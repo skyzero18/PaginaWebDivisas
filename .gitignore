@@ -1,0 +1,65 @@
+# Maven
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+.mvn/wrapper/maven-wrapper.jar
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# IntelliJ IDEA
+/.idea/
+/*.iml
+/modules.xml
+/.idea/modules.xml
+/.idea/*.iml
+/.idea/vcs.xml
+/.idea/workspace.xml
+/.idea/gradle.xml
+/.idea/libraries
+.DS_Store
+/out/
+/*.ipr
+/*.iws
+/*.bak
+/*.log
+
+# Eclipse
+/.classpath
+/.project
+/.settings/
+/target/
+
+# STS (Spring Tool Suite)
+.springBeans
+
+# Logs
+/log/
+/*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Node (if you have a frontend using npm or yarn)
+/node_modules/
+/dist/
+/npm-debug.log*
+/yarn-debug.log*
+/yarn-error.log*
+
+# Environment variables
+.env
+
+# IDE backup and cache files
+*.swp
+*.swo
+*~
+# Vim temporary files
+*.swo
+*.swp
+
+# VSCode
+.vscode/
