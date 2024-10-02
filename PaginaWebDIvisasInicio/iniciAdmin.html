@@ -40,6 +40,20 @@
                 <!-- Las divisas serán insertadas aquí dinámicamente -->
             </tbody>
         </table>
+
+        <!-- Tabla para mostrar los logs -->
+        <table id="tabla-logs">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Fecha de Creación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Los logs serán insertados aquí dinámicamente -->
+            </tbody>
+        </table>
     </main>
 
     <script>
@@ -124,7 +138,30 @@
             .catch(error => console.error('Error:', error));
         }
 
-        window.onload = obtenerDivisas;
+        function obtenerLogs() {
+            fetch('http://localhost:8080/logs')
+                .then(response => response.json())
+                .then(data => {
+                    let tablaLogs = document.getElementById('tabla-logs').getElementsByTagName('tbody')[0];
+                    tablaLogs.innerHTML = ''; // Limpiar la tabla antes de insertar
+
+                    data.forEach(log => {
+                        let fila = `<tr>
+                                <td>${log.id}</td>
+                                <td>${log.nombre}</td>
+                                <td>${new Date(log.fechaCreacion).toLocaleString()}</td> <!-- Formatear fecha -->
+                            </tr>`;
+                        tablaLogs.innerHTML += fila;
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Llama a las funciones para obtener divisas y logs al cargar la página
+        window.onload = function() {
+            obtenerDivisas();
+            obtenerLogs();
+        };
     </script>
 </body>
 </html>

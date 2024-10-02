@@ -1,5 +1,6 @@
 package com.example.PaginaWebDivisas.services;
 import com.example.PaginaWebDivisas.models.Logs;
+import com.example.PaginaWebDivisas.models.Usuarios;
 import com.example.PaginaWebDivisas.repository.LogsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,9 @@ public class LogsServiceImpl implements LogsService {
             switch (key) {
                 case "nombre":
                     existingLog.setNombre((String) value);
+                    break;
+                case "usuarios":
+                    existingLog.setUsuarios((Usuarios) value);
                     break;
             }
         });

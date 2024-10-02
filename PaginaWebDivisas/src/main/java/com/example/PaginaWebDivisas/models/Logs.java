@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 public class Logs {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -26,5 +25,7 @@ public class Logs {
     @Column(name = "fecha_creacion", updatable = false, nullable = false)
     private LocalDateTime fechaCreacion;
 
-
+    @ManyToOne(targetEntity = Usuarios.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuarios_id")
+    private Usuarios usuarios;
 }

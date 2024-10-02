@@ -1,9 +1,13 @@
 package com.example.PaginaWebDivisas.models;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,6 +25,10 @@ public class Usuarios {
 
     @Column(name="contraseña", nullable = false)
     private String contraseña;
+
+    @OneToMany(targetEntity = Logs.class, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Logs> logs;
 
 
 }
