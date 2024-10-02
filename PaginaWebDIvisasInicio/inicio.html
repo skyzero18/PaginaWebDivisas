@@ -5,131 +5,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compra y venta de divisas</title>
     <link rel="stylesheet" href="styles.css"> <!-- Enlace al archivo CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="header">
-        <div class="contact-info">
-            <p><strong>23:28</strong></p>
-            <p><strong>+562 2233 5327 // +569 6906 0570</strong></p>
-            <p><strong>succursalvirtual@moreexchange.cl</strong></p>
+<header class="header">
+    <div class="contact-info">
+        <p><strong>+562 2233 5327 // +569 6906 0570</strong></p>
+        <p><strong>succursalvirtual@moreexchange.cl</strong></p>
+    </div>
+    <div class="logo">
+        <img src="logo.png" alt="More Exchange Logo">
+    </div>
+</header>
+
+<section class="main">
+    <h1>Compra y venta de divisas & envíos de dinero al extranjero</h1>
+    <p>Compra y venta de divisas en <strong>Sucursales</strong> y <strong>Tótems de Autoatención</strong>. Envíos de dinero y remesas al extranjero con nuestra <strong>App More Giros</strong>.</p>
+
+    <!-- Tabla para mostrar divisas -->
+    <table class="exchange-table">
+        <thead>
+        <tr>
+            <th>Divisa</th>
+            <th>Compra</th>
+            <th>Venta</th>
+        </tr>
+        </thead>
+        <tbody id="tabla-divisas">
+        <!-- Las divisas se cargarán aquí dinámicamente -->
+        </tbody>
+    </table>
+
+    <!-- Formulario para conversión -->
+    <div class="conversion-section">
+        <h2>Conversión de Divisas</h2>
+        <div class="form-group">
+            <label for="divisa-origen">Divisa Origen:</label>
+            <select id="divisa-origen">
+                <!-- Opciones de divisas se cargarán aquí -->
+            </select>
         </div>
-        <div class="logo">
-            <img src="logo.png" alt="More Exchange Logo">
+        <div class="form-group">
+            <label for="cantidad">Cantidad a Convertir:</label>
+            <input type="number" id="cantidad" placeholder="Ingresa la cantidad">
         </div>
-        <nav>
-            <button class="menu-btn">☰</button>
-        </nav>
-    </header>
-
-    <section class="main">
-        <h1>Compra y venta de divisas & envíos de dinero al extranjero</h1>
-        <p>Compra y venta de divisas en <strong>Sucursales</strong> y <strong>Tótems de Autoatención</strong>. Envíos de dinero y remesas al extranjero con nuestra <strong>App More Giros</strong>.</p>
-
-        <!-- Tabla para mostrar divisas -->
-        <table class="exchange-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Divisa</th>
-                    <th>Compra</th>
-                    <th>Venta</th>
-                </tr>
-            </thead>
-            <tbody id="tabla-divisas">
-                <!-- Las divisas se cargarán aquí dinámicamente -->
-            </tbody>
-        </table>
-
-        <!-- Formulario para conversión -->
-        <div class="conversion-section">
-            <h2>Conversión de Divisas</h2>
-            <div class="form-group">
-                <label for="divisa-origen">Divisa Origen:</label>
-                <select id="divisa-origen">
-                    <!-- Opciones de divisas se cargarán aquí -->
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="cantidad">Cantidad a Convertir:</label>
-                <input type="number" id="cantidad" placeholder="Ingresa la cantidad">
-            </div>
-            <div class="form-group">
-                <label for="divisa-destino">Divisa Destino:</label>
-                <select id="divisa-destino">
-                    <!-- Opciones de divisas se cargarán aquí -->
-                </select>
-            </div>
-            <button class="cta-btn" onclick="convertirDivisa()">Convertir</button>
-
-            <!-- Resultado de la conversión -->
-            <div id="resultado"></div>
+        <div class="form-group">
+            <label for="divisa-destino">Divisa Destino:</label>
+            <select id="divisa-destino">
+                <!-- Opciones de divisas se cargarán aquí -->
+            </select>
         </div>
+        <button class="cta-btn" onclick="convertirDivisa()">Convertir</button>
 
-        <!-- Botón flotante para contacto en WhatsApp -->
-        <div id="contacto-flotante">
-            <a href="https://wa.me/543516789012" target="_blank" style="color: white; text-decoration: none;">
-                Contactar por WhatsApp
-            </a>
-        </div>
-    </section>
+        <!-- Resultado de la conversión -->
+        <div id="resultado"></div>
+    </div>
 
-    <footer>
-        <a href="#">Ver todas las divisas</a>
-    </footer>
+    <!-- Botón flotante para contacto en WhatsApp -->
+    <div id="contacto-flotante">
+        <a href="https://wa.me/543516789012" target="_blank" style="color: white; text-decoration: none;">
+            WhatsApp
+        </a>
+    </div>
+</section>
 
-    <script>
-        // Función para obtener divisas desde el backend
-        function obtenerDivisas() {
-            fetch('http://localhost:8080/divisas')
-                .then(response => response.json())
-                .then(data => {
-                    let tablaDivisas = document.getElementById('tabla-divisas');
-                    let opcionesDivisaOrigen = document.getElementById('divisa-origen');
-                    let opcionesDivisaDestino = document.getElementById('divisa-destino');
+<footer>
+    <a href="#">Ver todas las divisas</a>
+</footer>
 
-                    // Limpiar tabla y opciones previas
-                    tablaDivisas.innerHTML = '';
-                    opcionesDivisaOrigen.innerHTML = '';
-                    opcionesDivisaDestino.innerHTML = '';
+<script>
+    // Función para obtener divisas desde el backend
+    function obtenerDivisas() {
+        fetch('http://localhost:8080/divisas')
+            .then(response => response.json())
+            .then(data => {
+                let tablaDivisas = document.getElementById('tabla-divisas');
+                let opcionesDivisaOrigen = document.getElementById('divisa-origen');
+                let opcionesDivisaDestino = document.getElementById('divisa-destino');
 
-                    // Llenar tabla y selectores con las divisas
-                    data.forEach(divisa => {
-                        // Insertar en la tabla
-                        let fila = `<tr>
-                            <td>${divisa.id}</td>
+                // Limpiar tabla y opciones previas
+                tablaDivisas.innerHTML = '';
+                opcionesDivisaOrigen.innerHTML = '';
+                opcionesDivisaDestino.innerHTML = '';
+
+                // Llenar tabla y selectores con las divisas
+                data.forEach(divisa => {
+                    // Insertar en la tabla
+                    let fila = `<tr>
                             <td>${divisa.nombre}</td>
                             <td>${divisa.compra}</td>
                             <td>${divisa.venta}</td>
                         </tr>`;
-                        tablaDivisas.innerHTML += fila;
+                    tablaDivisas.innerHTML += fila;
 
-                        // Agregar opciones a los selectores
-                        let opcion = `<option value="${divisa.id}">${divisa.nombre}</option>`;
-                        opcionesDivisaOrigen.innerHTML += opcion;
-                        opcionesDivisaDestino.innerHTML += opcion;
-                    });
-                })
-                .catch(error => console.error('Error:', error));
+                    // Agregar opciones a los selectores
+                    let opcion = `<option value="${divisa.id}">${divisa.nombre}</option>`;
+                    opcionesDivisaOrigen.innerHTML += opcion;
+                    opcionesDivisaDestino.innerHTML += opcion;
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Función para convertir divisas
+    function convertirDivisa() {
+        let idOrigen = document.getElementById('divisa-origen').value;
+        let idDestino = document.getElementById('divisa-destino').value;
+        let cantidad = document.getElementById('cantidad').value;
+
+        if (idOrigen && idDestino && cantidad) {
+            document.getElementById('resultado').innerText = `Conversión: ${cantidad} desde Divisa ${idOrigen} a Divisa ${idDestino}.`;
+        } else {
+            alert("Por favor, completa todos los campos.");
         }
+    }
 
-        // Función para convertir divisas
-        function convertirDivisa() {
-            let idOrigen = document.getElementById('divisa-origen').value;
-            let idDestino = document.getElementById('divisa-destino').value;
-            let cantidad = document.getElementById('cantidad').value;
-
-            if (idOrigen && idDestino && cantidad) {
-                // Aquí se debería implementar la lógica de conversión según las tasas de compra/venta
-                // Por ahora solo muestra un mensaje
-                document.getElementById('resultado').innerText = `Conversión: ${cantidad} desde Divisa ${idOrigen} a Divisa ${idDestino}.`;
-            } else {
-                alert("Por favor, completa todos los campos.");
-            }
-        }
-
-        // Cargar las divisas al cargar la página
-        window.onload = obtenerDivisas;
-    </script>
+    // Cargar las divisas al cargar la página
+    window.onload = obtenerDivisas;
+</script>
 </body>
 </html>
-s
