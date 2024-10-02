@@ -7,6 +7,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/divisas")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class DivisasController {
 
     @Autowired
@@ -25,6 +26,11 @@ public class DivisasController {
     @PostMapping
     public Divisas createDivisa(@RequestBody Divisas divisas) {
         return divisasService.saveDivisa(divisas);
+    }
+
+    @PutMapping("/{id}")
+    public Divisas updateDivisa(@PathVariable Long id, @RequestBody Divisas divisas) {
+        return divisasService.updateDivisa(id, divisas);
     }
 
     @DeleteMapping("/{id}")

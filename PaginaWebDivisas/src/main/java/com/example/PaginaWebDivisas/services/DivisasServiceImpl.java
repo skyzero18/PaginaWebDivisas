@@ -40,9 +40,12 @@ public class DivisasServiceImpl implements DivisasService {
         Divisas existingDivisa = getDivisaById(id);
 
         existingDivisa.setNombre(divisa.getNombre());
+        existingDivisa.setCompra(divisa.getCompra());
+        existingDivisa.setVenta(divisa.getVenta());
 
         return divisasRepo.save(existingDivisa);
     }
+
 
     @Override
     public void deleteDivisa(Long id) {
