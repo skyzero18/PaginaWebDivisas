@@ -42,10 +42,10 @@ public class DivisasServiceImpl implements DivisasService {
                     existingDivisa.setNombre((String) value);
                     break;
                 case "compra":
-                    existingDivisa.setCompra((String) value);
+                    existingDivisa.setCompra((int) value);
                     break;
                 case "venta":
-                    existingDivisa.setVenta((String) value);
+                    existingDivisa.setVenta((int) value);
                     break;
             }
         });

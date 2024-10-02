@@ -27,8 +27,4 @@ public class Logs {
     private LocalDateTime fechaCreacion;
 
 
-    public LocalDateTime getFechaCreacion() {
-        return fechaCreacion;
-    }
-
 }

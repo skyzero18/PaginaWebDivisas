@@ -20,9 +20,9 @@ public class Divisas {
     private String nombre;
 
     @Column(name="compra", nullable = false)
-    private String compra;
+    private int compra;
 
     @Column(name="venta", nullable = false)
-    private String venta;
+    private int venta;
 
 }
