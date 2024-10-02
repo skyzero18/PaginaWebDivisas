@@ -45,7 +45,7 @@
         <table id="tabla-logs">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    
                     <th>Usuario</th>
                     <th>Fecha de Creación</th>
                 </tr>
@@ -147,8 +147,7 @@
 
                     data.forEach(log => {
                         let fila = `<tr>
-                                <td>${log.id}</td>
-                                <td>${log.nombre}</td>
+                                <td>${log.usuarios.nombre}</td> <!-- Mostrar el nombre del usuario -->
                                 <td>${new Date(log.fechaCreacion).toLocaleString()}</td> <!-- Formatear fecha -->
                             </tr>`;
                         tablaLogs.innerHTML += fila;
