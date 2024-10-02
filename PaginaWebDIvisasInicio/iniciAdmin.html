@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración de Divisas</title>
+    <link rel="stylesheet" href="stylesAdmin.css">
+</head>
+<body>
+    <header>
+        <h1>Administración de Divisas</h1>
+    </header>
+
+    <!-- Formulario para agregar o editar divisas -->
+    <main>
+        <form id="form-divisas">
+            <label for="id-divisa">ID:</label>
+            <input type="text" id="id-divisa" placeholder="ID solo para editar" disabled>
+            <label for="nombre-divisa">Nombre:</label>
+            <input type="text" id="nombre-divisa" placeholder="Ingrese el nombre de la divisa" required>
+            <label for="compra-divisa">Precio de Compra:</label>
+            <input type="number" id="compra-divisa" placeholder="Ingrese el precio de compra" required>
+            <label for="venta-divisa">Precio de Venta:</label>
+            <input type="number" id="venta-divisa" placeholder="Ingrese el precio de venta" required>
+            <button type="button" onclick="agregarOEditarDivisa()">Guardar</button>
+        </form>
+
+        <!-- Tabla para mostrar las divisas -->
+        <table id="tabla-divisas">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio de Compra</th>
+                    <th>Precio de Venta</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Las divisas serán insertadas aquí dinámicamente -->
+            </tbody>
+        </table>
+    </main>
+
+    <script>
+        function agregarOEditarDivisa() {
+            let id = document.getElementById('id-divisa').value;
+            let nombre = document.getElementById('nombre-divisa').value;
+            let compra = document.getElementById('compra-divisa').value;
+            let venta = document.getElementById('venta-divisa').value;
+
+            if (nombre && compra && venta) {
+                let divisaData = {
+                    nombre: nombre,
+                    compra: parseFloat(compra),
+                    venta: parseFloat(venta)
+                };
+
+                const url = id ? `http://localhost:8080/divisas/${id}` : 'http://localhost:8080/divisas';
+                const method = id ? 'PUT' : 'POST';
+
+                fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(divisaData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(`${id ? 'Divisa modificada' : 'Nueva divisa agregada'}: ${nombre}`);
+                    obtenerDivisas();
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                alert("Por favor, completa todos los campos.");
+            }
+        }
+
+        function eliminarDivisa(id) {
+            fetch(`http://localhost:8080/divisas/${id}`, { method: 'DELETE' })
+            .then(response => {
+                if (response.ok) {
+                    alert(`Divisa con ID ${id} eliminada.`);
+                    obtenerDivisas();
+                } else {
+                    alert('Error al eliminar la divisa.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function obtenerDivisas() {
+            fetch('http://localhost:8080/divisas')
+                .then(response => response.json())
+                .then(data => {
+                    let tablaDivisas = document.getElementById('tabla-divisas').getElementsByTagName('tbody')[0];
+                    tablaDivisas.innerHTML = '';
+
+                    data.forEach(divisa => {
+                        let fila = `<tr>
+                                <td>${divisa.id}</td>
+                                <td>${divisa.nombre}</td>
+                                <td>${divisa.compra}</td>
+                                <td>${divisa.venta}</td>
+                                <td>
+                                    <button class="edit-btn" onclick="editarDivisa(${divisa.id})">Editar</button>
+                                    <button class="delete-btn" onclick="eliminarDivisa(${divisa.id})">Eliminar</button>
+                                </td>
+                            </tr>`;
+                        tablaDivisas.innerHTML += fila;
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function editarDivisa(id) {
+            fetch(`http://localhost:8080/divisas/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('id-divisa').value = data.id;
+                document.getElementById('nombre-divisa').value = data.nombre;
+                document.getElementById('compra-divisa').value = data.compra;
+                document.getElementById('venta-divisa').value = data.venta;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        window.onload = obtenerDivisas;
+    </script>
+</body>
+</html>
