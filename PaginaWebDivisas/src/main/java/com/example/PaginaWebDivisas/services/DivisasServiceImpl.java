@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -36,12 +37,22 @@ public class DivisasServiceImpl implements DivisasService {
     }
 
     @Override
-    public Divisas updateDivisa(Long id, Divisas divisa) {
+    public Divisas patchDivisa(Long id, Map<String, Object> updates) {
         Divisas existingDivisa = getDivisaById(id);
 
-        existingDivisa.setNombre(divisa.getNombre());
-        existingDivisa.setCompra(divisa.getCompra());
-        existingDivisa.setVenta(divisa.getVenta());
+        updates.forEach((key, value) -> {
+            switch (key) {
+                case "nombre":
+                    existingDivisa.setNombre((String) value);
+                    break;
+                case "compra":
+                    existingDivisa.setCompra((String) value);
+                    break;
+                case "venta":
+                    existingDivisa.setVenta((String) value);
+                    break;
+            }
+        });
 
         return divisasRepo.save(existingDivisa);
     }

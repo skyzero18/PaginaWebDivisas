@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -33,10 +34,19 @@ public class UsuariosServiceImpl implements UsuariosService {
     }
 
     @Override
-    public Usuarios updateUsuario(Long id, Usuarios usuario) {
+    public Usuarios patchUsuario(Long id, Map<String, Object> updates) {
         Usuarios existingUsuario = getUsuarioById(id);
 
-        existingUsuario.setNombre(usuario.getNombre());
+        updates.forEach((key, value) -> {
+            switch (key) {
+                case "nombre":
+                    existingUsuario.setNombre((String) value);
+                    break;
+                case "contraseña":
+                    existingUsuario.setContraseña((String) value);
+                    break;
+            }
+        });
 
         return usuariosRepo.save(existingUsuario);
     }

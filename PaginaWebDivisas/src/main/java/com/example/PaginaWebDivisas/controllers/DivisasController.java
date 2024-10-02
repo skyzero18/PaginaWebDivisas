@@ -4,6 +4,7 @@ import com.example.PaginaWebDivisas.services.DivisasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/divisas")
@@ -28,9 +29,9 @@ public class DivisasController {
         return divisasService.saveDivisa(divisas);
     }
 
-    @PutMapping("/{id}")
-    public Divisas updateDivisa(@PathVariable Long id, @RequestBody Divisas divisas) {
-        return divisasService.updateDivisa(id, divisas);
+    @PatchMapping("/{id}")
+    public Divisas patchDivisas(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        return divisasService.patchDivisa(id, updates);
     }
 
     @DeleteMapping("/{id}")

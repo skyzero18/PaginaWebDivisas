@@ -4,6 +4,7 @@ import com.example.PaginaWebDivisas.services.UsuariosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -26,6 +27,11 @@ public class UsuariosController {
     @PostMapping
     public Usuarios createUsuarios(@RequestBody Usuarios usuarios) {
         return usuarioService.saveUsuario(usuarios);
+    }
+
+    @PatchMapping("/{id}")
+    public Usuarios patchUsuarios (@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        return usuarioService.patchUsuario(id, updates);
     }
 
     @DeleteMapping("/{id}")
