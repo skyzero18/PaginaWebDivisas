@@ -25,7 +25,7 @@ public class Logs {
     @Column(name = "fecha_creacion", updatable = false, nullable = false)
     private LocalDateTime fechaCreacion;
 
-    @ManyToOne(targetEntity = Usuarios.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Usuarios.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "usuarios_id")
     private Usuarios usuarios;
 }

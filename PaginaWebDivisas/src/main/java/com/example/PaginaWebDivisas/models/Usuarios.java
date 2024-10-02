@@ -26,7 +26,7 @@ public class Usuarios {
     @Column(name="contraseña", nullable = false)
     private String contraseña;
 
-    @OneToMany(targetEntity = Logs.class, fetch = FetchType.LAZY)
+    @OneToMany
     @JsonIgnore
     private List<Logs> logs;
 
