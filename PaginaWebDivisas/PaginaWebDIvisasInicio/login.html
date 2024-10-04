@@ -13,10 +13,10 @@
 
     <main>
         <form id="form-login">
-            <label for="username">Usuario:</label>
-            <input type="text" id="username" placeholder="Ingrese su usuario" required>
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" placeholder="Ingrese su contraseña" required>
+            <label for="usuario">Usuario:</label>
+            <input type="text" id="usuario" placeholder="Ingrese su usuario" required>
+            <label for="contraseña">Contraseña:</label>
+            <input type="password" id="contraseña" placeholder="Ingrese su contraseña" required>
             <button type="submit">Iniciar Sesión</button>
         </form>
     </main>
@@ -26,32 +26,38 @@
     </footer>
 
     <script>
-        // Aquí puedes agregar lógica para el login
         document.getElementById('form-login').addEventListener('submit', function(event) {
             event.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            if (username && password) {
+            const usuario = document.getElementById('usuario').value;
+            const contraseña = document.getElementById('contraseña').value;
+    
+            if (usuario && contraseña) {
                 fetch('http://localhost:8080/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
+                    body: JSON.stringify({ nombre: usuario, contraseña }) // Cambia "usuario" a "nombre"
                 })
                 .then(response => {
                     if (response.ok) {
-                        window.location.href = 'inicioAdmin.html'; // Redirige a la página de inicio admin
+                        return response.json(); // Asegúrate de manejar la respuesta JSON
                     } else {
-                        response.text().then(errorMessage => {
-                            alert(errorMessage); // Muestra el mensaje de error
+                        return response.text().then(errorMessage => {
+                            throw new Error(errorMessage); // Lanza un error con el mensaje
                         });
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .then(data => {
+                    window.location.href = 'inicioAdmin.html'; // Redirige a la página de inicio admin
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message); // Muestra el mensaje de error
+                    console.error('Error:', error);
+                });
             } else {
                 alert('Por favor, complete ambos campos.');
             }
         });
     </script>
+    
 </body>
 </html>

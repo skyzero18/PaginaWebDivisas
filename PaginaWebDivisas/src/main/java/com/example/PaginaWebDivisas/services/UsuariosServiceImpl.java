@@ -60,6 +60,11 @@ public class UsuariosServiceImpl implements UsuariosService {
     }
 
     @Override
+    public Usuarios findByNombre(String nombre) {
+        return usuariosRepo.findByNombre(nombre).orElse(null);
+    }
+
+    @Override
     public void deleteUsuario(Long id) {
         usuariosRepo.deleteById(id);
     }
