@@ -58,10 +58,13 @@ public class UsuariosServiceImpl implements UsuariosService {
 
         return usuariosRepo.save(existingUsuario);
     }
-
     @Override
-    public Usuarios findByNombre(String nombre) {
-        return usuariosRepo.findByNombre(nombre).orElse(null);
+    public List<Usuarios> findByNombre(String nombre) {
+        List<Usuarios> usuarios = usuariosRepo.findByNombre(nombre);
+        if (usuarios.isEmpty()) {
+            return null; // O lanzar una excepción según tu lógica
+        }
+        return usuarios;
     }
 
     @Override

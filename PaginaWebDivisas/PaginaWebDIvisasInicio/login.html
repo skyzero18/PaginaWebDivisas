@@ -47,7 +47,10 @@
                     }
                 })
                 .then(data => {
-                    window.location.href = 'inicioAdmin.html'; // Redirige a la página de inicio admin
+                    alert(data.message); // Muestra el mensaje del servidor
+                    if (data.message === "Inicio de sesión exitoso") {
+                        window.location.href = 'inicioAdmin.html'; // Redirige a la página de inicio admin
+                    }
                 })
                 .catch(error => {
                     alert('Error: ' + error.message); // Muestra el mensaje de error

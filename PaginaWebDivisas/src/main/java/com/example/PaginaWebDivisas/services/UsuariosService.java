@@ -8,7 +8,7 @@ public interface UsuariosService {
     Usuarios getUsuarioById(Long id);
     Usuarios saveUsuario(Usuarios usuario);
     Usuarios patchUsuario(Long id, Map<String, Object> updates);
-    Usuarios findByNombre(String nombre);
+    List<Usuarios> findByNombre(String nombre);
     void deleteUsuario(Long id);
 
 }
