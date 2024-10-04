@@ -74,10 +74,10 @@ public class DivisasServiceImpl implements DivisasService {
                     existingDivisa.setNombre((String) value);
                     break;
                 case "compra":
-                    existingDivisa.setCompra((int) value);
+                    existingDivisa.setCompra(Float.parseFloat(value.toString())); // Cambiado a float
                     break;
                 case "venta":
-                    existingDivisa.setVenta((int) value);
+                    existingDivisa.setVenta(Float.parseFloat(value.toString())); // Cambiado a float
                     break;
                 default:
                     throw new IllegalArgumentException("Campo no reconocido: " + key);
@@ -85,11 +85,10 @@ public class DivisasServiceImpl implements DivisasService {
         });
 
         Divisas updatedDivisa = divisasRepo.save(existingDivisa);
-
-        // Registrar log tras la modificación de la divisa
         registrarLog("Divisa modificada", usuarioId);
         return updatedDivisa;
     }
+
 
     @Override
     public void deleteDivisa(Long id, Long usuarioId) {

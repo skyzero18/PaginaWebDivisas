@@ -1,4 +1,5 @@
 package com.example.PaginaWebDivisas.models;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,10 +20,10 @@ public class Divisas {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name="compra", nullable = false)
-    private int compra;
+    @Column(name = "compra", nullable = false)
+    private float compra;
 
-    @Column(name="venta", nullable = false)
-    private int venta;
+    @Column(name = "venta", nullable = false)
+    private float venta;
 
 }

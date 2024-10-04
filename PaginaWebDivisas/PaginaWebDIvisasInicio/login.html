@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Administración de Divisas</title>
     <link rel="stylesheet" href="stylesLogin.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <header>
@@ -47,17 +48,17 @@
                     }
                 })
                 .then(data => {
-                    alert(data.message); // Muestra el mensaje del servidor
+                    Swal.fire(data.message); // Muestra el mensaje del servidor
                     if (data.message === "Inicio de sesión exitoso") {
                         window.location.href = 'inicioAdmin.html'; // Redirige a la página de inicio admin
                     }
                 })
                 .catch(error => {
-                    alert('Error: ' + error.message); // Muestra el mensaje de error
+                    Swal.fire('Error: ' + error.message); // Muestra el mensaje de error
                     console.error('Error:', error);
                 });
             } else {
-                alert('Por favor, complete ambos campos.');
+                Swal.fire('Por favor, complete ambos campos.');
             }
         });
     </script>

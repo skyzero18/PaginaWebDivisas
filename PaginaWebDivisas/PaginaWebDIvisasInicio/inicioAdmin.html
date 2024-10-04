@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administración de Divisas</title>
     <link rel="stylesheet" href="stylesAdmin.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <header>
@@ -18,38 +19,43 @@
             <label for="nombre-divisa">Nombre:</label>
             <input type="text" id="nombre-divisa" placeholder="Ingrese el nombre de la divisa" required>
             <label for="compra-divisa">Precio de Compra:</label>
-            <input type="number" id="compra-divisa" placeholder="Ingrese el precio de compra" required>
+            <input type="number" id="compra-divisa" placeholder="Ingrese el precio de compra" step="0.01" required>
             <label for="venta-divisa">Precio de Venta:</label>
-            <input type="number" id="venta-divisa" placeholder="Ingrese el precio de venta" required>
+            <input type="number" id="venta-divisa" placeholder="Ingrese el precio de venta" step="0.01" required>
+
             <button type="button" onclick="agregarOEditarDivisa()">Guardar</button>
         </form>
 
-        <table id="tabla-divisas">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Precio de Compra</th>
-                    <th>Precio de Venta</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Las divisas serán insertadas aquí dinámicamente -->
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table id="tabla-divisas">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Precio de Compra</th>
+                        <th>Precio de Venta</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las divisas serán insertadas aquí dinámicamente -->
+                </tbody>
+            </table>
+        </div>
 
-        <table id="tabla-logs">
-            <thead>
-                <tr>
-                    <th>Usuario</th>
-                    <th>Fecha de Creación</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Los logs serán insertados aquí dinámicamente -->
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table id="tabla-logs">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Fecha de Creación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Los logs serán insertados aquí dinámicamente -->
+                </tbody>
+            </table>
+        </div>
     </main>
 
     <script>
@@ -58,7 +64,7 @@
 
         function agregarOEditarDivisa() {
             let id = document.getElementById('id-divisa').value;
-            let nombre = document.getElementById('nombre-divisa').value;
+            let nombre = document.getElementById('nombre-divisa').value.toUpperCase(); // Convertir a mayúsculas
             let compra = document.getElementById('compra-divisa').value;
             let venta = document.getElementById('venta-divisa').value;
 
@@ -87,7 +93,7 @@
                     return response.json();
                 })
                 .then(data => {
-                    alert(`${id ? 'Divisa modificada' : 'Nueva divisa agregada'}: ${nombre}`);
+                    Swal.fire(`${id ? 'Divisa modificada' : 'Nueva divisa agregada'}: ${nombre}`);
                     obtenerDivisas();
                     // Reiniciar el formulario
                     document.getElementById('form-divisas').reset();
@@ -95,29 +101,38 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert(`Ocurrió un error: ${error.message}`);
+                    Swal.fire(`Ocurrió un error: ${error.message}`);
                 });
             } else {
-                alert("Por favor, completa todos los campos.");
+                Swal.fire("Por favor, completa todos los campos.");
             }
         }
 
         function eliminarDivisa(id) {
-            if (confirm('¿Estás seguro de que quieres eliminar esta divisa?')) {
-                fetch(`http://localhost:8080/divisas/${id}/${usuarioId}`, { method: 'DELETE' })
-                .then(response => {
-                    if (response.ok) {
-                        alert(`Divisa con ID ${id} eliminada.`);
-                        obtenerDivisas();
-                    } else {
-                        alert('Error al eliminar la divisa.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Ocurrió un error al intentar eliminar la divisa.');
-                });
-            }
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "No podrás revertir esto",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminarlo',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`http://localhost:8080/divisas/${id}/${usuarioId}`, { method: 'DELETE' })
+                    .then(response => {
+                        if (response.ok) {
+                            Swal.fire(`Divisa con ID ${id} eliminada.`);
+                            obtenerDivisas();
+                        } else {
+                            Swal.fire('Error al eliminar la divisa.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire('Ocurrió un error al intentar eliminar la divisa.');
+                    });
+                }
+            });
         }
 
         function obtenerDivisas() {
@@ -130,7 +145,7 @@
                     data.forEach(divisa => {
                         let fila = `<tr>
                                 <td>${divisa.id}</td>
-                                <td>${divisa.nombre}</td>
+                                <td>${divisa.nombre.toUpperCase()}</td>
                                 <td>${divisa.compra}</td>
                                 <td>${divisa.venta}</td>
                                 <td>
@@ -143,7 +158,7 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Ocurrió un error al obtener las divisas.');
+                    Swal.fire('Ocurrió un error al obtener las divisas.');
                 });
         }
 
@@ -163,32 +178,30 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert(`Ocurrió un error: ${error.message}`);
+                Swal.fire(`Ocurrió un error: ${error.message}`);
             });
         }
 
         function obtenerLogs() {
-    fetch('http://localhost:8080/logs')
-        .then(response => response.json())
-        .then(data => {
-            console.log("Datos recibidos de logs:", data); // Verificar los datos
-            let tablaLogs = document.getElementById('tabla-logs').getElementsByTagName('tbody')[0];
-            tablaLogs.innerHTML = ''; // Limpiar la tabla antes de insertar
+            fetch('http://localhost:8080/logs')
+                .then(response => response.json())
+                .then(data => {
+                    let tablaLogs = document.getElementById('tabla-logs').getElementsByTagName('tbody')[0];
+                    tablaLogs.innerHTML = '';
 
-            data.forEach(log => {
-                let fila = `<tr>
-                        <td>${log.usuarios.nombre}</td> <!-- Mostrar el nombre del usuario -->
-                        <td>${new Date(log.fechaCreacion).toLocaleString()}</td> <!-- Formatear fecha -->
-                    </tr>`;
-                tablaLogs.innerHTML += fila;
-            });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Ocurrió un error al obtener los logs.');
-        });
-}
-
+                    data.forEach(log => {
+                        let fila = `<tr>
+                                <td>${log.usuarios.nombre}</td>
+                                <td>${new Date(log.fechaCreacion).toLocaleString()}</td>
+                            </tr>`;
+                        tablaLogs.innerHTML += fila;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire('Ocurrió un error al obtener los logs.');
+                });
+        }
 
         window.onload = function() {
             obtenerDivisas();

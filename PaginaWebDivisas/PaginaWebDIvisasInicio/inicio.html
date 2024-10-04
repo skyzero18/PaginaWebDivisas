@@ -6,6 +6,7 @@
     <title>Compra y venta de divisas</title>
     <link rel="stylesheet" href="styles.css"> <!-- Enlace al archivo CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
 </head>
 <body>
 <header class="header">
@@ -18,8 +19,8 @@
 </header>
 
 <section class="main">
-    <h1>intercambio de divisas & transacción al extranjero</h1>
-    <p>Compra y venta de divisas en <strong>Sucursales</strong> y <strong>Cotizacion</strong>.</p>
+    <h1>Intercambio de divisas & transacción al extranjero</h1>
+    <p>Compra y venta de divisas en <strong>Sucursales</strong> y <strong>Cotización</strong>.</p>
 
     <!-- Tabla para mostrar divisas -->
     <table class="exchange-table">
@@ -36,29 +37,31 @@
     </table>
 
     <!-- Formulario para conversión -->
-    <div class="conversion-section">
-        <h2>Conversión de Divisas</h2>
-        <div class="form-group">
-            <label for="divisa-origen">Divisa Origen:</label>
-            <select id="divisa-origen">
-                <!-- Opciones de divisas se cargarán aquí -->
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="cantidad">Cantidad a Convertir:</label>
-            <input type="number" id="cantidad" placeholder="Ingresa la cantidad">
-        </div>
-        <div class="form-group">
-            <label for="divisa-destino">Divisa Destino:</label>
-            <select id="divisa-destino">
-                <!-- Opciones de divisas se cargarán aquí -->
-            </select>
-        </div>
-        <button class="cta-btn" onclick="convertirDivisa()">Convertir</button>
-
-        <!-- Resultado de la conversión -->
-        <div id="resultado"></div>
+<div class="conversion-section">
+    <h2>Conversión de Divisas</h2>
+    <div class="form-group">
+        <label for="divisa-origen">Divisa Origen:</label>
+        <select id="divisa-origen">
+            <option value="ARS" selected>Peso Argentino (ARS)</option> <!-- Opción ARS -->
+            <!-- Las opciones de divisas se cargarán aquí -->
+        </select>
     </div>
+    <div class="form-group">
+        <label for="cantidad">Cantidad a Convertir:</label>
+        <input type="number" id="cantidad" placeholder="Ingresa la cantidad">
+    </div>
+    <div class="form-group">
+        <label for="divisa-destino">Divisa Destino:</label>
+        <select id="divisa-destino">
+            <option value="ARS" selected>Peso Argentino (ARS)</option> <!-- Opción ARS -->
+            <!-- Las opciones de divisas se cargarán aquí -->
+        </select>
+    </div>
+    <button class="cta-btn" onclick="convertirDivisa()">Convertir</button>
+
+    <!-- Resultado de la conversión -->
+    <div id="resultado" class="resultado-conversion"></div>
+</div>
 
     <!-- Botón flotante para contacto en WhatsApp -->
     <div id="contacto-flotante">
@@ -73,51 +76,90 @@
 </footer>
 
 <script>
-    // Función para obtener divisas desde el backend
-    function obtenerDivisas() {
-        fetch('http://localhost:8080/divisas')
-            .then(response => response.json())
-            .then(data => {
-                let tablaDivisas = document.getElementById('tabla-divisas');
-                let opcionesDivisaOrigen = document.getElementById('divisa-origen');
-                let opcionesDivisaDestino = document.getElementById('divisa-destino');
+   let divisas = [];
 
-                // Limpiar tabla y opciones previas
-                tablaDivisas.innerHTML = '';
-                opcionesDivisaOrigen.innerHTML = '';
-                opcionesDivisaDestino.innerHTML = '';
+// Función para obtener divisas desde el backend
+function obtenerDivisas() {
+    fetch('http://localhost:8080/divisas')
+        .then(response => response.json())
+        .then(data => {
+            divisas = data;
+            let tablaDivisas = document.getElementById('tabla-divisas');
+            let opcionesDivisaOrigen = document.getElementById('divisa-origen');
+            let opcionesDivisaDestino = document.getElementById('divisa-destino');
 
-                // Llenar tabla y selectores con las divisas
-                data.forEach(divisa => {
-                    // Insertar en la tabla
-                    let fila = `<tr>
-                            <td>${divisa.nombre}</td>
-                            <td>${divisa.compra}</td>
-                            <td>${divisa.venta}</td>
-                        </tr>`;
-                    tablaDivisas.innerHTML += fila;
+            // Limpiar tabla y opciones previas
+            tablaDivisas.innerHTML = '';
+            opcionesDivisaOrigen.innerHTML = '';
+            opcionesDivisaDestino.innerHTML = '';
 
-                    // Agregar opciones a los selectores
+            // Llenar tabla y selectores con las divisas
+            data.forEach(divisa => {
+                // Insertar en la tabla
+                let fila = `<tr>
+                        <td>${divisa.nombre}</td>
+                        <td>${divisa.compra}</td>
+                        <td>${divisa.venta}</td>
+                    </tr>`;
+                tablaDivisas.innerHTML += fila;
+
+                // Agregar opciones a los selectores, pero omitir ARS
+                if (divisa.nombre !== 'Peso Argentino') { // Asegúrate de que el nombre coincida
                     let opcion = `<option value="${divisa.id}">${divisa.nombre}</option>`;
                     opcionesDivisaOrigen.innerHTML += opcion;
                     opcionesDivisaDestino.innerHTML += opcion;
-                });
-            })
-            .catch(error => console.error('Error:', error));
-    }
+                }
+            });
+
+            // Agregar ARS al final de las opciones
+            opcionesDivisaOrigen.innerHTML += `<option value="ARS">ARS</option>`;
+            opcionesDivisaDestino.innerHTML += `<option value="ARS">ARS</option>`;
+        })
+        .catch(error => console.error('Error:', error));
+}
 
     // Función para convertir divisas
     function convertirDivisa() {
-        let idOrigen = document.getElementById('divisa-origen').value;
-        let idDestino = document.getElementById('divisa-destino').value;
-        let cantidad = document.getElementById('cantidad').value;
+    let idOrigen = document.getElementById('divisa-origen').value;
+    let idDestino = document.getElementById('divisa-destino').value;
+    let cantidad = parseFloat(document.getElementById('cantidad').value);
 
-        if (idOrigen && idDestino && cantidad) {
-            document.getElementById('resultado').innerText = `Conversión: ${cantidad} desde Divisa ${idOrigen} a Divisa ${idDestino}.`;
-        } else {
-            alert("Por favor, completa todos los campos.");
-        }
+    if (!idOrigen || !idDestino || !cantidad || isNaN(cantidad)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Campos incompletos',
+            text: 'Por favor, completa todos los campos correctamente.'
+        });
+        return;
     }
+
+    let divisaOrigen = divisas.find(d => d.id == idOrigen) || { compra: 1, nombre: "Peso Argentino" };
+    let divisaDestino = divisas.find(d => d.id == idDestino) || { venta: 1, nombre: "Peso Argentino" };
+
+    let resultado = 0;
+
+    if (idOrigen === idDestino) {
+        // Mismo origen y destino
+        resultado = cantidad;
+    } else if (idOrigen === 'ARS') {
+        // Pesos a moneda extranjera
+        resultado = cantidad / divisaDestino.venta;
+    } else if (idDestino === 'ARS') {
+        // Moneda extranjera a pesos
+        resultado = cantidad * divisaOrigen.compra;
+    } else {
+        // Moneda extranjera a moneda extranjera
+        let aPesos = cantidad * divisaOrigen.compra; // Convertir a pesos primero
+        resultado = aPesos / divisaDestino.venta; 
+    }
+
+    document.getElementById('resultado').innerText = `Resultado: ${resultado.toFixed(2)} ${divisaDestino.nombre}`;
+    Swal.fire({
+        icon: 'success',
+        title: 'Conversión exitosa',
+        text: `Has convertido ${cantidad} ${divisaOrigen.nombre} a ${resultado.toFixed(2)} ${divisaDestino.nombre}.`
+    });
+}
 
     // Cargar las divisas al cargar la página
     window.onload = obtenerDivisas;
