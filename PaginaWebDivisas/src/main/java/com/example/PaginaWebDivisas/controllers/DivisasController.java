@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
-
 @RestController
 @RequestMapping("/divisas")
 @CrossOrigin(origins = "http://127.0.0.1:5500")
@@ -24,18 +23,18 @@ public class DivisasController {
         return divisasService.getDivisaById(id);
     }
 
-    @PostMapping
-    public Divisas createDivisa(@RequestBody Divisas divisas) {
-        return divisasService.saveDivisa(divisas);
+    @PostMapping("/{usuarioId}")
+    public Divisas createDivisa(@RequestBody Divisas divisas, @PathVariable Long usuarioId) {
+        return divisasService.saveDivisa(divisas, usuarioId);
     }
 
-    @PatchMapping("/{id}")
-    public Divisas patchDivisas(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
-        return divisasService.patchDivisa(id, updates);
+    @PatchMapping("/{id}/{usuarioId}")
+    public Divisas patchDivisas(@PathVariable Long id, @RequestBody Map<String, Object> updates, @PathVariable Long usuarioId) {
+        return divisasService.patchDivisa(id, updates, usuarioId);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteDivisa(@PathVariable Long id) {
-        divisasService.deleteDivisa(id);
+    @DeleteMapping("/{id}/{usuarioId}")
+    public void deleteDivisa(@PathVariable Long id, @PathVariable Long usuarioId) {
+        divisasService.deleteDivisa(id, usuarioId);
     }
 }

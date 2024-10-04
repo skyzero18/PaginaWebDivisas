@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Administración de Divisas</title>
+    <link rel="stylesheet" href="stylesLogin.css">
+</head>
+<body>
+    <header>
+        <h1>Iniciar Sesión</h1>
+    </header>
+
+    <main>
+        <form id="form-login">
+            <label for="usuario">Usuario:</label>
+            <input type="text" id="usuario" placeholder="Ingrese su usuario" required>
+            <label for="contraseña">Contraseña:</label>
+            <input type="password" id="contraseña" placeholder="Ingrese su contraseña" required>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Compra y Venta de Divisas</p>
+    </footer>
+
+    <script>
+        document.getElementById('form-login').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const usuario = document.getElementById('usuario').value;
+            const contraseña = document.getElementById('contraseña').value;
+    
+            if (usuario && contraseña) {
+                fetch('http://localhost:8080/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre: usuario, contraseña }) // Cambia "usuario" a "nombre"
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json(); // Asegúrate de manejar la respuesta JSON
+                    } else {
+                        return response.text().then(errorMessage => {
+                            throw new Error(errorMessage); // Lanza un error con el mensaje
+                        });
+                    }
+                })
+                .then(data => {
+                    alert(data.message); // Muestra el mensaje del servidor
+                    if (data.message === "Inicio de sesión exitoso") {
+                        window.location.href = 'inicioAdmin.html'; // Redirige a la página de inicio admin
+                    }
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message); // Muestra el mensaje de error
+                    console.error('Error:', error);
+                });
+            } else {
+                alert('Por favor, complete ambos campos.');
+            }
+        });
+    </script>
+    
+</body>
+</html>

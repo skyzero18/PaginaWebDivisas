@@ -58,13 +58,15 @@ form button:hover {
 
 /* Tabla de Divisas */
 table {
-    width: 90%;
+    width: 100%;
+    max-width: 1000px;
     margin: 20px auto;
-    border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 15px;
     overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
 }
 
 table th, table td {
@@ -93,7 +95,14 @@ table td {
 
 table {
     width: 100%;
-    min-width: 600px; /* Asegura que la tabla no se encoja demasiado */
+    max-width: 1000px;
+    margin: 20px auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
 }
 
 /* Estilos para botones de acción en la tabla */

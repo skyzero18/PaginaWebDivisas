@@ -9,4 +9,10 @@ public interface DivisasService {
     Divisas saveDivisa(Divisas divisas);
     Divisas patchDivisa(Long id, Map<String, Object> updates);
     void deleteDivisa(Long id);
+
+    Divisas saveDivisa(Divisas divisas, Long usuarioId);
+
+    Divisas patchDivisa(Long id, Map<String, Object> updates, Long usuarioId);
+
+    void deleteDivisa(Long id, Long usuarioId);
 }
