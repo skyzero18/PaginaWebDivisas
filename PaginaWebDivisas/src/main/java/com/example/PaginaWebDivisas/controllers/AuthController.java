@@ -27,20 +27,21 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest loginRequest) {
         List<Usuarios> usuarios = usuariosService.findByNombre(loginRequest.getNombre());
-
         Map<String, String> response = new HashMap<>();
 
+        // Verifica si hay usuarios con ese nombre
         if (usuarios != null && !usuarios.isEmpty()) {
-            Usuarios usuario = usuarios.get(0);
-
-            if (passwordEncoder.matches(loginRequest.getContraseña(), usuario.getContraseña())) {
-                response.put("message", "Inicio de sesión exitoso");
-                return ResponseEntity.ok(response);
+            for (Usuarios usuario : usuarios) {
+                if (passwordEncoder.matches(loginRequest.getContraseña(), usuario.getContraseña())) {
+                    response.put("message", "Inicio de sesión exitoso");
+                    return ResponseEntity.ok(response);
+                }
             }
         }
 
         response.put("message", "Usuario o contraseña incorrectos");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
+
 
 }
