@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Administración de Divisas</title>
+    <link rel="stylesheet" href="stylesLogin.css">
+</head>
+<body>
+    <header>
+        <h1>Iniciar Sesión</h1>
+    </header>
+
+    <main>
+        <form id="form-login">
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" placeholder="Ingrese su usuario" required>
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" placeholder="Ingrese su contraseña" required>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Compra y Venta de Divisas</p>
+    </footer>
+
+    <script>
+        // Aquí puedes agregar lógica para el login
+        document.getElementById('form-login').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username && password) {
+                fetch('http://localhost:8080/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = 'inicioAdmin.html'; // Redirige a la página de inicio admin
+                    } else {
+                        response.text().then(errorMessage => {
+                            alert(errorMessage); // Muestra el mensaje de error
+                        });
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                alert('Por favor, complete ambos campos.');
+            }
+        });
+    </script>
+</body>
+</html>
