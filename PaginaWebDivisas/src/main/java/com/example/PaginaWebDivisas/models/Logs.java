@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class Logs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "nombre", nullable = false)
     private String nombre;
