@@ -55,7 +55,7 @@ public class LogsServiceImpl implements LogsService {
                         if (usuarioMap.containsKey("id") && usuarioMap.get("id") instanceof Number) {
                             Long usuarioId = ((Number) usuarioMap.get("id")).longValue();
                             // Aquí deberías tener un método para buscar el usuario por id
-                            Usuarios usuario = getUsuarioById(usuarioId);
+                            Usuarios usuario = getLogById(usuarioId).getUsuarios();
                             existingLog.setUsuarios(usuario);
                         } else {
                             throw new IllegalArgumentException("Campo 'id' no válido en 'usuarios': " + usuarioMap);

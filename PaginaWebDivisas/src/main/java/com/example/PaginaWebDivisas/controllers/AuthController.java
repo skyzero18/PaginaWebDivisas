@@ -1,21 +1,18 @@
 package com.example.PaginaWebDivisas.controllers;
 
-import com.example.PaginaWebDivisas.DTO.LoginRequest;
-import com.example.PaginaWebDivisas.models.Usuarios;
 import com.example.PaginaWebDivisas.services.UsuariosService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder; // Importar PasswordEncoder
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin(origins = "http://localhost:5500", allowCredentials = "true")
 public class AuthController {
 
     @Autowired
@@ -24,24 +21,43 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest loginRequest) {
-        List<Usuarios> usuarios = usuariosService.findByNombre(loginRequest.getNombre());
-        Map<String, String> response = new HashMap<>();
+    public ResponseEntity<?> login(@RequestBody Map<String, String> credentials, HttpSession session) {
+        String username = credentials.get("username");
+        String password = credentials.get("password");
 
-        // Verifica si hay usuarios con ese nombre
-        if (usuarios != null && !usuarios.isEmpty()) {
-            for (Usuarios usuario : usuarios) {
-                if (passwordEncoder.matches(loginRequest.getContraseña(), usuario.getContraseña())) {
-                    response.put("message", "Inicio de sesión exitoso");
-                    return ResponseEntity.ok(response);
-                }
-            }
+        if ("admin".equals(username) && "password".equals(password)) {
+            session.setAttribute("user", username);
+            System.out.println("Usuario almacenado en sesión: " + username);
+            System.out.println("ID de sesión en login: " + session.getId());
+            return ResponseEntity.ok().body(Map.of("redirectUrl", "/inicioAdmin.html"));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o contraseña incorrectos");
         }
-
-        response.put("message", "Usuario o contraseña incorrectos");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
+
+
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpSession session) {
+        session.invalidate(); // Invalidar la sesión del usuario
+        System.out.println("Sesión cerrada para el usuario: ");
+        return ResponseEntity.ok().body(Map.of("redirectUrl", "/login.html"));
+    }
+
+
+    @GetMapping("/port")
+    public ResponseEntity<?> checkSession(HttpSession session) {
+        String user = (String) session.getAttribute("user");
+        System.out.println("ID de sesión en checkSession: " + session.getId());
+        System.out.println("Usuario recuperado de la sesión: " + user);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("redirectUrl", "/login.html"));
+        } else {
+            return ResponseEntity.ok().body("Usuario autenticado: " + user);
+        }
+    }
 
 }

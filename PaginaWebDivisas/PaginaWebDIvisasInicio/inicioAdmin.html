@@ -13,6 +13,7 @@
     </header>
 
     <main>
+        <button id="logout-button" onclick="cerrarSesion()">Cerrar Sesión</button> <!-- Botón para cerrar sesión -->
         <form id="form-divisas">
             <label for="id-divisa">ID:</label>
             <input type="text" id="id-divisa" placeholder="ID solo para editar" disabled>
@@ -202,8 +203,54 @@
                     Swal.fire('Ocurrió un error al obtener los logs.');
                 });
         }
+        function cerrarSesion() {
+    fetch('http://localhost:8080/auth/logout', {
+        method: 'POST',
+        credentials: 'include' // Incluir cookies de sesión
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json(); // Obtener el cuerpo de la respuesta
+        } else {
+            console.error('Error al cerrar sesión:', response.statusText);
+            alert('Error al cerrar sesión, inténtalo de nuevo.'); // Mostrar un mensaje de error
+            throw new Error('Error en la respuesta de logout');
+        }
+    })
+    .then(data => {
+        // Redirigir a la URL proporcionada por el backend
+        window.location.href = data.redirectUrl; // Redirigir a la página de inicio de sesión
+    })
+    .catch(error => {
+        console.error('Error en la petición:', error);
+        alert('Error al cerrar sesión, inténtalo de nuevo.'); // Mostrar un mensaje de error
+    });
+}
 
+
+        function verificarUsuario() {
+            fetch('http://localhost:8080/auth/port', {
+                method: 'GET',
+                credentials: 'include' // Incluir cookies de sesión
+            })
+            .then(response => {
+                if (response.status === 401) {
+                    return response.json().then(data => {
+                        window.location.href = data.redirectUrl; // Redirige a login.html
+                    });
+                }
+                // Aquí puedes manejar la respuesta si el usuario está autenticado
+                return response.text(); // O JSON, dependiendo de lo que quieras hacer
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('Ocurrió un error al verificar la sesión.');
+            });
+        }
+
+        // Llama a verificarUsuario al cargar la página
         window.onload = function() {
+      
             obtenerDivisas();
             obtenerLogs();
         };
