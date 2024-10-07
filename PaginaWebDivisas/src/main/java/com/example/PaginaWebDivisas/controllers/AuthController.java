@@ -32,9 +32,9 @@ public class AuthController {
             System.out.println("Usuario almacenado en sesión: " + username);
             System.out.println("ID de sesión en login: " + session.getId());
             return ResponseEntity.ok().body(Map.of("redirectUrl", "/inicioAdmin.html"));
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o contraseña incorrectos");
         }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o contraseña incorrectos");
+
     }
 
 
