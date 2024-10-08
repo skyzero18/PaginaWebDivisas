@@ -30,14 +30,28 @@
         // Función para verificar si el usuario ya está logueado
         async function checkSession() {
             try {
-                const response = await fetch('http://localhost:8080/auth/login', {
+                const currentUrl = window.location.pathname; // Obtén la ruta actual
+
+                const response = await fetch('http://localhost:8080/auth/verify', {
                     method: 'GET',
                     credentials: 'include', // Permite el envío de cookies de sesión
                 });
 
-                if (response.redirected) {
-                    // Redirige si el servidor indica que el usuario ya está autenticado
-                    window.location.href = response.url; // Cambia a la página correspondiente
+                if (response.ok) {
+                    const data = await response.json(); // Obtén los datos de la respuesta JSON
+                    if (data.autenticado) {
+                        if (currentUrl !== data.redirectUrl) {
+                            // Redirige solo si no estás ya en la página de inicio admin
+                            window.location.href = data.redirectUrl;
+                        }
+                    } else {
+                        if (currentUrl !== data.redirectUrl) {
+                            // Redirige solo si no estás ya en la página de login
+                            window.location.href = data.redirectUrl;
+                        }
+                    }
+                } else {
+                    console.error('Error en la respuesta del servidor:', response.statusText);
                 }
             } catch (error) {
                 console.error('Error al verificar la sesión:', error);
@@ -46,6 +60,8 @@
 
         // Llama a la función para verificar la sesión al cargar la página
         checkSession();
+
+
 
         document.getElementById('form-login').addEventListener('submit', async function(event) {
             event.preventDefault();
