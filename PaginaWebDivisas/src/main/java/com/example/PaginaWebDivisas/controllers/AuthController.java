@@ -1,6 +1,8 @@
 package com.example.PaginaWebDivisas.controllers;
 
 import com.example.PaginaWebDivisas.services.UsuariosService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,11 +43,16 @@ public class AuthController {
 
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpSession session) {
-        session.invalidate(); // Invalidar la sesión del usuario
-        System.out.println("Sesión cerrada para el usuario: ");
-        return ResponseEntity.ok().body(Map.of("redirectUrl", "/login.html"));
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            // Invalidar la sesión actual
+            request.getSession().invalidate();
+            return ResponseEntity.ok("Sesión cerrada con éxito");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al cerrar la sesión");
+        }
     }
+
 
     @PostMapping("/inicio")
     public ResponseEntity<?> inicio() {
