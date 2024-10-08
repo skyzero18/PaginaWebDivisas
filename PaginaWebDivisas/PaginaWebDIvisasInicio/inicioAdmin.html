@@ -217,7 +217,7 @@
             return response.json(); // Obtener el cuerpo de la respuesta
         } else {
             console.error('Error al cerrar sesión:', response.statusText);
-            alert('Error al cerrar sesión, inténtalo de nuevo.');
+            Swal.fire('Error al cerrar sesión, inténtalo de nuevo.');
             throw new Error('Error en la respuesta de logout');
         }
     })
@@ -227,7 +227,7 @@
     })
     .catch(error => {
         console.error('Error en la petición:', error);
-        alert('Error al cerrar sesión, inténtalo de nuevo.'); // Mostrar un mensaje de error
+        Swal.fire('Error al cerrar sesión, inténtalo de nuevo.'); // Mostrar un mensaje de error
     });
 }
 
@@ -241,7 +241,7 @@
                 if (response.ok) {
                     return response.json();
                 } else {
-                    alert('Error.'); // Mostrar un mensaje de error
+                    Swal.firert('Error.'); // Mostrar un mensaje de error
                     throw new Error('Error en la respuesta');
                 }
             })
@@ -251,7 +251,7 @@
             })
             .catch(error => {
                 console.error('Error en la petición:', error);
-                alert('Error al cerrar sesión, inténtalo de nuevo.'); // Mostrar un mensaje de error
+                Swal.fire('Error al cerrar sesión, inténtalo de nuevo.'); // Mostrar un mensaje de error
             });
         }
 

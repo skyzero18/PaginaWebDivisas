@@ -23,11 +23,13 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    String username;
+    String password;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials, HttpSession session) {
-        String username = credentials.get("username");
-        String password = credentials.get("password");
+         username = credentials.get("username");
+         password = credentials.get("password");
 
         // Buscar el usuario en la base de datos
         var usuarioOptional = usuariosService.findByUsername(username);
@@ -52,12 +54,16 @@ public class AuthController {
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
         try {
             // Invalidar la sesión actual
-            request.getSession().invalidate();
-            return ResponseEntity.ok("Sesión cerrada con éxito");
+            request.getSession().invalidate(); // Invalida la sesión actual del usuario
+            // Devolver la URL de redirección al frontend
+            return ResponseEntity.ok(Map.of("redirectUrl", "/login.html")); // Cambia si tu archivo está en otra ruta
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al cerrar la sesión");
         }
     }
+
+
+
 
 
     @PostMapping("/inicio")
