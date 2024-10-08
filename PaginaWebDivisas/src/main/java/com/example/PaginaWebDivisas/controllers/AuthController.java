@@ -29,15 +29,21 @@ public class AuthController {
         String username = credentials.get("username");
         String password = credentials.get("password");
 
-        if ("admin".equals(username) && "password".equals(password)) {
+        // Buscar el usuario en la base de datos
+        var usuarioOptional = usuariosService.findByUsername(username);
+
+        // Validar que el usuario existe
+        if (usuarioOptional.isPresent() && passwordEncoder.matches(password, usuarioOptional.get().getContraseña())) {
             session.setAttribute("user", username);
             System.out.println("Usuario almacenado en sesión: " + username);
             System.out.println("ID de sesión en login: " + session.getId());
             return ResponseEntity.ok().body(Map.of("redirectUrl", "/inicioAdmin.html"));
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o contraseña incorrectos");
 
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o contraseña incorrectos");
     }
+
+
 
 
 
@@ -69,6 +75,12 @@ public class AuthController {
         } else {
             return ResponseEntity.ok().body("Usuario autenticado: " + user);
         }
+    }
+    @GetMapping("/verify")
+    public ResponseEntity<?> verifySession(HttpSession session) {
+        String user = (String) session.getAttribute("user");
+        boolean autenticado = user != null;
+        return ResponseEntity.ok(Map.of("autenticado", autenticado));
     }
 
 }

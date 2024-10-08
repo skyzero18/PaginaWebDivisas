@@ -71,4 +71,11 @@ public class UsuariosServiceImpl implements UsuariosService {
     public void deleteUsuario(Long id) {
         usuariosRepo.deleteById(id);
     }
+
+    @Override
+    public Optional<Usuarios> findByUsername(String username) {
+        return usuariosRepo.findByNombre(username).stream().findFirst();
+    }
+
+
 }

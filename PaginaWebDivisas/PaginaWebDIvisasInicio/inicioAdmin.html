@@ -13,6 +13,8 @@
     </header>
 
     <main>
+        
+        
         <form id="form-divisas">
             <label for="id-divisa">ID:</label>
             <input type="text" id="id-divisa" placeholder="ID solo para editar" disabled>
@@ -26,7 +28,7 @@
             <button type="button" onclick="agregarOEditarDivisa()">Guardar</button>
         </form>
         <div class="buttonsini">
-            <button id="inicioButton" onclick="irainicio()">Inicio</button> <!-- Botón para ir al inicio -->
+            <button id="logoutbutton" onclick="irainicio()">Inicio</button> <!-- Botón para cerrar sesión -->
             <button id="logoutbutton" onclick="cerrarSesion()">Cerrar Sesión</button> <!-- Botón para cerrar sesión -->
         </div>
         <div class="table-container">
@@ -78,6 +80,7 @@
                     venta: parseFloat(venta)
                 };
 
+                // Si existe ID, se hace PATCH, de lo contrario POST
                 const url = id ? `http://localhost:8080/divisas/${id}/${usuarioId}` : `http://localhost:8080/divisas/${usuarioId}`;
                 const method = id ? 'PATCH' : 'POST';
 
@@ -95,12 +98,7 @@
                     return response.json();
                 })
                 .then(data => {
-                    Swal.fire({
-                        title: `${id ? 'Divisa modificada' : 'Nueva divisa agregada'}`,
-                        text: `Nombre: ${nombre}`,
-                        icon: 'success',
-                        confirmButtonText: 'Aceptar'
-                    });
+                    Swal.fire(`${id ? 'Divisa modificada' : 'Nueva divisa agregada'}: ${nombre}`);
                     obtenerDivisas();
                     // Reiniciar el formulario
                     document.getElementById('form-divisas').reset();
@@ -209,29 +207,30 @@
                     Swal.fire('Ocurrió un error al obtener los logs.');
                 });
         }
-
         function cerrarSesion() {
-            fetch('http://localhost:8080/auth/logout', {
-                method: 'POST',
-                credentials: 'include' // Incluir cookies de sesión
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    console.error('Error al cerrar sesión:', response.statusText);
-                    Swal.fire('Error al cerrar sesión, inténtalo de nuevo.');
-                    throw new Error('Error en la respuesta de logout');
-                }
-            })
-            .then(data => {
-                window.location.href = data.redirectUrl; // Redirigir a la página de inicio de sesión
-            })
-            .catch(error => {
-                console.error('Error en la petición:', error);
-                Swal.fire('Error al cerrar sesión, inténtalo de nuevo.');
-            });
+    fetch('http://localhost:8080/auth/logout', {
+        method: 'POST',
+        credentials: 'include' // Incluye las cookies de sesión
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json(); // Obtener el cuerpo de la respuesta
+        } else {
+            console.error('Error al cerrar sesión:', response.statusText);
+            alert('Error al cerrar sesión, inténtalo de nuevo.');
+            throw new Error('Error en la respuesta de logout');
         }
+    })
+    .then(data => {
+        // Redirigir a la URL proporcionada por el backend
+        window.location.href = data.redirectUrl; // Redirigir a la página de inicio de sesión
+    })
+    .catch(error => {
+        console.error('Error en la petición:', error);
+        alert('Error al cerrar sesión, inténtalo de nuevo.'); // Mostrar un mensaje de error
+    });
+}
+
 
         function irainicio() {
             fetch('http://localhost:8080/auth/inicio', {
@@ -242,40 +241,47 @@
                 if (response.ok) {
                     return response.json();
                 } else {
-                    Swal.fire('Error al intentar ir al inicio.');
+                    alert('Error.'); // Mostrar un mensaje de error
+                    throw new Error('Error en la respuesta');
                 }
             })
             .then(data => {
+              
                 window.location.href = data.redirectUrl;
             })
             .catch(error => {
                 console.error('Error en la petición:', error);
+                alert('Error al cerrar sesión, inténtalo de nuevo.'); // Mostrar un mensaje de error
             });
         }
+
 
         function verificarUsuario() {
-            fetch('http://localhost:8080/auth/verify', {
-                method: 'POST',
+            fetch('http://localhost:8080/auth/checkSession', {
+                method: 'GET',
                 credentials: 'include' // Incluir cookies de sesión
             })
-            .then(response => response.json())
-            .then(data => {
-                if (!data.autenticado) {
-                    window.location.href = '/login.html';
+            .then(response => {
+                if (response.status === 401) {
+                    return response.json().then(data => {
+                        window.location.href = data.redirectUrl; 
+                    });
                 }
+    
+                return response.text();
             })
             .catch(error => {
-                console.error('Error en la verificación:', error);
-                Swal.fire('Error al verificar la sesión.');
-                window.location.href = '/login.html';
+                console.error('Error:', error);
+                Swal.fire('Ocurrió un error al verificar la sesión.');
             });
         }
 
+        // Llama a verificarUsuario al cargar la página
         window.onload = function() {
-            verificarUsuario();
+            verificarUsuario() 
             obtenerDivisas();
             obtenerLogs();
-        }
+        };
     </script>
 </body>
 </html>
