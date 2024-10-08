@@ -14,7 +14,10 @@
 
     <main>
         
-        
+        <div class="buttonsini">
+            <button id="logoutbutton" onclick="irainicio()">Inicio</button> <!-- Botón para cerrar sesión -->
+            <button id="logoutbutton" onclick="cerrarSesion()">Cerrar Sesión</button> <!-- Botón para cerrar sesión -->
+        </div>
         <form id="form-divisas">
             <label for="id-divisa">ID:</label>
             <input type="text" id="id-divisa" placeholder="ID solo para editar" disabled>
@@ -27,10 +30,6 @@
 
             <button type="button" onclick="agregarOEditarDivisa()">Guardar</button>
         </form>
-        <div class="buttonsini">
-            <button id="logoutbutton" onclick="irainicio()">Inicio</button> <!-- Botón para cerrar sesión -->
-            <button id="logoutbutton" onclick="cerrarSesion()">Cerrar Sesión</button> <!-- Botón para cerrar sesión -->
-        </div>
         <div class="table-container">
             <table id="tabla-divisas">
                 <thead>
