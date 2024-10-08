@@ -256,18 +256,18 @@
 
 
         function verificarUsuario() {
-            fetch('http://localhost:8080/auth/port', {
+            fetch('http://localhost:8080/auth/checkSession', {
                 method: 'GET',
                 credentials: 'include' // Incluir cookies de sesión
             })
             .then(response => {
                 if (response.status === 401) {
                     return response.json().then(data => {
-                        window.location.href = data.redirectUrl; // Redirige a login.html
+                        window.location.href = data.redirectUrl; 
                     });
                 }
-                // Aquí puedes manejar la respuesta si el usuario está autenticado
-                return response.text(); // O JSON, dependiendo de lo que quieras hacer
+    
+                return response.text();
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -277,7 +277,7 @@
 
         // Llama a verificarUsuario al cargar la página
         window.onload = function() {
-      
+            verificarUsuario() 
             obtenerDivisas();
             obtenerLogs();
         };

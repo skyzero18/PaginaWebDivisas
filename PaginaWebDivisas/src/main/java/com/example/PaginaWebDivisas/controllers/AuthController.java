@@ -52,7 +52,7 @@ public class AuthController {
         return ResponseEntity.ok().body(Map.of("redirectUrl", "/inicio.html"));
     }
 
-    @GetMapping("/port")
+    @GetMapping("/checkSession")
     public ResponseEntity<?> checkSession(HttpSession session) {
         String user = (String) session.getAttribute("user");
         System.out.println("ID de sesión en checkSession: " + session.getId());
