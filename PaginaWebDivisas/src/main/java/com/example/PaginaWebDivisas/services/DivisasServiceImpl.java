@@ -1,8 +1,15 @@
 package com.example.PaginaWebDivisas.services;
 import com.example.PaginaWebDivisas.models.Divisas;
+import com.example.PaginaWebDivisas.models.Logs;
+import com.example.PaginaWebDivisas.models.Usuarios;
 import com.example.PaginaWebDivisas.repository.DivisasRepo;
+import com.example.PaginaWebDivisas.repository.LogsRepo;
+import com.example.PaginaWebDivisas.repository.UsuariosRepo;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -12,9 +19,12 @@ public class DivisasServiceImpl implements DivisasService {
 
     @Autowired
     private DivisasRepo divisasRepo;
-
-
-
+    @Autowired
+    private LogsRepo logsRepo;
+    @Autowired
+    private HttpSession httpSession;
+    @Autowired
+    private UsuariosRepo usuariosRepo;
 
 
     @Override
@@ -31,24 +41,21 @@ public class DivisasServiceImpl implements DivisasService {
         throw new RuntimeException("No se encontraron divisas con id " + id);
     }
 
-    @Override
-    public Divisas saveDivisa(Divisas divisas) {
-        return null;
-    }
 
     @Override
-    public Divisas patchDivisa(Long id, Map<String, Object> updates) {
-        return null;
-    }
+    public Divisas saveDivisa(Divisas divisas, Long usuarioId, HttpSession httpSession) {
 
-    @Override
-    public void deleteDivisa(Long id) {
+        Divisas nuevaDivisa = divisasRepo.save(divisas);
+        Usuarios usuarioEjemplo = usuariosRepo.findById(1L).orElse(null);
+        Logs nuevoLog = new Logs();
+        nuevoLog.setFechaCreacion(LocalDateTime.now());
+        nuevoLog.setDivisas(nuevaDivisa);
+        nuevoLog.setUsuarios(usuarioEjemplo);
 
-    }
+        String user = (String) httpSession.getAttribute("user");
+        System.out.println("usuario de la sesion "+ user);
 
-    @Override
-    public Divisas saveDivisa(Divisas divisas, Long usuarioId) {
-
+        logsRepo.save(nuevoLog);
         return divisasRepo.save(divisas);
     }
 

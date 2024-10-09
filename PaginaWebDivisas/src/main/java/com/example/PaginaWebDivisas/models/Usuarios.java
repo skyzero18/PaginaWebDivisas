@@ -1,7 +1,10 @@
 package com.example.PaginaWebDivisas.models;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-
+@Getter
+@Setter
 @Entity
 public class Usuarios {
 
@@ -12,29 +15,4 @@ public class Usuarios {
     private String nombre;
     private String contraseña; // O puedes llamarlo password
 
-    // Constructor, getters y setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
-    }
 }

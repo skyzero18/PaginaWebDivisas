@@ -1,6 +1,7 @@
 package com.example.PaginaWebDivisas.controllers;
 import com.example.PaginaWebDivisas.models.Divisas;
 import com.example.PaginaWebDivisas.services.DivisasService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -24,8 +25,8 @@ public class DivisasController {
     }
 
     @PostMapping("/{usuarioId}")
-    public Divisas createDivisa(@RequestBody Divisas divisas, @PathVariable Long usuarioId) {
-        return divisasService.saveDivisa(divisas, usuarioId);
+    public Divisas createDivisa(@RequestBody Divisas divisas, @PathVariable Long usuarioId, HttpSession httpSession) {
+        return divisasService.saveDivisa(divisas, usuarioId, httpSession);
     }
 
     @PatchMapping("/{id}/{usuarioId}")

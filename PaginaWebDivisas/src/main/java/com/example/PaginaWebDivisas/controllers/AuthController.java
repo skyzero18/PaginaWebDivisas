@@ -28,13 +28,10 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials, HttpSession session) {
-         username = credentials.get("username");
-         password = credentials.get("password");
-
-        // Buscar el usuario en la base de datos
+        username = credentials.get("username");
+        password = credentials.get("password");
         var usuarioOptional = usuariosService.findByUsername(username);
 
-        // Validar que el usuario existe
         if (usuarioOptional.isPresent() && passwordEncoder.matches(password, usuarioOptional.get().getContraseña())) {
             session.setAttribute("user", username);
             System.out.println("Usuario almacenado en sesión: " + username);
@@ -45,26 +42,15 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o contraseña incorrectos");
     }
 
-
-
-
-
-
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
         try {
-            // Invalidar la sesión actual
-            request.getSession().invalidate(); // Invalida la sesión actual del usuario
-            // Devolver la URL de redirección al frontend
-            return ResponseEntity.ok(Map.of("redirectUrl", "/login.html")); // Cambia si tu archivo está en otra ruta
+            request.getSession().invalidate();
+            return ResponseEntity.ok(Map.of("redirectUrl", "/login.html"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al cerrar la sesión");
         }
     }
-
-
-
-
 
     @PostMapping("/inicio")
     public ResponseEntity<?> inicio() {
