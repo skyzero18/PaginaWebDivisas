@@ -128,20 +128,49 @@ select, input {
     text-align: center;
 }
 
-/* Botón flotante */
+/* Spinner de carga */
+.loading-spinner {
+    font-size: 18px;
+    text-align: center;
+    color: #0066cc;
+    margin: 20px 0;
+}
+
+/* Estilos para el resultado de la conversión */
+.resultado-conversion {
+    margin-top: 20px;
+    font-weight: bold;
+    background-color: #e0f7fa;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    color: #0066cc;
+    font-size: 18px;
+}
+
+/* Estilo para el logo de WhatsApp en el botón flotante */
+.whatsapp-logo {
+    width: 40px; /* Ajusta el tamaño del logo */
+    height: 40px;
+    display: block;
+    margin: 0 auto; /* Centra la imagen dentro del botón */
+}
+
+/* Ajuste para el botón flotante */
 #contacto-flotante {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #25D366;
+    background-color: transparent; /* Cambia el color a transparente */
     color: white;
-    padding: 10px 20px;
+    padding: 10px;
     border-radius: 50px;
     text-align: center;
-    font-size: 20px;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+
 
 /* Footer */
 footer {

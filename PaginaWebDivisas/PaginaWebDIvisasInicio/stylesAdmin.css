@@ -1,7 +1,3 @@
-header{
-    background-color: #0056b3;
-}
-
 /* General Styles */
 body {
     font-family: 'Roboto', sans-serif;
@@ -56,35 +52,29 @@ form button {
     margin-top: 10px;
 }
 .buttonsini {
+    position: absolute;
+    top: 20px; /* Ajusta la distancia desde la parte superior */
+    right: 20px; /* Ajusta la distancia desde la derecha */
     display: flex;
-    margin: auto;
-    align-items: center; 
-    justify-content: space-between; 
-    width: 40%;
+    gap: 10px; /* Espaciado entre los botones */
 }
 
 #logoutbutton {
-    display: block;
-    width: 70%; /* Incrementar el ancho del botón */
-    padding: 15px 20px; /* Incrementar el relleno (espacio interno) */
+    width: auto; /* Ajustar automáticamente según el contenido */
+    padding: 10px 15px; /* Ajustar relleno para mayor comodidad */
     background-color: #45a049;
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 16px; /* Incrementar el tamaño de la fuente */
-    margin-top: 10px;
-    text-align: center; /* Asegura que el texto esté centrado */
-    
-    /* Evitar saltos de línea */
-    white-space: nowrap; 
-    overflow: hidden; /* Ocultar el desbordamiento del texto */
-    text-overflow: ellipsis; /* Mostrar '...' si el texto es demasiado largo */
+    font-size: 14px; /* Tamaño de la fuente más adecuado */
+    text-align: center;
 }
 
-form button:hover {
-    background-color: #45a049;
+#logoutbutton:hover {
+    background-color: #3d8c40; /* Cambiar color al pasar el ratón */
 }
+
 
 /* Table Styles */
 .table-container {

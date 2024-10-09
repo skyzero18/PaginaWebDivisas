@@ -6,20 +6,19 @@
     <title>Compra y venta de divisas</title>
     <link rel="stylesheet" href="styles.css"> <!-- Enlace al archivo CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
 </head>
 <body>
 <header class="header">
-
-        <img src="logo.png" alt="Financiera Logo">
-    </div>
+    <img src="logo.png" alt="Financiera Logo">
 </header>
 
 <section class="main">
     <h1>Intercambio de divisas & transacción al extranjero</h1>
     <p>Compra y venta de divisas en <strong>Sucursales</strong> y <strong>Cotización</strong>.</p>
-    <a href="#conversion-section" class="boton-enlace">Click aqui para ir al conversor de divisas</a>
+    <a href="#conversion-section" class="boton-enlace">Click aquí para ir al conversor de divisas</a>
 
+    <!-- Indicador de carga -->
+    <div id="loading" class="loading-spinner" style="display:none;">Cargando...</div>
 
     <!-- Tabla para mostrar divisas -->
     <table class="exchange-table">
@@ -34,41 +33,40 @@
         <!-- Las divisas se cargarán aquí dinámicamente -->
         </tbody>
     </table>
-    
 
     <!-- Formulario para conversión -->
-<div class="conversion-section">
-    <h2>Conversión de Divisas</h2>
-    <div class="form-group">
-        <label for="divisa-origen">Divisa Origen:</label>
-        <select id="divisa-origen">
-            <option value="ARS" selected>Peso Argentino (ARS)</option> <!-- Opción ARS -->
-            <!-- Las opciones de divisas se cargarán aquí -->
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="cantidad">Cantidad a Convertir:</label>
-        <input type="number" id="cantidad" placeholder="Ingresa la cantidad">
-    </div>
-    <div class="form-group">
-        <label for="divisa-destino">Divisa Destino:</label>
-        <select id="divisa-destino">
-            <option value="ARS" selected>Peso Argentino (ARS)</option> <!-- Opción ARS -->
-            <!-- Las opciones de divisas se cargarán aquí -->
-        </select>
-    </div>
-    <button class="cta-btn" onclick="convertirDivisa()">Convertir</button>
+    <div class="conversion-section" id="conversion-section">
+        <h2>Conversión de Divisas</h2>
+        <div class="form-group">
+            <label for="divisa-origen">Divisa Origen:</label>
+            <select id="divisa-origen">
+                <option value="ARS" selected>Peso Argentino (ARS)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cantidad">Cantidad a Convertir:</label>
+            <input type="number" id="cantidad" placeholder="Ingresa la cantidad">
+        </div>
+        <div class="form-group">
+            <label for="divisa-destino">Divisa Destino:</label>
+            <select id="divisa-destino">
+                <option value="ARS" selected>Peso Argentino (ARS)</option>
+            </select>
+        </div>
+        <button class="cta-btn" onclick="convertirDivisa()">Convertir</button>
 
-    <!-- Resultado de la conversión -->
-    <div id="resultado" class="resultado-conversion"></div>
+        <!-- Mostrar el resultado de la conversión en lugar de una alerta -->
+        <div id="resultado" class="resultado-conversion"></div>
+    </div>
+
+<!-- Botón flotante para contacto en WhatsApp -->
+<div id="contacto-flotante">
+    <a href="https://wa.me/542634646078" target="_blank" style="color: white; text-decoration: none;">
+        <img src="data:image/png;base64,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" alt="WhatsApp Logo" class="whatsapp-logo">
+    </a>
 </div>
 
-    <!-- Botón flotante para contacto en WhatsApp -->
-    <div id="contacto-flotante">
-        <a href="https://wa.me/542634646078" target="_blank" style="color: white; text-decoration: none;">
-            WhatsApp
-        </a>
-    </div>
+
 </section>
 
 <footer>
@@ -76,92 +74,86 @@
 </footer>
 
 <script>
-   let divisas = [];
+    let divisas = [];
 
-// Función para obtener divisas desde el backend
-function obtenerDivisas() {
-    fetch('http://localhost:8080/divisas')
-        .then(response => response.json())
-        .then(data => {
-            divisas = data;
-            let tablaDivisas = document.getElementById('tabla-divisas');
-            let opcionesDivisaOrigen = document.getElementById('divisa-origen');
-            let opcionesDivisaDestino = document.getElementById('divisa-destino');
+    // Función para mostrar spinner mientras se cargan divisas
+    function mostrarCargando(mostrar) {
+        const loading = document.getElementById('loading');
+        loading.style.display = mostrar ? 'block' : 'none';
+    }
 
-            // Limpiar tabla y opciones previas
-            tablaDivisas.innerHTML = '';
-            opcionesDivisaOrigen.innerHTML = '';
-            opcionesDivisaDestino.innerHTML = '';
+    // Función para obtener divisas desde el backend
+    function obtenerDivisas() {
+        mostrarCargando(true);  // Mostrar spinner de carga
+        fetch('http://localhost:8080/divisas')
+            .then(response => response.json())
+            .then(data => {
+                divisas = data;
+                let tablaDivisas = document.getElementById('tabla-divisas');
+                let opcionesDivisaOrigen = document.getElementById('divisa-origen');
+                let opcionesDivisaDestino = document.getElementById('divisa-destino');
 
-            // Llenar tabla y selectores con las divisas
-            data.forEach(divisa => {
-                // Insertar en la tabla
-                let fila = `<tr>
-                        <td>${divisa.nombre}</td>
-                        <td>${divisa.compra}</td>
-                        <td>${divisa.venta}</td>
-                    </tr>`;
-                tablaDivisas.innerHTML += fila;
+                // Limpiar tabla y opciones previas
+                tablaDivisas.innerHTML = '';
+                opcionesDivisaOrigen.innerHTML = '';
+                opcionesDivisaDestino.innerHTML = '';
 
-                // Agregar opciones a los selectores, pero omitir ARS
-                if (divisa.nombre !== 'Peso Argentino') { // Asegúrate de que el nombre coincida
-                    let opcion = `<option value="${divisa.id}">${divisa.nombre}</option>`;
-                    opcionesDivisaOrigen.innerHTML += opcion;
-                    opcionesDivisaDestino.innerHTML += opcion;
-                }
+                // Llenar tabla y selectores con las divisas
+                data.forEach(divisa => {
+                    let fila = `<tr>
+                            <td>${divisa.nombre}</td>
+                            <td>${divisa.compra}</td>
+                            <td>${divisa.venta}</td>
+                        </tr>`;
+                    tablaDivisas.innerHTML += fila;
+
+                    if (divisa.nombre !== 'Peso Argentino') {
+                        let opcion = `<option value="${divisa.id}">${divisa.nombre}</option>`;
+                        opcionesDivisaOrigen.innerHTML += opcion;
+                        opcionesDivisaDestino.innerHTML += opcion;
+                    }
+                });
+
+                opcionesDivisaOrigen.innerHTML += `<option value="ARS">ARS</option>`;
+                opcionesDivisaDestino.innerHTML += `<option value="ARS">ARS</option>`;
+                mostrarCargando(false);  // Ocultar spinner de carga
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mostrarCargando(false);  // Ocultar spinner de carga en caso de error
             });
-
-            // Agregar ARS al final de las opciones
-            opcionesDivisaOrigen.innerHTML += `<option value="ARS">ARS</option>`;
-            opcionesDivisaDestino.innerHTML += `<option value="ARS">ARS</option>`;
-        })
-        .catch(error => console.error('Error:', error));
-}
+    }
 
     // Función para convertir divisas
     function convertirDivisa() {
-    let idOrigen = document.getElementById('divisa-origen').value;
-    let idDestino = document.getElementById('divisa-destino').value;
-    let cantidad = parseFloat(document.getElementById('cantidad').value);
+        let idOrigen = document.getElementById('divisa-origen').value;
+        let idDestino = document.getElementById('divisa-destino').value;
+        let cantidad = parseFloat(document.getElementById('cantidad').value);
 
-    if (!idOrigen || !idDestino || !cantidad || isNaN(cantidad)) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Campos incompletos',
-            text: 'Por favor, completa todos los campos correctamente.'
-        });
-        return;
+        if (!idOrigen || !idDestino || !cantidad || isNaN(cantidad) || cantidad <= 0) {
+            document.getElementById('resultado').innerText = 'Por favor, ingresa una cantidad válida mayor a cero.';
+            return;
+        }
+
+        let divisaOrigen = divisas.find(d => d.id == idOrigen) || { compra: 1, nombre: "Peso Argentino" };
+        let divisaDestino = divisas.find(d => d.id == idDestino) || { venta: 1, nombre: "Peso Argentino" };
+
+        let resultado = 0;
+
+        if (idOrigen === idDestino) {
+            resultado = cantidad;
+        } else if (idOrigen === 'ARS') {
+            resultado = cantidad / divisaDestino.venta;
+        } else if (idDestino === 'ARS') {
+            resultado = cantidad * divisaOrigen.compra;
+        } else {
+            let aPesos = cantidad * divisaOrigen.compra;
+            resultado = aPesos / divisaDestino.venta;
+        }
+
+        document.getElementById('resultado').innerText = `Resultado: ${resultado.toFixed(2)} ${divisaDestino.nombre}`;
     }
 
-    let divisaOrigen = divisas.find(d => d.id == idOrigen) || { compra: 1, nombre: "Peso Argentino" };
-    let divisaDestino = divisas.find(d => d.id == idDestino) || { venta: 1, nombre: "Peso Argentino" };
-
-    let resultado = 0;
-
-    if (idOrigen === idDestino) {
-        // Mismo origen y destino
-        resultado = cantidad;
-    } else if (idOrigen === 'ARS') {
-        // Pesos a moneda extranjera
-        resultado = cantidad / divisaDestino.venta;
-    } else if (idDestino === 'ARS') {
-        // Moneda extranjera a pesos
-        resultado = cantidad * divisaOrigen.compra;
-    } else {
-        // Moneda extranjera a moneda extranjera
-        let aPesos = cantidad * divisaOrigen.compra; // Convertir a pesos primero
-        resultado = aPesos / divisaDestino.venta; 
-    }
-
-    document.getElementById('resultado').innerText = `Resultado: ${resultado.toFixed(2)} ${divisaDestino.nombre}`;
-    Swal.fire({
-        icon: 'success',
-        title: 'Conversión exitosa',
-        text: `Has convertido ${cantidad} ${divisaOrigen.nombre} a ${resultado.toFixed(2)} ${divisaDestino.nombre}.`
-    });
-}
-
-    // Cargar las divisas al cargar la página
     window.onload = obtenerDivisas;
 </script>
 </body>

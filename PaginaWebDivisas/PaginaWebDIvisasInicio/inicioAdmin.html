@@ -20,8 +20,8 @@
         
         <h1>Administración de Divisas</h1>
         <form id="form-divisas">
-            <label for="id-divisa">ID:</label>
-            <input type="text" id="id-divisa" placeholder="ID solo para editar" disabled>
+            <label for="id-divisa" style="display:none;">ID:</label>
+            <input type="text"  style="display:none;" id="id-divisa" placeholder="ID solo para editar" disabled>
             <label for="nombre-divisa">Nombre:</label>
             <input type="text" id="nombre-divisa" placeholder="Ingrese el nombre de la divisa" required>
             <label for="compra-divisa">Precio de Compra:</label>
@@ -35,7 +35,7 @@
             <table id="tabla-divisas">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th style="display:none;">ID</th>
                         <th>Nombre</th>
                         <th>Precio de Compra</th>
                         <th>Precio de Venta</th>
@@ -150,7 +150,7 @@
 
                     data.forEach(divisa => {
                         let fila = `<tr>
-                                <td>${divisa.id}</td>
+                                <td style="display:none;">${divisa.id}</td>
                                 <td>${divisa.nombre.toUpperCase()}</td>
                                 <td>${divisa.compra}</td>
                                 <td>${divisa.venta}</td>
