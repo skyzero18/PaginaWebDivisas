@@ -24,17 +24,17 @@ public class DivisasController {
         return divisasService.getDivisaById(id);
     }
 
-    @PostMapping("/{usuarioId}")
-    public Divisas createDivisa(@RequestBody Divisas divisas, @PathVariable Long usuarioId, HttpSession httpSession) {
-        return divisasService.saveDivisa(divisas, usuarioId, httpSession);
+    @PostMapping
+    public Divisas createDivisa(@RequestBody Divisas divisas, HttpSession httpSession) {
+        return divisasService.saveDivisa(divisas, httpSession);
     }
 
-    @PatchMapping("/{id}/{usuarioId}")
-    public Divisas patchDivisas(@PathVariable Long id, @RequestBody Map<String, Object> updates, @PathVariable Long usuarioId) {
-        return divisasService.patchDivisa(id, updates, usuarioId);
+    @PatchMapping("/{id}")
+    public Divisas patchDivisas(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        return divisasService.patchDivisa(id, updates);
     }
 
-    @DeleteMapping("/{id}/{usuarioId}")
+    @DeleteMapping("/{id}")
     public void deleteDivisa(@PathVariable Long id, @PathVariable Long usuarioId) {
         divisasService.deleteDivisa(id, usuarioId);
     }

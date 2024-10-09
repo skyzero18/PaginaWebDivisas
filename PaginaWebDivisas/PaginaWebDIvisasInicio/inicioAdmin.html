@@ -82,7 +82,7 @@
                 };
 
                 // Si existe ID, se hace PATCH, de lo contrario POST
-                const url = id ? `http://localhost:8080/divisas/${id}/${usuarioId}` : `http://localhost:8080/divisas/${usuarioId}`;
+                const url = id ? `http://localhost:8080/divisas/${id}` : `http://localhost:8080/divisas`;
                 const method = id ? 'PATCH' : 'POST';
 
                 fetch(url, {
@@ -124,11 +124,18 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    fetch(`http://localhost:8080/divisas/${id}/${usuarioId}`, { method: 'DELETE' })
+                    // Configurar el cuerpo de la solicitud para establecer el status a false
+                    const divisaData = { status: false };
+
+                    fetch(`http://localhost:8080/divisas/${id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(divisaData) // Enviar el nuevo estado
+                    })
                     .then(response => {
                         if (response.ok) {
                             Swal.fire(`Divisa con ID ${id} eliminada.`);
-                            obtenerDivisas();
+                            obtenerDivisas(); // Volver a cargar las divisas
                         } else {
                             Swal.fire('Error al eliminar la divisa.');
                         }
@@ -141,6 +148,7 @@
             });
         }
 
+
         function obtenerDivisas() {
             fetch('http://localhost:8080/divisas')
                 .then(response => response.json())
@@ -148,7 +156,10 @@
                     let tablaDivisas = document.getElementById('tabla-divisas').getElementsByTagName('tbody')[0];
                     tablaDivisas.innerHTML = '';
 
-                    data.forEach(divisa => {
+                    // Filtrar las divisas con status true
+                    const divisasActivas = data.filter(divisa => divisa.status === true);
+
+                    divisasActivas.forEach(divisa => {
                         let fila = `<tr>
                                 <td style="display:none;">${divisa.id}</td>
                                 <td>${divisa.nombre.toUpperCase()}</td>

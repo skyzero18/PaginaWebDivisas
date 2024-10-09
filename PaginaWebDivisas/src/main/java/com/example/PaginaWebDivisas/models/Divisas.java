@@ -26,4 +26,7 @@ public class Divisas {
     @Column(name = "venta", nullable = false)
     private float venta;
 
+    @Column(name = "status", nullable = false)
+    private Boolean status;
+
 }

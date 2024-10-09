@@ -43,8 +43,8 @@ public class DivisasServiceImpl implements DivisasService {
 
 
     @Override
-    public Divisas saveDivisa(Divisas divisas, Long usuarioId, HttpSession httpSession) {
-
+    public Divisas saveDivisa(Divisas divisas, HttpSession httpSession) {
+        divisas.setStatus(true);
         Divisas nuevaDivisa = divisasRepo.save(divisas);
         Usuarios usuarioEjemplo = usuariosRepo.findById(1L).orElse(null);
         Logs nuevoLog = new Logs();
@@ -53,14 +53,14 @@ public class DivisasServiceImpl implements DivisasService {
         nuevoLog.setUsuarios(usuarioEjemplo);
 
         String user = (String) httpSession.getAttribute("user");
-        System.out.println("usuario de la sesion "+ user);
+        System.out.println("usuario de la sesion " + user);
 
         logsRepo.save(nuevoLog);
         return divisasRepo.save(divisas);
     }
 
     @Override
-    public Divisas patchDivisa(Long id, Map<String, Object> updates, Long usuarioId) {
+    public Divisas patchDivisa(Long id, Map<String, Object> updates) {
         Divisas existingDivisa = getDivisaById(id);
 
         updates.forEach((key, value) -> {
@@ -74,11 +74,19 @@ public class DivisasServiceImpl implements DivisasService {
                 case "venta":
                     existingDivisa.setVenta(Float.parseFloat(value.toString())); // Cambiado a float
                     break;
+                case "status":
+                    existingDivisa.setStatus(Boolean.parseBoolean(value.toString())); // Cambiado a float
+                    break;
                 default:
                     throw new IllegalArgumentException("Campo no reconocido: " + key);
             }
         });
-
+        Usuarios usuarioEjemplo = usuariosRepo.findById(1L).orElse(null);
+        Logs nuevoLog = new Logs();
+        nuevoLog.setFechaCreacion(LocalDateTime.now());
+        nuevoLog.setDivisas(existingDivisa);
+        nuevoLog.setUsuarios(usuarioEjemplo);
+        logsRepo.save(nuevoLog);
         return divisasRepo.save(existingDivisa);
     }
 

@@ -27,7 +27,7 @@ public class Logs {
     private Usuarios usuarios;
 
     @ManyToOne(targetEntity = Divisas.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "divisass_id")
+    @JoinColumn(name = "divisas_id")
     private Divisas divisas;
 
 }
