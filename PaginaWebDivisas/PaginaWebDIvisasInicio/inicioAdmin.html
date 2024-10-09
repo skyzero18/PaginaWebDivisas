@@ -101,6 +101,7 @@
                 .then(data => {
                     Swal.fire(`${id ? 'Divisa modificada' : 'Nueva divisa agregada'}: ${nombre}`);
                     obtenerDivisas();
+                    obtenerLogs();
                     // Reiniciar el formulario
                     document.getElementById('form-divisas').reset();
                     document.getElementById('id-divisa').value = ''; // Reiniciar ID
@@ -136,6 +137,7 @@
                         if (response.ok) {
                             Swal.fire(`Divisa con ID ${id} eliminada.`);
                             obtenerDivisas(); // Volver a cargar las divisas
+                            obtenerLogs();
                         } else {
                             Swal.fire('Error al eliminar la divisa.');
                         }
