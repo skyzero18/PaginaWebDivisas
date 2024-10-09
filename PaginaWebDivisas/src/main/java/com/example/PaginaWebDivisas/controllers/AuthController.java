@@ -82,4 +82,5 @@ public class AuthController {
             return ResponseEntity.ok().body("Usuario autenticado: " + user);
         }
     }
+
 }

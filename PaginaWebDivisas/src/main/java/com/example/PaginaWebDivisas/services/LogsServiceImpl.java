@@ -1,6 +1,8 @@
 package com.example.PaginaWebDivisas.services;
+import com.example.PaginaWebDivisas.models.Divisas;
 import com.example.PaginaWebDivisas.models.Logs;
 import com.example.PaginaWebDivisas.models.Usuarios;
+import com.example.PaginaWebDivisas.repository.DivisasRepo;
 import com.example.PaginaWebDivisas.repository.LogsRepo;
 import com.example.PaginaWebDivisas.repository.UsuariosRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class LogsServiceImpl implements LogsService {
     private LogsRepo logsRepo;
     @Autowired
     private UsuariosRepo usuariosRepo;
+    @Autowired
+    private DivisasRepo divisasRepo;
 
     @Override
     public List<Logs> getAllLogs() {return logsRepo.findAll();}
@@ -63,6 +67,26 @@ public class LogsServiceImpl implements LogsService {
                         throw new IllegalArgumentException("Valor no válido para 'usuarios': " + value);
                     }
                     break;
+                case "divisas":
+                    if (value instanceof Map) {
+                        Map<String, Object> divisaMap = (Map<String, Object>) value;
+                        if (divisaMap.containsKey("id") && divisaMap.get("id") instanceof Number) {
+                            Long divisaId = ((Number) divisaMap.get("id")).longValue();
+
+                            Divisas divisa = findDivisaById(divisaId);
+
+                            if (divisa != null) {
+                                existingLog.setDivisas(divisa);
+                            } else {
+                                throw new IllegalArgumentException("Usuario no encontrado con id: " + divisaId);
+                            }
+                        } else {
+                            throw new IllegalArgumentException("Campo 'id' no válido en 'usuarios': " + divisaMap);
+                        }
+                    } else {
+                        throw new IllegalArgumentException("Valor no válido para 'usuarios': " + value);
+                    }
+                    break;
 
                 default:
                     throw new IllegalArgumentException("Campo no reconocido: " + key);
@@ -79,7 +103,10 @@ public class LogsServiceImpl implements LogsService {
                 .orElseThrow(() -> new IllegalArgumentException("Usuario con id " + usuarioId + " no encontrado."));
     }
 
-
+    private Divisas findDivisaById(Long divisaId) {
+        return divisasRepo.findById(divisaId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario con id " + divisaId + " no encontrado."));
+    }
 
     @Override
     public void deleteLog(Long id) {

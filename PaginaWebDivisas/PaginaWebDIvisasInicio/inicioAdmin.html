@@ -53,7 +53,8 @@
                 <thead>
                     <tr>
                         <th>Usuario</th>
-                        <th>Fecha de Creación</th>
+                        <th>Moneda</th>
+                        <th>Fecha del Cambio</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -188,25 +189,27 @@
         }
 
         function obtenerLogs() {
-            fetch('http://localhost:8080/logs')
-                .then(response => response.json())
-                .then(data => {
-                    let tablaLogs = document.getElementById('tabla-logs').getElementsByTagName('tbody')[0];
-                    tablaLogs.innerHTML = '';
+        fetch('http://localhost:8080/logs')
+            .then(response => response.json())
+            .then(data => {
+                let tablaLogs = document.getElementById('tabla-logs').getElementsByTagName('tbody')[0];
+                tablaLogs.innerHTML = '';
 
-                    data.forEach(log => {
-                        let fila = `<tr>
+                data.forEach(log => {
+                    let fila = `<tr>
                                 <td>${log.usuarios.nombre}</td>
+                                <td>${log.divisas.nombre}</td>
                                 <td>${new Date(log.fechaCreacion).toLocaleString()}</td>
                             </tr>`;
-                        tablaLogs.innerHTML += fila;
-                    });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    Swal.fire('Ocurrió un error al obtener los logs.');
+                    tablaLogs.innerHTML += fila;
                 });
-        }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('Ocurrió un error al obtener los logs.');
+            });
+    }
+
         function cerrarSesion() {
             fetch('http://localhost:8080/auth/logout', {
                 method: 'POST',
