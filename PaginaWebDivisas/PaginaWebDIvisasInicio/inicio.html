@@ -98,8 +98,11 @@
                 opcionesDivisaOrigen.innerHTML = '';
                 opcionesDivisaDestino.innerHTML = '';
 
-                // Llenar tabla y selectores con las divisas
-                data.forEach(divisa => {
+                // Filtrar solo las divisas activas
+                const divisasActivas = data.filter(divisa => divisa.status === true);
+
+                // Llenar tabla y selectores con las divisas activas
+                divisasActivas.forEach(divisa => {
                     let fila = `<tr>
                             <td>${divisa.nombre}</td>
                             <td>${divisa.compra}</td>
@@ -114,8 +117,7 @@
                     }
                 });
 
-                opcionesDivisaOrigen.innerHTML += `<option value="ARS">ARS</option>`;
-                opcionesDivisaDestino.innerHTML += `<option value="ARS">ARS</option>`;
+            
                 mostrarCargando(false);  // Ocultar spinner de carga
             })
             .catch(error => {
@@ -123,6 +125,7 @@
                 mostrarCargando(false);  // Ocultar spinner de carga en caso de error
             });
     }
+
 
     // Función para convertir divisas
     function convertirDivisa() {
