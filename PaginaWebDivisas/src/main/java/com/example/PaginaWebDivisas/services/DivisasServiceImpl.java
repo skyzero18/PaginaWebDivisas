@@ -1,15 +1,8 @@
 package com.example.PaginaWebDivisas.services;
-
 import com.example.PaginaWebDivisas.models.Divisas;
-import com.example.PaginaWebDivisas.models.Logs;
-import com.example.PaginaWebDivisas.models.Usuarios;
 import com.example.PaginaWebDivisas.repository.DivisasRepo;
-import com.example.PaginaWebDivisas.repository.LogsRepo;
-import com.example.PaginaWebDivisas.repository.UsuariosRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -20,11 +13,9 @@ public class DivisasServiceImpl implements DivisasService {
     @Autowired
     private DivisasRepo divisasRepo;
 
-    @Autowired
-    private LogsRepo logsRepo;
 
-    @Autowired
-    private UsuariosRepo usuariosRepo;
+
+
 
     @Override
     public List<Divisas> getAllDivisas() {
@@ -57,11 +48,8 @@ public class DivisasServiceImpl implements DivisasService {
 
     @Override
     public Divisas saveDivisa(Divisas divisas, Long usuarioId) {
-        Divisas savedDivisa = divisasRepo.save(divisas);
 
-        // Registrar log tras la creación de la divisa
-        registrarLog("Divisa creada", usuarioId);
-        return savedDivisa;
+        return divisasRepo.save(divisas);
     }
 
     @Override
@@ -84,32 +72,14 @@ public class DivisasServiceImpl implements DivisasService {
             }
         });
 
-        Divisas updatedDivisa = divisasRepo.save(existingDivisa);
-        registrarLog("Divisa modificada", usuarioId);
-        return updatedDivisa;
+        return divisasRepo.save(existingDivisa);
     }
 
 
     @Override
     public void deleteDivisa(Long id, Long usuarioId) {
         divisasRepo.deleteById(id);
-
-        // Registrar log tras la eliminación de la divisa
-        registrarLog("Divisa eliminada", usuarioId);
     }
 
-    // Método auxiliar para registrar logs
-    private void registrarLog(String accion, Long usuarioId) {
-        Optional<Usuarios> usuarioOpt = usuariosRepo.findById(usuarioId);
-        if (usuarioOpt.isPresent()) {
-            Usuarios usuario = usuarioOpt.get();
-            Logs log = new Logs();
-            log.setNombre(accion);
-            log.setUsuarios(usuario);
-            log.setFechaCreacion(LocalDateTime.now()); // JPA puede gestionar automáticamente este campo
-            logsRepo.save(log);
-        } else {
-            throw new IllegalArgumentException("Usuario no encontrado para registrar el log");
-        }
-    }
+
 }

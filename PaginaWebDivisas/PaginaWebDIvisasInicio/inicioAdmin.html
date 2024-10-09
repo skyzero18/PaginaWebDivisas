@@ -9,15 +9,16 @@
 </head>
 <body>
     <header>
-        <h1>Administración de Divisas</h1>
-    </header>
-
-    <main>
-        
         <div class="buttonsini">
             <button id="logoutbutton" onclick="irainicio()">Inicio</button> <!-- Botón para cerrar sesión -->
             <button id="logoutbutton" onclick="cerrarSesion()">Cerrar Sesión</button> <!-- Botón para cerrar sesión -->
         </div>
+        
+    </header>
+
+    <main>
+        
+        <h1>Administración de Divisas</h1>
         <form id="form-divisas">
             <label for="id-divisa">ID:</label>
             <input type="text" id="id-divisa" placeholder="ID solo para editar" disabled>
@@ -207,28 +208,28 @@
                 });
         }
         function cerrarSesion() {
-    fetch('http://localhost:8080/auth/logout', {
-        method: 'POST',
-        credentials: 'include' // Incluye las cookies de sesión
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json(); // Obtener el cuerpo de la respuesta
-        } else {
-            console.error('Error al cerrar sesión:', response.statusText);
-            Swal.fire('Error al cerrar sesión, inténtalo de nuevo.');
-            throw new Error('Error en la respuesta de logout');
+            fetch('http://localhost:8080/auth/logout', {
+                method: 'POST',
+                credentials: 'include' // Incluye las cookies de sesión
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Obtener el cuerpo de la respuesta
+                } else {
+                    console.error('Error al cerrar sesión:', response.statusText);
+                    Swal.fire('Error al cerrar sesión, inténtalo de nuevo.');
+                    throw new Error('Error en la respuesta de logout');
+                }
+            })
+            .then(data => {
+                // Redirigir a la URL proporcionada por el backend
+                window.location.href = data.redirectUrl; // Redirigir a la página de inicio de sesión
+            })
+            .catch(error => {
+                console.error('Error en la petición:', error);
+                Swal.fire('Error al cerrar sesión, inténtalo de nuevo.'); // Mostrar un mensaje de error
+            });
         }
-    })
-    .then(data => {
-        // Redirigir a la URL proporcionada por el backend
-        window.location.href = data.redirectUrl; // Redirigir a la página de inicio de sesión
-    })
-    .catch(error => {
-        console.error('Error en la petición:', error);
-        Swal.fire('Error al cerrar sesión, inténtalo de nuevo.'); // Mostrar un mensaje de error
-    });
-}
 
 
         function irainicio() {

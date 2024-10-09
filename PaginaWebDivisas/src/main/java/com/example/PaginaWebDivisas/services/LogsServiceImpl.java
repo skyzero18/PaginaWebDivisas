@@ -6,7 +6,7 @@ import com.example.PaginaWebDivisas.repository.UsuariosRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashMap;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -27,7 +27,7 @@ public class LogsServiceImpl implements LogsService {
         if (logs.isPresent()) {
             return logs.get();
         }
-        throw new RuntimeException("no se encontraron divisas con id " + id);
+        throw new RuntimeException("no se encontraron logs con id " + id);
 
     }
 
@@ -42,21 +42,20 @@ public class LogsServiceImpl implements LogsService {
 
         updates.forEach((key, value) -> {
             switch (key) {
-                case "nombre":
-                    if (value instanceof String) {
-                        existingLog.setNombre((String) value);
-                    } else {
-                        throw new IllegalArgumentException("Valor no válido para 'nombre': " + value);
-                    }
-                    break;
                 case "usuarios":
                     if (value instanceof Map) {
                         Map<String, Object> usuarioMap = (Map<String, Object>) value;
                         if (usuarioMap.containsKey("id") && usuarioMap.get("id") instanceof Number) {
                             Long usuarioId = ((Number) usuarioMap.get("id")).longValue();
-                            // Aquí deberías tener un método para buscar el usuario por id
-                            Usuarios usuario = getLogById(usuarioId).getUsuarios();
-                            existingLog.setUsuarios(usuario);
+
+                            // Método para buscar un usuario por id (ejemplo: findUsuarioById)
+                            Usuarios usuario = findUsuarioById(usuarioId);
+
+                            if (usuario != null) {
+                                existingLog.setUsuarios(usuario);
+                            } else {
+                                throw new IllegalArgumentException("Usuario no encontrado con id: " + usuarioId);
+                            }
                         } else {
                             throw new IllegalArgumentException("Campo 'id' no válido en 'usuarios': " + usuarioMap);
                         }
@@ -64,17 +63,21 @@ public class LogsServiceImpl implements LogsService {
                         throw new IllegalArgumentException("Valor no válido para 'usuarios': " + value);
                     }
                     break;
+
                 default:
                     throw new IllegalArgumentException("Campo no reconocido: " + key);
             }
         });
 
-        return existingLog;
+        return logsRepo.save(existingLog);
     }
 
 
 
-
+    private Usuarios findUsuarioById(Long usuarioId) {
+        return usuariosRepo.findById(usuarioId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario con id " + usuarioId + " no encontrado."));
+    }
 
 
 

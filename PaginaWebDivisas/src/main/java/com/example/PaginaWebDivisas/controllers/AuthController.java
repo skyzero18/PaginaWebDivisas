@@ -82,13 +82,4 @@ public class AuthController {
             return ResponseEntity.ok().body("Usuario autenticado: " + user);
         }
     }
-    @GetMapping("/verify")
-    public ResponseEntity<?> verifySession(HttpSession session) {
-        String user = (String) session.getAttribute("user");
-        if (user != null) {
-            return ResponseEntity.ok(Map.of("autenticado", true, "redirectUrl", "/inicioAdmin.html"));
-        } else {
-            return ResponseEntity.ok(Map.of("autenticado", false, "redirectUrl", "/login.html"));
-        }
-    }
 }
