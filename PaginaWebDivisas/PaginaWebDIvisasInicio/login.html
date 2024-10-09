@@ -32,7 +32,7 @@
             try {
                 const currentUrl = window.location.pathname; // Obtén la ruta actual
 
-                const response = await fetch('http://localhost:8080/auth/checkSession', {
+                const response = await fetch('http://localhost:8080/auth/verify', {
                     method: 'GET',
                     credentials: 'include', // Permite el envío de cookies de sesión
                 });
