@@ -5,9 +5,28 @@ body {
     padding: 0;
     background: linear-gradient(to bottom right, #f4f4f4, #e0f7fa);
 }
+header { 
+    background-color: #00913e;
+    color: rgb(255, 255, 255);
+    display: grid;
+    grid-template-columns: 1fr; /* Una columna */
+    grid-template-rows: auto 1fr; /* Dos filas: la primera se ajusta al contenido, la segunda al resto */
+    gap: 10px; /* Espacio entre las filas */
+    padding: 20px; /* Espaciado interno del header */
+}
+
+header h1 {
+    grid-row: 1; /* Fila 1 */
+    text-align: center; /* Centrar el texto */
+    font-size: 24px; /* Tamaño de fuente */
+}
+
+
+
+
+
 
 h1, h2 {
-    color: #0066cc;
     font-weight: bold;
     text-align: center;
     margin-top: 20px;
@@ -52,11 +71,11 @@ form button {
     margin-top: 10px;
 }
 .buttonsini {
-    position: absolute;
-    top: 20px; /* Ajusta la distancia desde la parte superior */
-    right: 20px; /* Ajusta la distancia desde la derecha */
-    display: flex;
-    gap: 10px; /* Espaciado entre los botones */
+    grid-row: 2; /* Fila 2 */
+    text-align: center; /* Centrar el texto */
+    display: flex; /* Para alinear los botones en línea */
+    justify-content: center; /* Centra los botones horizontalmente */
+    gap: 10px; /* Espacio entre los botones */
 }
 
 #logoutbutton {
@@ -92,7 +111,7 @@ table {
 }
 
 thead {
-    background-color: #0066cc;
+    background-color: #00913e;
     color: white;
 }
 

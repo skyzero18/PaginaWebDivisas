@@ -7,8 +7,25 @@ body {
     background: linear-gradient(to bottom right, #f4f4f4, #e0f7fa);
 }
 
+header { 
+    background-color: #00913e;
+    color: rgb(255, 255, 255);
+    display: grid;
+    grid-template-columns: 1fr; /* Una columna */
+    grid-template-rows: auto 1fr; /* Dos filas: la primera se ajusta al contenido, la segunda al resto */
+    gap: 10px; /* Espacio entre las filas */
+    padding: 20px; /* Espaciado interno del header */
+}
+
+header h1 {
+    grid-row: 1; /* Fila 1 */
+    text-align: center; /* Centrar el texto */
+    font-size: 24px; /* Tamaño de fuente */
+}
+
+
 h1 {
-    color: #0066cc;
+
     font-weight: bold;
     text-align: center;
     margin-top: 20px;
@@ -43,7 +60,7 @@ form button {
     display: block;
     width: 100%;
     padding: 15px;
-    background-color: #00b894;
+    background-color: #00913e;
     color: white;
     font-size: 18px;
     border-radius: 10px;
@@ -58,7 +75,7 @@ form button:hover {
 
 footer {
     text-align: center;
-    background-color: #002f87;
+    background-color: #00913e;
     color: white;
     padding: 10px;
     position: fixed;

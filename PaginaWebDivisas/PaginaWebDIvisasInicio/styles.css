@@ -1,19 +1,30 @@
-/* General Styles */
+html, body {
+    height: 100%; /* Asegura que el body ocupe toda la altura */
+    margin: 0; /* Elimina el margen por defecto */
+}
+
 body {
     font-family: 'Roboto', sans-serif;
-    margin: 0;
     padding: 0;
     background: linear-gradient(to bottom right, #f4f4f4, #e0f7fa);
+    display: flex; /* Utiliza flexbox */
+    flex-direction: column; /* Coloca los elementos en columna */
 }
 
 .header {
-    background-color: #002f87;
-    color: white;
-    padding: 10px;
+    background-color: #00913e;
+    color: rgb(255, 255, 255);
+    flex-direction: column;
+    text-align: center;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; 
 }
+
 
 .contact-info p {
     margin: 0;
@@ -23,11 +34,6 @@ body {
     width: 150px;
 }
 
-h1, h2 {
-    color: #0066cc;
-    font-weight: bold;
-    text-align: center;
-}
 
 /* Tabla sin divisiones */
 .exchange-table {
@@ -49,7 +55,7 @@ h1, h2 {
 }
 
 .exchange-table th {
-    background-color: #0066cc;
+    background-color: #00913e;
     color: white;
 }
 
@@ -109,7 +115,7 @@ select, input {
     width: 100%;
     margin: 20px 0;
     padding: 15px 0;
-    background-color: #00b894;
+    background-color: #00913e;
     color: white;
     font-size: 18px;
     border-radius: 10px;
@@ -161,21 +167,21 @@ select, input {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: transparent; /* Cambia el color a transparente */
+    background-color: #00913e;
     color: white;
     padding: 10px;
     border-radius: 50px;
     text-align: center;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.37);
 }
 
 
 
 /* Footer */
 footer {
-    background-color: #002f87;
-    padding: 10px;
+    background-color: #00913e;
+    padding: 3%;
     color: white;
     text-align: center;
 }
@@ -231,10 +237,9 @@ footer a:hover {
 
 /* Main Section */
 .main {
+    margin-top: 60px; /* Para dejar espacio debajo del header fijo */
     text-align: center;
     padding: 20px;
+    flex: 1; /* Permite que el contenido principal crezca y ocupe el espacio disponible */
 }
 
-h1 {
-    color: #0066cc;
-}

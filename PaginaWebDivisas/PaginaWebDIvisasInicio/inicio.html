@@ -9,13 +9,12 @@
 </head>
 <body>
 <header class="header">
-    <img src="logo.png" alt="Financiera Logo">
+    <h1>DeFi</h1>
 </header>
 
 <section class="main">
-    <h1>Intercambio de divisas & transacción al extranjero</h1>
     <p>Compra y venta de divisas en <strong>Sucursales</strong> y <strong>Cotización</strong>.</p>
-    <a href="#conversion-section" class="boton-enlace">Click aquí para ir al conversor de divisas</a>
+
 
     <!-- Indicador de carga -->
     <div id="loading" class="loading-spinner" style="display:none;">Cargando...</div>
@@ -40,7 +39,7 @@
         <div class="form-group">
             <label for="divisa-origen">Divisa Origen:</label>
             <select id="divisa-origen">
-                <option value="ARS" selected>ARS</option>
+                <option value="ARS" selected>Peso Argentino (ARS)</option>
             </select>
         </div>
         <div class="form-group">
@@ -50,7 +49,7 @@
         <div class="form-group">
             <label for="divisa-destino">Divisa Destino:</label>
             <select id="divisa-destino">
-                <option value="ARS" selected>ARS</option>
+                <option value="ARS" selected>Peso Argentino (ARS)</option>
             </select>
         </div>
         <button class="cta-btn" onclick="convertirDivisa()">Convertir</button>
@@ -62,7 +61,7 @@
 <!-- Botón flotante para contacto en WhatsApp -->
 <div id="contacto-flotante">
     <a href="https://wa.me/542634646078" target="_blank" style="color: white; text-decoration: none;">
-        <img src="" alt="WhatsApp Logo" class="whatsapp-logo">
+        <img src="https://img.icons8.com/m_outlined/512/FFFFFF/whatsapp.png" alt="WhatsApp Logo" class="whatsapp-logo">
     </a>
 </div>
 
@@ -70,82 +69,7 @@
 </section>
 
 <footer>
-    <a href="#">Ver todas las divisas</a>
-</footer>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compra y venta de divisas</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Enlace al archivo CSS -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-</head>
-<body>
-<header class="header">
-    <img src="logo.png" alt="Financiera Logo">
-</header>
-
-<section class="main">
-    <h1>Intercambio de divisas & transacción al extranjero</h1>
-    <p>Compra y venta de divisas en <strong>Sucursales</strong> y <strong>Cotización</strong>.</p>
-    <a href="#conversion-section" class="boton-enlace">Click aquí para ir al conversor de divisas</a>
-
-    <!-- Indicador de carga -->
-    <div id="loading" class="loading-spinner" style="display:none;">Cargando...</div>
-
-    <!-- Tabla para mostrar divisas -->
-    <table class="exchange-table">
-        <thead>
-        <tr>
-            <th>Divisa</th>
-            <th>Compra</th>
-            <th>Venta</th>
-        </tr>
-        </thead>
-        <tbody id="tabla-divisas">
-        <!-- Las divisas se cargarán aquí dinámicamente -->
-        </tbody>
-    </table>
-
-    <!-- Formulario para conversión -->
-    <div class="conversion-section" id="conversion-section">
-        <h2>Conversión de Divisas</h2>
-        <div class="form-group">
-            <label for="divisa-origen">Divisa Origen:</label>
-            <select id="divisa-origen">
-                <option value="ARS" selected>ARS</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="cantidad">Cantidad a Convertir:</label>
-            <input type="number" id="cantidad" placeholder="Ingresa la cantidad">
-        </div>
-        <div class="form-group">
-            <label for="divisa-destino">Divisa Destino:</label>
-            <select id="divisa-destino">
-                <option value="ARS" selected>ARS</option>
-            </select>
-        </div>
-        <button class="cta-btn" onclick="convertirDivisa()">Convertir</button>
-
-        <!-- Mostrar el resultado de la conversión en lugar de una alerta -->
-        <div id="resultado" class="resultado-conversion"></div>
-    </div>
-
-<!-- Botón flotante para contacto en WhatsApp -->
-<div id="contacto-flotante">
-    <a href="https://wa.me/542634646078" target="_blank" style="color: white; text-decoration: none;">
-        <img src="" alt="WhatsApp Logo" class="whatsapp-logo">
-    </a>
-</div>
-
-
-</section>
-
-<footer>
-    <a href="#">Ver todas las divisas</a>
+    
 </footer>
 
 <script>
@@ -159,50 +83,47 @@
 
     // Función para obtener divisas desde el backend
     function obtenerDivisas() {
-    mostrarCargando(true);  // Mostrar spinner de carga
-    fetch('http://localhost:8080/divisas')
-        .then(response => response.json())
-        .then(data => {
-            divisas = data;
-            let tablaDivisas = document.getElementById('tabla-divisas');
-            let opcionesDivisaOrigen = document.getElementById('divisa-origen');
-            let opcionesDivisaDestino = document.getElementById('divisa-destino');
+        mostrarCargando(true);  // Mostrar spinner de carga
+        fetch('http://localhost:8080/divisas')
+            .then(response => response.json())
+            .then(data => {
+                divisas = data;
+                let tablaDivisas = document.getElementById('tabla-divisas');
+                let opcionesDivisaOrigen = document.getElementById('divisa-origen');
+                let opcionesDivisaDestino = document.getElementById('divisa-destino');
 
-            // Limpiar tabla y opciones previas
-            tablaDivisas.innerHTML = '';
-            opcionesDivisaOrigen.innerHTML = '';
-            opcionesDivisaDestino.innerHTML = '';
+                // Limpiar tabla y opciones previas
+                tablaDivisas.innerHTML = '';
+                opcionesDivisaOrigen.innerHTML = '';
+                opcionesDivisaDestino.innerHTML = '';
 
-            // Siempre agregar ARS primero como opción en ambos selectores
-            opcionesDivisaOrigen.innerHTML += `<option value="ARS" selected>ARS</option>`;
-            opcionesDivisaDestino.innerHTML += `<option value="ARS" selected>ARS</option>`;
+                // Filtrar solo las divisas activas
+                const divisasActivas = data.filter(divisa => divisa.status === true);
 
-            // Filtrar solo las divisas activas
-            const divisasActivas = data.filter(divisa => divisa.status === true);
+                // Llenar tabla y selectores con las divisas activas
+                divisasActivas.forEach(divisa => {
+                    let fila = `<tr>
+                            <td>${divisa.nombre}</td>
+                            <td>${divisa.compra}</td>
+                            <td>${divisa.venta}</td>
+                        </tr>`;
+                    tablaDivisas.innerHTML += fila;
 
-            // Llenar tabla y selectores con las divisas activas
-            divisasActivas.forEach(divisa => {
-                let fila = `<tr>
-                        <td>${divisa.nombre}</td>
-                        <td>${divisa.compra}</td>
-                        <td>${divisa.venta}</td>
-                    </tr>`;
-                tablaDivisas.innerHTML += fila;
+                    if (divisa.nombre !== 'Peso Argentino') {
+                        let opcion = `<option value="${divisa.id}">${divisa.nombre}</option>`;
+                        opcionesDivisaOrigen.innerHTML += opcion;
+                        opcionesDivisaDestino.innerHTML += opcion;
+                    }
+                });
 
-                // Agregar las demás divisas activas
-                let opcion = `<option value="${divisa.id}">${divisa.nombre}</option>`;
-                opcionesDivisaOrigen.innerHTML += opcion;
-                opcionesDivisaDestino.innerHTML += opcion;
+            
+                mostrarCargando(false);  // Ocultar spinner de carga
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mostrarCargando(false);  // Ocultar spinner de carga en caso de error
             });
-
-            mostrarCargando(false);  // Ocultar spinner de carga
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            mostrarCargando(false);  // Ocultar spinner de carga en caso de error
-        });
-}
-
+    }
 
 
     // Función para convertir divisas
@@ -216,8 +137,9 @@
             return;
         }
 
-        let divisaOrigen = divisas.find(d => d.id == idOrigen) || { compra: 1, nombre: "ARS" };
-        let divisaDestino = divisas.find(d => d.id == idDestino) || { venta: 1, nombre: "ARS" };
+        let divisaOrigen = divisas.find(d => d.id == idOrigen) || { compra: 1, nombre: "Peso Argentino" };
+        let divisaDestino = divisas.find(d => d.id == idDestino) || { venta: 1, nombre: "Peso Argentino" };
+
         let resultado = 0;
 
         if (idOrigen === idDestino) {
@@ -236,7 +158,5 @@
 
     window.onload = obtenerDivisas;
 </script>
-</body>
-</html>
 </body>
 </html>
