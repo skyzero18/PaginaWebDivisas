@@ -10,11 +10,14 @@ body {
 header { 
     background-color: #00913e;
     color: rgb(255, 255, 255);
-    display: grid;
-    grid-template-columns: 1fr; /* Una columna */
-    grid-template-rows: auto 1fr; /* Dos filas: la primera se ajusta al contenido, la segunda al resto */
-    gap: 10px; /* Espacio entre las filas */
-    padding: 20px; /* Espaciado interno del header */
+    flex-direction: column;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; 
 }
 
 header h1 {

@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <h1>DeFi</h1>
+        <h1 onclick="irainicio()">DeFi</h1>
     </header>
 
     <main>
@@ -24,7 +24,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 Compra y Venta de Divisas</p>
+        <p>&copy; 2024 Cotizaciones DeFi</p>
     </footer>
 
     <script>
@@ -62,7 +62,28 @@
         // Llama a la función para verificar la sesión al cargar la página
         checkSession();
 
-
+        function irainicio() {
+            fetch('http://localhost:8080/auth/inicio', {
+                method: 'POST',
+                credentials: 'include'
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    Swal.firert('Error.'); // Mostrar un mensaje de error
+                    throw new Error('Error en la respuesta');
+                }
+            })
+            .then(data => {
+              
+                window.location.href = data.redirectUrl;
+            })
+            .catch(error => {
+                console.error('Error en la petición:', error);
+                Swal.fire('Error al cerrar sesión, inténtalo de nuevo.'); // Mostrar un mensaje de error
+            });
+        }
 
         document.getElementById('form-login').addEventListener('submit', async function(event) {
             event.preventDefault();
