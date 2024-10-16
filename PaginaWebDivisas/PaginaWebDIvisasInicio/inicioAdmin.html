@@ -11,20 +11,22 @@
     <header>
         <button id="logoutbutton" onclick="cerrarSesion()">
             <img src="Src/image.png" alt="Cerrar Sesión">
-           
         </button> <!-- Botón para cerrar sesión -->
-        
-        <h1 onclick="irainicio()">DeFi</h1>
-        
-        
+
+        <h1>DeFi</h1>
+
+        <!-- Imagen de inicio a la derecha -->
+        <button id="inicioButton" onclick="irainicio()">
+            <img src="Src/inicio.png" alt="Inicio" style="width: 40px; height: 40px;">
+        </button>
     </header>
 
     <main>
-        
         <h1>Administración de Divisas</h1>
         <form id="form-divisas">
+            <!-- Formulario -->
             <label for="id-divisa" style="display:none;">ID:</label>
-            <input type="text"  style="display:none;" id="id-divisa" placeholder="ID solo para editar" disabled>
+            <input type="text" style="display:none;" id="id-divisa" placeholder="ID solo para editar" disabled>
             <label for="nombre-divisa">Nombre:</label>
             <input type="text" id="nombre-divisa" placeholder="Ingrese el nombre de la divisa" required>
             <label for="compra-divisa">Precio de Compra:</label>
@@ -34,6 +36,7 @@
 
             <button type="button" onclick="agregarOEditarDivisa()">Guardar</button>
         </form>
+        <!-- Tabla de Divisas -->
         <div class="table-container">
             <table id="tabla-divisas">
                 <thead>
@@ -51,6 +54,7 @@
             </table>
         </div>
 
+        <!-- Tabla de Logs -->
         <div class="table-container">
             <table id="tabla-logs">
                 <thead>

@@ -12,8 +12,7 @@
 </header>
 
 <section class="main">
-    <p>Compra y venta de divisas en <strong>Sucursales</strong> y <strong>Cotización</strong>.</p>
-
+    <p><strong>Nuestra cotización es válida por 15 minutos, </strong> transcurrido el tiempo establecido, las cotizaciones pueden variar sin previo aviso, según modificación del mercado. </p>
 
     <!-- Indicador de carga -->
     <div id="loading" class="loading-spinner" style="display:none;">Cargando...</div>
@@ -38,6 +37,7 @@
         <div class="form-group">
             <label for="divisa-origen">Divisa Origen:</label>
             <select id="divisa-origen">
+                <!-- Opción predeterminada para ARS -->
                 <option value="ARS" selected>ARS</option>
             </select>
         </div>
@@ -48,6 +48,7 @@
         <div class="form-group">
             <label for="divisa-destino">Divisa Destino:</label>
             <select id="divisa-destino">
+                <!-- Opción predeterminada para ARS -->
                 <option value="ARS" selected>ARS</option>
             </select>
         </div>
@@ -57,13 +58,16 @@
         <div id="resultado" class="resultado-conversion"></div>
     </div>
 
-<!-- Botón flotante para contacto en WhatsApp -->
-<div id="contacto-flotante">
-    <a href="https://wa.me/542634646078" target="_blank" style="color: white; text-decoration: none;">
-        <img src="https://img.icons8.com/m_outlined/512/FFFFFF/whatsapp.png" alt="WhatsApp Logo" class="whatsapp-logo">
-    </a>
-</div>
+    <!-- Botón flotante para contacto en WhatsApp -->
+    <div id="contacto-flotante">
+        <a href="https://wa.me/542634646078" target="_blank" style="color: white; text-decoration: none;">
+            <img src="https://img.icons8.com/m_outlined/512/FFFFFF/whatsapp.png" alt="WhatsApp Logo" class="whatsapp-logo">
+        </a>
+    </div>
 
+    <p>Solo se atiende a clientes con cita previamente agendada.<strong> Solo se recibe efectivo</strong>bajo ninguna excepción se reciben transferencias.</p>
+    <p>El dinero deberá ser revisado en nuestras oficinas bajo nuestro sistema monitoreado de cámaras.<strong>  Luego de retirarse, no habrá lugar a reclamos. </strong> </p>
+    <p>No se reserva dinero, tampoco se congelan cotizaciones.<strong> No comprometa a nuestro equipo.</strong> </p>
 
 </section>
 
@@ -91,10 +95,8 @@
                 let opcionesDivisaOrigen = document.getElementById('divisa-origen');
                 let opcionesDivisaDestino = document.getElementById('divisa-destino');
 
-                // Limpiar tabla y opciones previas
+                // Limpiar tabla previa
                 tablaDivisas.innerHTML = '';
-                opcionesDivisaOrigen.innerHTML = '';
-                opcionesDivisaDestino.innerHTML = '';
 
                 // Filtrar solo las divisas activas
                 const divisasActivas = data.filter(divisa => divisa.status === true);
@@ -114,8 +116,6 @@
                         opcionesDivisaDestino.innerHTML += opcion;
                     }
                 });
-
-            
                 mostrarCargando(false);  // Ocultar spinner de carga
             })
             .catch(error => {
@@ -123,7 +123,6 @@
                 mostrarCargando(false);  // Ocultar spinner de carga en caso de error
             });
     }
-
 
     // Función para convertir divisas
     function convertirDivisa() {

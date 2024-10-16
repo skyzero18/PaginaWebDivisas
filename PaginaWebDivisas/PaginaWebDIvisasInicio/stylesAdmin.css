@@ -5,23 +5,39 @@ body {
     padding: 0;
     background: linear-gradient(to bottom right, #f4f4f4, #e0f7fa);
 }
+
 header { 
     background-color: #00913e;
     color: rgb(255, 255, 255);
     display: grid; /* Usar grid para el layout */
-    grid-template-columns: 2fr auto; /* Dos partes para el h1 y una parte automática para el botón de cierre de sesión */
+    grid-template-columns: auto 1fr auto; /* Para el botón de inicio, el título, y el botón de cerrar sesión */
     align-items: center; /* Alinear verticalmente los elementos */
-    width: 100%;
-    grid-template-columns: auto 1fr;
+    padding: 10px;
 }
 
 header h1 {
     text-align: center; 
     font-size: 24px; 
-    margin: 20px 0; /* Añadir margen superior e inferior */
+    margin: 10px 0; /* Añadir margen superior e inferior */
+}
+h1{
+    text-align: center;
 }
 
+/* Botón de Inicio */
+#inicioButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
 
+#inicioButton img {
+  width: 20px; /* Tamaño de la imagen */
+    height: 20px; /* Tamaño de la imagen */
+    margin-right: 5px; /* Espacio entre la imagen y el texto */
+}
+
+/* Botón de Cerrar Sesión */
 #logoutbutton {
     align-items: center;
     width: auto; /* Ajustar automáticamente según el contenido */
@@ -46,11 +62,7 @@ header h1 {
     background-color: #0000005d; /* Cambiar color al pasar el ratón */
 }
 
-h1{
-    font-weight: bold;
-    text-align: center;
-    margin-top: 20px;
-}
+/* Formulario */
 form {
     margin: 20px auto;
     padding: 20px;
@@ -89,9 +101,6 @@ form button {
     margin-top: 10px;
 }
 
-
-
-
 /* Table Styles */
 .table-container {
     margin: 20px auto;
@@ -105,6 +114,7 @@ table {
     border-collapse: collapse;
     margin-bottom: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-width: 600px; /* Ancho mínimo para tablas más grandes */
 }
 
 thead {
@@ -153,10 +163,6 @@ tbody td {
 /* Estilo de desplazamiento horizontal */
 .table-container {
     overflow-x: auto;
-}
-
-table {
-    min-width: 600px; /* Definir un ancho mínimo para permitir el desplazamiento horizontal */
 }
 
 td, th {
