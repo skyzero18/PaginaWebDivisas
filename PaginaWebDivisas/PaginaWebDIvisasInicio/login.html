@@ -20,7 +20,10 @@
             <label for="contraseña">Contraseña:</label>
             <input type="password" id="contraseña" placeholder="Ingrese su contraseña" required>
             <button type="submit">Iniciar Sesión</button>
+            <button id="registrarse-btn">Registrarse</button>
         </form>
+        <br>
+        
     </main>
 
     <footer>
@@ -113,6 +116,63 @@
                 console.error('Error al iniciar sesión:', error);
             }
         });
+
+        document.getElementById('registrarse-btn').addEventListener('click', function() {
+            Swal.fire({
+                title: 'Registrarse',
+                html: `
+                    <input type="text" id="nuevo-usuario" class="swal2-input" placeholder="Nuevo usuario">
+                    <input type="password" id="nueva-contraseña" class="swal2-input" placeholder="Nueva contraseña">
+                    <input type="password" id="clave-maestra" class="swal2-input" placeholder="Clave maestra">
+                `,
+                confirmButtonText: 'Registrar',
+                focusConfirm: false,
+                preConfirm: () => {
+                    const nuevoUsuario = document.getElementById('nuevo-usuario').value;
+                    const nuevaContraseña = document.getElementById('nueva-contraseña').value;
+                    const claveMaestra = document.getElementById('clave-maestra').value;
+                    
+                    // Validar que los campos no estén vacíos
+                    if (!nuevoUsuario || !nuevaContraseña || !claveMaestra) {
+                        Swal.showValidationMessage('Por favor, complete todos los campos');
+                        return false;
+                    }
+                    
+                    // Retorna los valores ingresados para usarlos luego
+                    return { nuevoUsuario, nuevaContraseña, claveMaestra };
+                }
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const { nuevoUsuario, nuevaContraseña, claveMaestra } = result.value;
+                    try {
+                        // Realizar la solicitud al backend para registrar al usuario
+                        const response = await fetch('http://localhost:8080/usuarios', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                username: nuevoUsuario,
+                                contraseña: nuevaContraseña,
+                                masterKey: claveMaestra // Incluir masterKey en el cuerpo de la solicitud
+                            })
+                        });
+
+                        if (response.ok) {
+                            const usuario = await response.json();  // Obtener el objeto 'Usuarios' de la respuesta
+                            Swal.fire('Registrado con éxito', `Usuario: ${nuevoUsuario}`, 'success');
+                        } else {
+                            const errorMessage = await response.text();
+                            Swal.fire('Error',  'credenciales invalidas');
+                        }
+                    } catch (error) {
+                        console.error('Error al registrar:', error);
+                        Swal.fire('Error', 'Ocurrió un error durante el registro', 'error');
+                    }
+                }
+            });
+        });
+
     </script>
     
 </body>

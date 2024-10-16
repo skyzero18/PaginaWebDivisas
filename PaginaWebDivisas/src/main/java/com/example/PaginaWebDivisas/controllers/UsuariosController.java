@@ -1,7 +1,9 @@
 package com.example.PaginaWebDivisas.controllers;
+import com.example.PaginaWebDivisas.DTO.UsuarioRequest;
 import com.example.PaginaWebDivisas.models.Usuarios;
 import com.example.PaginaWebDivisas.services.UsuariosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +27,18 @@ public class UsuariosController {
     }
 
     @PostMapping
-    public Usuarios createUsuarios(@RequestBody Usuarios usuarios) {
+    public Usuarios createUsuarios(@RequestBody UsuarioRequest usuarioRequest) {
+        System.out.println(usuarioRequest.getMasterKey());
+        String expectedMasterKey = "defiprotecpeoint";
+
+        if (!usuarioRequest.getMasterKey().equals(expectedMasterKey)) {
+            throw new RuntimeException("Clave maestra incorrecta");
+        }
+
+        Usuarios usuarios = new Usuarios();
+        usuarios.setNombre(usuarioRequest.getUsername());
+        usuarios.setContraseña(usuarioRequest.getContraseña());
+
         return usuarioService.saveUsuario(usuarios);
     }
 
