@@ -4,7 +4,7 @@ html, body {
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Avalon', sans-serif;
     padding: 0;
     background: linear-gradient(to bottom right, #f4f4f4, #e0f7fa);
     display: flex; /* Utiliza flexbox */
@@ -126,7 +126,7 @@ select, input {
 }
 
 .cta-btn:hover {
-    background-color: #019670;
+    background-color: #00642b;
 }
 
 #resultado {
@@ -244,3 +244,7 @@ footer a:hover {
     flex: 1; /* Permite que el contenido principal crezca y ocupe el espacio disponible */
 }
 
+@font-face {
+    font-family: 'Avalon';
+    src: url('Src/Avalon\ Bold.ttf') format('truetype');
+}

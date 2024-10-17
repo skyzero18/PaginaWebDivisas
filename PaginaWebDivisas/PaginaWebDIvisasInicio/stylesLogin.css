@@ -1,7 +1,7 @@
 
 /* General Styles (ya incluidas en stylesAdmin.css) */
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Avalon', sans-serif;
     margin: 0;
     padding: 0;
     background: linear-gradient(to bottom right, #f4f4f4, #e0f7fa);
@@ -85,4 +85,8 @@ footer {
     position: fixed;
     width: 100%;
     bottom: 0;
+}
+@font-face {
+    font-family: 'Avalon';
+    src: url('Src/Avalon\ Bold.ttf') format('truetype');
 }

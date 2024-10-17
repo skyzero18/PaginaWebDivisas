@@ -1,6 +1,6 @@
 /* General Styles */
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Avalon', sans-serif;
     margin: 0;
     padding: 0;
     background: linear-gradient(to bottom right, #f4f4f4, #e0f7fa);
@@ -167,4 +167,8 @@ tbody td {
 
 td, th {
     white-space: nowrap; /* Evitar que el contenido se ajuste en varias líneas */
+}
+@font-face {
+    font-family: 'Avalon';
+    src: url('Src/Avalon\ Bold.ttf') format('truetype');
 }
