@@ -10,16 +10,16 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("message", "Hola, bienvenido a PaginaWebDivisas!");
-        return "inicio"; // El nombre del archivo HTML en src/main/resources/templates/
+        return "inicio.html"; // El nombre del archivo HTML en src/main/resources/templates/
     }
 
     @GetMapping("/admin")
     public String admin(Model model) {
-        return "inicioAdmin";
+        return "inicioAdmin.html";
     }
 
     @GetMapping("/login")
     public String login(Model model) {
-        return "login";
+        return "login.html";
     }
 }
