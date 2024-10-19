@@ -67,6 +67,17 @@ img {
     margin: 0 auto 10px; /* Centra la imagen horizontalmente y agrega un margen inferior */
 }
 
+/* Media Queries para tamaños de pantalla más pequeños */
+@media (max-width: 800px) {
+    .container {
+        justify-content: center; 
+        max-width: 100%;
+    }
+
+    .box {
+        width: 40%; 
+    }
+}
 
 /* Tabla sin divisiones */
 .exchange-table {
