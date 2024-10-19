@@ -4,7 +4,10 @@ body {
     font-family: 'Avalon', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom right, #f4f4f4, #e0f7fa);
+    background-image: url('../img/web2.png');
+    background-size: cover; /* Hace que la imagen cubra todo el ancho sin deformarse */
+    background-position: center; /* Centra la imagen si hay exceso de alto */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
 }
 
 header { 

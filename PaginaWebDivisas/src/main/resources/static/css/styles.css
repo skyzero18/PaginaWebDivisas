@@ -6,10 +6,14 @@ html, body {
 body {
     font-family: 'Avalon', sans-serif;
     padding: 0;
-    background: linear-gradient(to bottom right, #f4f4f4, #e0f7fa);
+    background-image: url('../img/web2.png');
+    background-size: cover; /* Hace que la imagen cubra todo el ancho sin deformarse */
+    background-position: center; /* Centra la imagen si hay exceso de alto */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
     display: flex; /* Utiliza flexbox */
     flex-direction: column; /* Coloca los elementos en columna */
 }
+
 
 .header {
     background-color: #00913e;
@@ -33,6 +37,33 @@ body {
 
 .logo img {
     width: 150px;
+}
+
+.container {
+    display: flex; /* Coloca las cajas en fila */
+    justify-content: space-around; /* Distribuye las cajas con espacio alrededor */
+    flex-wrap: wrap; /* Permite que las cajas salten a nuevas filas si es necesario */
+    max-width: 50%; /* Controla el ancho total del contenedor (80% del ancho de la página) */
+    margin: 0 auto; /* Centra el contenedor en la página */
+}
+
+.box {
+    border: 1px solid #ccc; /* Borde de la caja */
+    width: 20%; 
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
+    word-wrap: break-word; /* Asegura que el texto haga saltos de línea */
+    overflow-wrap: break-word; /* Evita que las palabras largas salgan de la caja */
+    text-align: center; /* Centra el texto */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: #00642b00;
+    border-radius: 5%;
+    background-color: #f9f9f9; /* Color de fondo claro para distinguir las cajas */
+}
+
+img {
+    width: 80%;
+    display: block; /* Asegura que la imagen esté en su propia línea */
+    margin: 0 auto 10px; /* Centra la imagen horizontalmente y agrega un margen inferior */
 }
 
 
