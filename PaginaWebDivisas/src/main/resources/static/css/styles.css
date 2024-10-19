@@ -21,6 +21,7 @@ body {
     grid-template-columns: 2fr auto; /* Dos partes para el h1 y una parte automática para el botón de cierre de sesión */
     align-items: center; /* Alinear verticalmente los elementos */
     width: 100%;
+    position: fixed;
     grid-template-columns: auto 1fr;
 }
 
