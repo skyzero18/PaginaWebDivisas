@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 @RestController
 @RequestMapping("/divisas")
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin(origins = "https://cotizacionesdefi.com")
 public class DivisasController {
 
     @Autowired

@@ -8,7 +8,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/logs")
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin(origins = "https://cotizacionesdefi.com")
 public class LogsController {
 
     @Autowired
