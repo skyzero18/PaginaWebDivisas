@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administración de Divisas</title>
-    <link rel="stylesheet" href="../static/css/stylesAdmin.css">
+    <link rel="stylesheet" href="/static/css/stylesAdmin.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="icon" href="../static/img/Defilogo1.png" type="image/x-icon">
+    <link rel="icon" href="/static/img/Defilogo1.png" type="image/x-icon">
 </head>
 <body>
     <header>
 
         <button id="inicioButton" onclick="irainicio()">
-            <img src="../static/img/inicio.png" alt="Inicio">
+            <img src="/static/img/inicio.png" alt="Inicio">
         </button>
         <h1>DeFi</h1>
 
         <button id="logoutbutton" onclick="cerrarSesion()">
-            <img src="../static/img/image.png" alt="Cerrar Sesión">
+            <img src="/static/img/image.png" alt="Cerrar Sesión">
         </button> 
     </header>
 
@@ -179,8 +179,8 @@
                                 <td>${divisa.compra}</td>
                                 <td>${divisa.venta}</td>
                                 <td>
-                                    <button class="edit-btn" onclick="editarDivisa(${divisa.id})" ><img src="../static/img/6324826.png" alt="Editar" style="width: 20px; height: 20px; margin-right: 5px;"></button>
-                                    <button class="delete-btn" onclick="eliminarDivisa(${divisa.id})"><img src="../static/img/5561819.png" alt="Editar" style="width: 20px; height: 20px; margin-right: 5px;"></button>
+                                    <button class="edit-btn" onclick="editarDivisa(${divisa.id})" ><img src="/static/img/6324826.png" alt="Editar" style="width: 20px; height: 20px; margin-right: 5px;"></button>
+                                    <button class="delete-btn" onclick="eliminarDivisa(${divisa.id})"><img src="/static/img/5561819.png" alt="Editar" style="width: 20px; height: 20px; margin-right: 5px;"></button>
                                 </td>
                             </tr>`;
                         tablaDivisas.innerHTML += fila;
