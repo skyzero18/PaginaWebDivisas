@@ -9,16 +9,15 @@
 </head>
 <body>
     <header>
-        <button id="logoutbutton" onclick="cerrarSesion()">
-            <img src="../static/img/image.png" alt="Cerrar Sesión">
-        </button> <!-- Botón para cerrar sesión -->
 
+        <button id="inicioButton" onclick="irainicio()">
+            <img src="../static/img/inicio.png" alt="Inicio">
+        </button>
         <h1>DeFi</h1>
 
-        <!-- Imagen de inicio a la derecha -->
-        <button id="inicioButton" onclick="irainicio()">
-            <img src="../static/img/inicio.png" alt="Inicio" style="width: 40px; height: 40px;">
-        </button>
+        <button id="logoutbutton" onclick="cerrarSesion()">
+            <img src="../static/img/image.png" alt="Cerrar Sesión">
+        </button> 
     </header>
 
     <main>
@@ -71,6 +70,10 @@
         </div>
     </main>
 
+    <footer>
+        <p>&copy; 2024 Cotizaciones DeFi</p>
+    </footer>
+    
     <script>
         // Simulación de obtener el ID del usuario autenticado
         const usuarioId = 1; // Reemplazar con el ID del usuario real en la aplicación autenticada

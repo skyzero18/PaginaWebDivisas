@@ -1,4 +1,8 @@
-/* General Styles */
+html, body {
+    height: 100%;  /* Asegura que el cuerpo ocupe toda la altura de la página */
+    margin: 0;     /* Elimina los márgenes predeterminados */
+}
+
 body {
     font-family: 'Avalon', sans-serif;
     margin: 0;
@@ -7,6 +11,7 @@ body {
     background-size: cover; /* Hace que la imagen cubra todo el ancho sin deformarse */
     background-position: center; /* Centra la imagen si hay exceso de alto */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
+    min-height: 100vh; 
 }
 
 header { 
@@ -14,7 +19,7 @@ header {
     color: rgb(255, 255, 255);
     display: grid; /* Usar grid para el layout */
     grid-template-columns: auto 1fr auto; /* Para el botón de inicio, el título, y el botón de cerrar sesión */
-    align-items: center; /* Alinear verticalmente los elementos */
+    align-items: center; 
     padding: 10px;
 }
 
@@ -27,7 +32,7 @@ h1{
     text-align: center;
 }
 
-/* Botón de Inicio */
+
 #inicioButton {
     background-color: transparent;
     border: none;
@@ -35,35 +40,24 @@ h1{
 }
 
 #inicioButton img {
-  width: 20px; /* Tamaño de la imagen */
-    height: 20px; /* Tamaño de la imagen */
+    width: 30px; /* Tamaño de la imagen */
+    height: 30x; /* Tamaño de la imagen */
     margin-right: 5px; /* Espacio entre la imagen y el texto */
 }
 
 /* Botón de Cerrar Sesión */
 #logoutbutton {
-    align-items: center;
-    width: auto; /* Ajustar automáticamente según el contenido */
-    background-color: #e9ffea00;
-    color: white;
+    background-color: transparent;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-    font-size: 14px; /* Tamaño de la fuente más adecuado */
-    text-align: center;
-    display: inline-flex; /* Para alinear imagen y texto */
-    align-items: center; /* Centrar verticalmente el contenido */
 }
 
 #logoutbutton img {
-    width: 20px; /* Tamaño de la imagen */
-    height: 20px; /* Tamaño de la imagen */
+    width: 30px; /* Tamaño de la imagen */
+    height: 30px; /* Tamaño de la imagen */
     margin-right: 5px; /* Espacio entre la imagen y el texto */
 }
 
-#logoutbutton:hover {
-    background-color: #0000005d; /* Cambiar color al pasar el ratón */
-}
 
 /* Formulario */
 form {
@@ -170,6 +164,25 @@ tbody td {
 
 td, th {
     white-space: nowrap; /* Evitar que el contenido se ajuste en varias líneas */
+}
+
+
+
+
+footer {
+    background-color: #00913e;
+    padding: 0%;
+    color: white;
+    text-align: center;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
 }
 @font-face {
     font-family: 'Avalon';
