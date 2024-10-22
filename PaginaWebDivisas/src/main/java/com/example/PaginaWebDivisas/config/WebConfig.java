@@ -10,6 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Permitir todas las rutas
                 .allowedOrigins("http://127.0.0.1:5500") // Permitir solicitudes desde este origen
+                .allowedOrigins("https://www.cotizacionesdefi.com")
                 .allowedMethods("GET", "POST", "PATCH", "DELETE", "OPTIONS") // Métodos permitidos
                 .allowCredentials(true); // Permitir el uso de credenciales (como cookies o sesiones)
     }
