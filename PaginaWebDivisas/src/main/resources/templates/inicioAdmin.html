@@ -17,7 +17,7 @@
         <h1>DeFi</h1>
 
         <button id="logoutbutton" onclick="cerrarSesion()">
-            <img src="/static/img/image.png" alt="Cerrar Sesión">
+            <img src="/img/image.png" alt="Cerrar Sesión">
         </button> 
     </header>
 
@@ -163,7 +163,7 @@
 
 
         function obtenerDivisas() {
-            fetch('http://localhost:8080/divisas')
+            fetch('http://91.108.125.163:8080/divisas')
                 .then(response => response.json())
                 .then(data => {
                     let tablaDivisas = document.getElementById('tabla-divisas').getElementsByTagName('tbody')[0];
