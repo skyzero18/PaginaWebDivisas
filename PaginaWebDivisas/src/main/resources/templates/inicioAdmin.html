@@ -18,7 +18,7 @@
 
         <button id="logoutbutton" onclick="cerrarSesion()">
             <img src="/img/image.png" alt="Cerrar Sesión">
-        </button> 
+        </button>
     </header>
 
     <main>
@@ -74,7 +74,7 @@
     <footer>
         <p>&copy; 2024 Cotizaciones DeFi</p>
     </footer>
-    
+
     <script>
         // Simulación de obtener el ID del usuario autenticado
         const usuarioId = 1; // Reemplazar con el ID del usuario real en la aplicación autenticada
@@ -260,7 +260,7 @@
 
 
         function irainicio() {
-            fetch('https://91.108.125.163:8080/auth/inicio', {
+            fetch('http://91.108.125.163:8080/auth/inicio', {
                 method: 'POST',
                 credentials: 'include'
             })
@@ -273,7 +273,7 @@
                 }
             })
             .then(data => {
-              
+
                 window.location.href = data.redirectUrl;
             })
             .catch(error => {
@@ -284,17 +284,17 @@
 
 
         function verificarUsuario() {
-            fetch('https://91.108.125.163:8080/auth/checkSession', {
+            fetch('http://91.108.125.163:8080/auth/checkSession', {
                 method: 'GET',
                 credentials: 'include' // Incluir cookies de sesión
             })
             .then(response => {
                 if (response.status === 401) {
                     return response.json().then(data => {
-                        window.location.href = data.redirectUrl; 
+                        window.location.href = data.redirectUrl;
                     });
                 }
-    
+
                 return response.text();
             })
             .catch(error => {
@@ -305,7 +305,7 @@
 
         // Llama a verificarUsuario al cargar la página
         window.onload = function() {
-            verificarUsuario() 
+            verificarUsuario()
             obtenerDivisas();
             obtenerLogs();
         };
