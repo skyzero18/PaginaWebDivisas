@@ -10,7 +10,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/usuarios")
-@CrossOrigin(origins = "https://cotizacionesdefi.com")
+@CrossOrigin(origins = "https://www.cotizacionesdefi.com")
 public class UsuariosController {
 
     @Autowired

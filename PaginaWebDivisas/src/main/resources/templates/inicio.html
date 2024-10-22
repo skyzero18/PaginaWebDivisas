@@ -6,6 +6,7 @@
     <title>Cotizaciones DeFi</title>
     <link rel="icon" href="/static/img/Defilogo1.png" type="image/x-icon">
     <link rel="stylesheet" href="/css/styles.css"> <!-- Enlace al archivo CSS -->
+    <link rel="icon" href="/img/Defilogo1.png" type="image/x-icon">
 </head>
 <body>
 <header class="header">
@@ -111,8 +112,8 @@
      // Función para obtener divisas desde el backend
      function obtenerDivisas() {
          mostrarCargando(true);  // Mostrar spinner de carga
-         fetch('http://localhost:8080/divisas')
-             .then(response => response.json())
+         fetch('http://91.108.125.163:8080/divisas')
+             .then(response => response.json()) 
              .then(data => {
                  divisas = data;
                  let tablaDivisas = document.getElementById('tabla-divisas');
