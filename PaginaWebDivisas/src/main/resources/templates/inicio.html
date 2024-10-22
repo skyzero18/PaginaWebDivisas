@@ -60,124 +60,124 @@
         <div id="resultado" class="resultado-conversion"></div>
     </div>
 
-    <!-- Botón flotante para contacto en WhatsApp -->
-    <div id="contacto-flotante">
-        <a href="https://wa.me/542634646078" target="_blank" style="color: white; text-decoration: none;">
-            <img src="https://img.icons8.com/m_outlined/512/FFFFFF/whatsapp.png" alt="WhatsApp Logo" class="whatsapp-logo">
-        </a>
-    </div>
-    <div class="container">
-        <div class="box">
-            <img src="/img/citaag.png" alt="Descripción de la imagen">
-            <p>Solo se recibe efectivo bajo ninguna excepción se reciben transferencias.</p>
-        </div>
-    
-        <div class="box">
-            <img src="/img/efect.png" alt="Descripción de la imagen">
-            <p>El dinero deberá ser revisado en nuestras oficinas bajo nuestro sistema monitoreado de cámaras.</p>
-        </div>
-    
-        <div class="box">
-            <img src="/img/citaag.png" alt="Descripción de la imagen">
-            <p>Luego de retirarse, no habrá lugar a reclamos.</p>
-        </div>
-    
-        <div class="box">
-            <img src="/img/reclam.png" alt="Descripción de la imagen" >
-            <p>No se reserva dinero, tampoco se congelan cotizaciones. No comprometa a nuestro equipo.</p>
-        </div>
-    
-        <div class="box">
-            <img src="/img/citaag.png" alt="Descripción de la imagen">
-            <p>Solo se recibe efectivo bajo ninguna excepción se reciben transferencias.</p>
-        </div>
-    </div>
-</section>
+   <!-- Botón flotante para contacto en WhatsApp -->
+    <!-- <div id="contacto-flotante">
+         <a href="https://wa.me/542634646078" target="_blank" style="color: white; text-decoration: none;">
+             <img src="https://img.icons8.com/m_outlined/512/FFFFFF/whatsapp.png" alt="WhatsApp Logo" class="whatsapp-logo">
+         </a>
+     </div> -->
+     <div class="container">
+         <div class="box">
+             <img src="/img/citaag.png" alt="Descripción de la imagen">
+             <p>Solo se recibe efectivo bajo ninguna excepción se reciben transferencias.</p>
+         </div>
 
-<footer>
-    <p>&copy; 2024 Cotizaciones DeFi</p>
-</footer>
+         <div class="box">
+             <img src="/img/efect.png" alt="Descripción de la imagen">
+             <p>El dinero deberá ser revisado en nuestras oficinas bajo nuestro sistema monitoreado de cámaras.</p>
+         </div>
 
-<script>
-    let divisas = [];
+         <div class="box">
+             <img src="/img/citaag.png" alt="Descripción de la imagen">
+             <p>Luego de retirarse, no habrá lugar a reclamos.</p>
+         </div>
 
-    // Función para mostrar spinner mientras se cargan divisas
-    function mostrarCargando(mostrar) {
-        const loading = document.getElementById('loading');
-        loading.style.display = mostrar ? 'block' : 'none';
-    }
+         <div class="box">
+             <img src="/img/reclam.png" alt="Descripción de la imagen" >
+             <p>No se reserva dinero, tampoco se congelan cotizaciones. No comprometa a nuestro equipo.</p>
+         </div>
 
-    // Función para obtener divisas desde el backend
-    function obtenerDivisas() {
-        mostrarCargando(true);  // Mostrar spinner de carga
-        fetch('http://localhost:8080/divisas')
-            .then(response => response.json())
-            .then(data => {
-                divisas = data;
-                let tablaDivisas = document.getElementById('tabla-divisas');
-                let opcionesDivisaOrigen = document.getElementById('divisa-origen');
-                let opcionesDivisaDestino = document.getElementById('divisa-destino');
+         <div class="box">
+             <img src="/img/citaag.png" alt="Descripción de la imagen">
+             <p>Solo se recibe efectivo bajo ninguna excepción se reciben transferencias.</p>
+         </div>
+     </div>
+ </section>
 
-                // Limpiar tabla previa
-                tablaDivisas.innerHTML = '';
+ <footer>
+     <p>&copy; 2024 Cotizaciones DeFi</p>
+ </footer>
 
-                // Filtrar solo las divisas activas
-                const divisasActivas = data.filter(divisa => divisa.status === true);
+ <script>
+     let divisas = [];
 
-                // Llenar tabla y selectores con las divisas activas
-                divisasActivas.forEach(divisa => {
-                    let fila = `<tr>
-                            <td>${divisa.nombre}</td>
-                            <td>${divisa.compra}</td>
-                            <td>${divisa.venta}</td>
-                        </tr>`;
-                    tablaDivisas.innerHTML += fila;
+     // Función para mostrar spinner mientras se cargan divisas
+     function mostrarCargando(mostrar) {
+         const loading = document.getElementById('loading');
+         loading.style.display = mostrar ? 'block' : 'none';
+     }
 
-                    if (divisa.nombre !== 'Peso Argentino') {
-                        let opcion = `<option value="${divisa.id}">${divisa.nombre}</option>`;
-                        opcionesDivisaOrigen.innerHTML += opcion;
-                        opcionesDivisaDestino.innerHTML += opcion;
-                    }
-                });
-                mostrarCargando(false);  // Ocultar spinner de carga
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                mostrarCargando(false);  // Ocultar spinner de carga en caso de error
-            });
-    }
+     // Función para obtener divisas desde el backend
+     function obtenerDivisas() {
+         mostrarCargando(true);  // Mostrar spinner de carga
+         fetch('http://localhost:8080/divisas')
+             .then(response => response.json())
+             .then(data => {
+                 divisas = data;
+                 let tablaDivisas = document.getElementById('tabla-divisas');
+                 let opcionesDivisaOrigen = document.getElementById('divisa-origen');
+                 let opcionesDivisaDestino = document.getElementById('divisa-destino');
 
-    // Función para convertir divisas
-    function convertirDivisa() {
-        let idOrigen = document.getElementById('divisa-origen').value;
-        let idDestino = document.getElementById('divisa-destino').value;
-        let cantidad = parseFloat(document.getElementById('cantidad').value);
+                 // Limpiar tabla previa
+                 tablaDivisas.innerHTML = '';
 
-        if (!idOrigen || !idDestino || !cantidad || isNaN(cantidad) || cantidad <= 0) {
-            document.getElementById('resultado').innerText = 'Por favor, ingresa una cantidad válida mayor a cero.';
-            return;
-        }
+                 // Filtrar solo las divisas activas
+                 const divisasActivas = data.filter(divisa => divisa.status === true);
 
-        let divisaOrigen = divisas.find(d => d.id == idOrigen) || { compra: 1, nombre: "Peso Argentino" };
-        let divisaDestino = divisas.find(d => d.id == idDestino) || { venta: 1, nombre: "Peso Argentino" };
+                 // Llenar tabla y selectores con las divisas activas
+                 divisasActivas.forEach(divisa => {
+                     let fila = `<tr>
+                             <td>${divisa.nombre}</td>
+                             <td>${divisa.compra}</td>
+                             <td>${divisa.venta}</td>
+                         </tr>`;
+                     tablaDivisas.innerHTML += fila;
 
-        let resultado = 0;
+                     if (divisa.nombre !== 'Peso Argentino') {
+                         let opcion = `<option value="${divisa.id}">${divisa.nombre}</option>`;
+                         opcionesDivisaOrigen.innerHTML += opcion;
+                         opcionesDivisaDestino.innerHTML += opcion;
+                     }
+                 });
+                 mostrarCargando(false);  // Ocultar spinner de carga
+             })
+             .catch(error => {
+                 console.error('Error:', error);
+                 mostrarCargando(false);  // Ocultar spinner de carga en caso de error
+             });
+     }
 
-        if (idOrigen === idDestino) {
-            resultado = cantidad;
-        } else if (idOrigen === 'ARS') {
-            resultado = cantidad / divisaDestino.venta;
-        } else if (idDestino === 'ARS') {
-            resultado = cantidad * divisaOrigen.compra;
-        } else {
-            let aPesos = cantidad * divisaOrigen.compra;
-            resultado = aPesos / divisaDestino.venta;
-        }
+     // Función para convertir divisas
+     function convertirDivisa() {
+         let idOrigen = document.getElementById('divisa-origen').value;
+         let idDestino = document.getElementById('divisa-destino').value;
+         let cantidad = parseFloat(document.getElementById('cantidad').value);
 
-        document.getElementById('resultado').innerText = `Resultado: ${resultado.toFixed(2)} ${divisaDestino.nombre}`;
-    }
+         if (!idOrigen || !idDestino || !cantidad || isNaN(cantidad) || cantidad <= 0) {
+             document.getElementById('resultado').innerText = 'Por favor, ingresa una cantidad válida mayor a cero.';
+             return;
+         }
 
-    window.onload = obtenerDivisas;
-</script>
-</body>
-</html>
+         let divisaOrigen = divisas.find(d => d.id == idOrigen) || { compra: 1, nombre: "Peso Argentino" };
+         let divisaDestino = divisas.find(d => d.id == idDestino) || { venta: 1, nombre: "Peso Argentino" };
+
+         let resultado = 0;
+
+         if (idOrigen === idDestino) {
+             resultado = cantidad;
+         } else if (idOrigen === 'ARS') {
+             resultado = cantidad / divisaDestino.venta;
+         } else if (idDestino === 'ARS') {
+             resultado = cantidad * divisaOrigen.compra;
+         } else {
+             let aPesos = cantidad * divisaOrigen.compra;
+             resultado = aPesos / divisaDestino.venta;
+         }
+
+         document.getElementById('resultado').innerText = `Resultado: ${resultado.toFixed(2)} ${divisaDestino.nombre}`;
+     }
+
+     window.onload = obtenerDivisas;
+ </script>
+ </body>
+ </html>
