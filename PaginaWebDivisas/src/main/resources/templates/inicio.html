@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cotizaciones DeFi</title>
-    <link rel="icon" href="/static/img/Defilogo1.png" type="image/x-icon">
     <link rel="stylesheet" href="/css/styles.css"> <!-- Enlace al archivo CSS -->
     <link rel="icon" href="/img/Defilogo1.png" type="image/x-icon">
 </head>
@@ -112,7 +111,7 @@
      // Función para obtener divisas desde el backend
      function obtenerDivisas() {
          mostrarCargando(true);  // Mostrar spinner de carga
-         fetch('http://91.108.125.163:8080/divisas')
+         fetch('')
              .then(response => response.json()) 
              .then(data => {
                  divisas = data;
