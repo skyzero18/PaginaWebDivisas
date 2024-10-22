@@ -111,7 +111,7 @@
      // Función para obtener divisas desde el backend
      function obtenerDivisas() {
          mostrarCargando(true);  // Mostrar spinner de carga
-         fetch('http://91.108.125.163:8080/divisas')
+         fetch('https://91.108.125.163:8080/divisas')
              .then(response => response.json()) 
              .then(data => {
                  divisas = data;
