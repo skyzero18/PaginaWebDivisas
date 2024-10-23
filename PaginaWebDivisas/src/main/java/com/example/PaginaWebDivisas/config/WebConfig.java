@@ -11,6 +11,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**") // Permitir todas las rutas
                 .allowedOrigins("http://127.0.0.1:5500") // Permitir solicitudes desde este origen
                 .allowedOrigins("https://www.cotizacionesdefi.com")
+                .allowedOrigins("https://127.0.0.1:8443")
                 .allowedMethods("GET", "POST", "PATCH", "DELETE", "OPTIONS") // Métodos permitidos
                 .allowCredentials(true); // Permitir el uso de credenciales (como cookies o sesiones)
     }
