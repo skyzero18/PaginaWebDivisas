@@ -93,7 +93,7 @@
                 };
 
                 // Si existe ID, se hace PATCH, de lo contrario POST
-                const url = id ? `https://91.108.125.163:8080/divisas/${id}` : `https://91.108.125.163:8080/divisas`;
+                const url = id ? `https://91.108.125.163:8443/divisas/${id}` : `https://91.108.125.163:8443/divisas`;
                 const method = id ? 'PATCH' : 'POST';
 
                 fetch(url, {
@@ -139,7 +139,7 @@
                     // Configurar el cuerpo de la solicitud para establecer el status a false
                     const divisaData = { status: false };
 
-                    fetch(`https://91.108.125.163:8080/divisas/${id}`, {
+                    fetch(`https://91.108.125.163:8443/divisas/${id}`, {
                         method: 'PATCH',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(divisaData) // Enviar el nuevo estado
@@ -163,7 +163,7 @@
 
 
         function obtenerDivisas() {
-            fetch('https://91.108.125.163:8080/divisas')
+            fetch('https://91.108.125.163:8443/divisas')
                 .then(response => response.json())
                 .then(data => {
                     let tablaDivisas = document.getElementById('tabla-divisas').getElementsByTagName('tbody')[0];
@@ -193,7 +193,7 @@
         }
 
         function editarDivisa(id) {
-            fetch(`https://91.108.125.163:8080/divisas/${id}`)
+            fetch(`https://91.108.125.163:8443/divisas/${id}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al obtener la divisa.');
@@ -213,7 +213,7 @@
         }
 
         function obtenerLogs() {
-        fetch('https://91.108.125.163:8080/logs')
+        fetch('https://91.108.125.163:8443/logs')
             .then(response => response.json())
             .then(data => {
                 let tablaLogs = document.getElementById('tabla-logs').getElementsByTagName('tbody')[0];
@@ -235,7 +235,7 @@
     }
 
         function cerrarSesion() {
-            fetch('https://91.108.125.163:8080/auth/logout', {
+            fetch('https://91.108.125.163:8443/auth/logout', {
                 method: 'POST',
                 credentials: 'include' // Incluye las cookies de sesión
             })
@@ -260,7 +260,7 @@
 
 
         function irainicio() {
-            fetch('http://91.108.125.163:8080/auth/inicio', {
+            fetch('http://91.108.125.163:8443/auth/inicio', {
                 method: 'POST',
                 credentials: 'include'
             })
@@ -284,7 +284,7 @@
 
 
         function verificarUsuario() {
-            fetch('http://91.108.125.163:8080/auth/checkSession', {
+            fetch('http://91.108.125.163:8443/auth/checkSession', {
                 method: 'GET',
                 credentials: 'include' // Incluir cookies de sesión
             })
