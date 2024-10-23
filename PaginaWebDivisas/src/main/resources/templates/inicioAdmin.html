@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administración de Divisas</title>
+    <link rel="icon" href="/img/Defilogo1.png" type="image/x-icon">
     <link rel="stylesheet" href="/css/stylesAdmin.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="icon" href="/img/Defilogo1.png" type="image/x-icon">
 </head>
 <body>
     <header>
@@ -260,7 +260,7 @@
 
 
         function irainicio() {
-            fetch('http://91.108.125.163:8443/auth/inicio', {
+            fetch('https://91.108.125.163:8443/auth/inicio', {
                 method: 'POST',
                 credentials: 'include'
             })
@@ -284,7 +284,7 @@
 
 
         function verificarUsuario() {
-            fetch('http://91.108.125.163:8443/auth/checkSession', {
+            fetch('https://91.108.125.163:8443/auth/checkSession', {
                 method: 'GET',
                 credentials: 'include' // Incluir cookies de sesión
             })
