@@ -6,6 +6,8 @@ import com.example.PaginaWebDivisas.repository.DivisasRepo;
 import com.example.PaginaWebDivisas.repository.LogsRepo;
 import com.example.PaginaWebDivisas.repository.UsuariosRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 
@@ -44,6 +46,11 @@ public class LogsServiceImpl implements LogsService {
     public Logs patchLog(Long id, Map<String, Object> updates) {
         Logs existingLog = getLogById(id);
 
+        // Obtiene el usuario autenticado
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication != null ? authentication.getName() : "Desconocido";
+        Usuarios usuarioAutenticado = findUsuarioByUsername(username); // Método para encontrar el usuario autenticado
+
         updates.forEach((key, value) -> {
             switch (key) {
                 case "usuarios":
@@ -52,7 +59,7 @@ public class LogsServiceImpl implements LogsService {
                         if (usuarioMap.containsKey("id") && usuarioMap.get("id") instanceof Number) {
                             Long usuarioId = ((Number) usuarioMap.get("id")).longValue();
 
-                            // Método para buscar un usuario por id (ejemplo: findUsuarioById)
+                            // Método para buscar un usuario por id
                             Usuarios usuario = findUsuarioById(usuarioId);
 
                             if (usuario != null) {
@@ -67,6 +74,7 @@ public class LogsServiceImpl implements LogsService {
                         throw new IllegalArgumentException("Valor no válido para 'usuarios': " + value);
                     }
                     break;
+
                 case "divisas":
                     if (value instanceof Map) {
                         Map<String, Object> divisaMap = (Map<String, Object>) value;
@@ -78,13 +86,13 @@ public class LogsServiceImpl implements LogsService {
                             if (divisa != null) {
                                 existingLog.setDivisas(divisa);
                             } else {
-                                throw new IllegalArgumentException("Usuario no encontrado con id: " + divisaId);
+                                throw new IllegalArgumentException("Divisa no encontrada con id: " + divisaId);
                             }
                         } else {
-                            throw new IllegalArgumentException("Campo 'id' no válido en 'usuarios': " + divisaMap);
+                            throw new IllegalArgumentException("Campo 'id' no válido en 'divisas': " + divisaMap);
                         }
                     } else {
-                        throw new IllegalArgumentException("Valor no válido para 'usuarios': " + value);
+                        throw new IllegalArgumentException("Valor no válido para 'divisas': " + value);
                     }
                     break;
 
@@ -93,10 +101,11 @@ public class LogsServiceImpl implements LogsService {
             }
         });
 
+        // Registrar el usuario que realizó la modificación en el log
+        existingLog.setUsuarios(usuarioAutenticado);
+
         return logsRepo.save(existingLog);
     }
-
-
 
     private Usuarios findUsuarioById(Long usuarioId) {
         return usuariosRepo.findById(usuarioId)
@@ -105,8 +114,14 @@ public class LogsServiceImpl implements LogsService {
 
     private Divisas findDivisaById(Long divisaId) {
         return divisasRepo.findById(divisaId)
-                .orElseThrow(() -> new IllegalArgumentException("Usuario con id " + divisaId + " no encontrado."));
+                .orElseThrow(() -> new IllegalArgumentException("Divisa con id " + divisaId + " no encontrada."));
     }
+
+    private Usuarios findUsuarioByUsername(String username) {
+        return usuariosRepo.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario " + username + " no encontrado."));
+    }
+
 
     @Override
     public void deleteLog(Long id) {
