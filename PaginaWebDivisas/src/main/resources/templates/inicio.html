@@ -106,41 +106,51 @@
 
      // Función para obtener divisas desde el backend
      function obtenerDivisas() {
-         mostrarCargando(true);  // Mostrar spinner de carga
+         mostrarCargando(true);
          fetch('https://cotizacionesdefi.com:8443/divisas')
-             .then(response => response.json()) 
+             .then(response => response.json())
              .then(data => {
+                 console.log("Datos recibidos:", data); // Verificar la estructura de datos
                  divisas = data;
+
+                 if (!Array.isArray(divisas)) {
+                     console.error("La respuesta no es un array:", divisas);
+                     return;
+                 }
+
+                 // Filtrar solo las divisas activas
+                 const divisasActivas = divisas.filter(divisa => divisa.status === true);
+
                  let tablaDivisas = document.getElementById('tabla-divisas');
                  let opcionesDivisaOrigen = document.getElementById('divisa-origen');
                  let opcionesDivisaDestino = document.getElementById('divisa-destino');
 
                  // Limpiar tabla previa
                  tablaDivisas.innerHTML = '';
+                 opcionesDivisaOrigen.innerHTML = '<option value="ARS" selected>ARS</option>';
+                 opcionesDivisaDestino.innerHTML = '<option value="ARS" selected>ARS</option>';
 
-                 // Filtrar solo las divisas activas
-                 const divisasActivas = data.filter(divisa => divisa.status === true);
-
-                 // Llenar tabla y selectores con las divisas activas
                  divisasActivas.forEach(divisa => {
-                     let fila = `<tr>
-                             <td>${divisa.nombre}</td>
-                             <td>${divisa.compra}</td>
-                             <td>${divisa.venta}</td>
-                         </tr>`;
-                     tablaDivisas.innerHTML += fila;
+                     if (divisa.id && divisa.nombre && divisa.compra && divisa.venta) { // Verifica si existen estas propiedades
+                         let fila = `<tr>
+                        <td>${divisa.nombre}</td>
+                        <td>${divisa.compra}</td>
+                        <td>${divisa.venta}</td>
+                    </tr>`;
+                         tablaDivisas.innerHTML += fila;
 
-                     if (divisa.nombre !== 'Peso Argentino') {
                          let opcion = `<option value="${divisa.id}">${divisa.nombre}</option>`;
                          opcionesDivisaOrigen.innerHTML += opcion;
                          opcionesDivisaDestino.innerHTML += opcion;
+                     } else {
+                         console.warn("Divisa con datos incompletos:", divisa);
                      }
                  });
-                 mostrarCargando(false);  // Ocultar spinner de carga
+                 mostrarCargando(false);
              })
              .catch(error => {
-                 console.error('Error:', error);
-                 mostrarCargando(false);  // Ocultar spinner de carga en caso de error
+                 console.error('Error al obtener las divisas:', error);
+                 mostrarCargando(false);
              });
      }
 
