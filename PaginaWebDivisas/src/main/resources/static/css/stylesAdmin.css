@@ -1,9 +1,13 @@
 html, body {
     height: 100%;  /* Asegura que el cuerpo ocupe toda la altura de la página */
     margin: 0;     /* Elimina los márgenes predeterminados */
+    overflow-x: hidden;
 }
 
 body {
+    display: flex;
+    flex-direction: column; /* Coloca los elementos en columna */
+    justify-content: space-between;
     font-family: 'Avalon', sans-serif;
     margin: 0;
     padding: 0;
@@ -21,6 +25,12 @@ header {
     grid-template-columns: auto 1fr auto; /* Para el botón de inicio, el título, y el botón de cerrar sesión */
     align-items: center; 
     padding: 10px;
+    width: 100%; /* Asegura que el header ocupe todo el ancho de la página */
+    position: fixed; /* Hace que el header se quede fijo en la parte superior */
+    top: 0; /* Asegura que esté en la parte superior */
+    left: 0; /* Alinea a la izquierda */
+    z-index: 1000; /* Coloca el header sobre cualquier otro contenido */
+    box-shadow: 0 4px 2px -2px rgba(0,0,0,0.1); /* Añade una ligera sombra para separarlo del contenido */
 }
 
 header h1 {
@@ -31,7 +41,9 @@ header h1 {
 h1{
     text-align: center;
 }
-
+.main {
+    margin-top: 70px; /* Ajusta el espacio debajo del header fijo */
+}
 
 #inicioButton {
     background-color: transparent;
@@ -187,4 +199,10 @@ footer a:hover {
 @font-face {
     font-family: 'Avalon';
     src: url('fond/Avalon\ Bold.ttf') format('truetype');
+}
+
+@media (max-width: 480px) {
+    html, body {
+        overflow-x: hidden; /* Previene el desplazamiento horizontal */
+    }
 }
