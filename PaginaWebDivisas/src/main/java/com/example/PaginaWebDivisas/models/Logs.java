@@ -1,4 +1,5 @@
 package com.example.PaginaWebDivisas.models;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,5 +30,4 @@ public class Logs {
     @ManyToOne(targetEntity = Divisas.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "divisas_id")
     private Divisas divisas;
-
 }

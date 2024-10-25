@@ -1,8 +1,10 @@
 package com.example.PaginaWebDivisas.repository;
+
 import com.example.PaginaWebDivisas.models.Logs;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
-@Repository
 public interface LogsRepo extends JpaRepository<Logs, Long> {
+    // Método para encontrar logs por el ID del usuario
+    List<Logs> findByUsuariosId(Long usuarioId);
 }

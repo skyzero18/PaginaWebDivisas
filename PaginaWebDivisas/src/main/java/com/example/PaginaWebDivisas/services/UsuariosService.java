@@ -15,4 +15,7 @@ public interface UsuariosService {
 
     // Método para buscar usuario por nombre de usuario (username)
     Optional<Usuarios> findByUsername(String username);
+
+    // Método para buscar usuario por email
+    Optional<Usuarios> findByEmail(String email);
 }

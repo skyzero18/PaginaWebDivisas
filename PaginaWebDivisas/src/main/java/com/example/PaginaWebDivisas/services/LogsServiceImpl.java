@@ -1,4 +1,5 @@
 package com.example.PaginaWebDivisas.services;
+
 import com.example.PaginaWebDivisas.models.Divisas;
 import com.example.PaginaWebDivisas.models.Logs;
 import com.example.PaginaWebDivisas.models.Usuarios;
@@ -10,10 +11,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class LogsServiceImpl implements LogsService {
@@ -36,11 +37,14 @@ public class LogsServiceImpl implements LogsService {
         return logsRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se encontraron logs con id " + id));
     }
+
+    /**
+     * Método para obtener el nombre de usuario autenticado o "Desconocido" si no está autenticado.
+     */
     private String getAuthenticatedUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (authentication != null) ? authentication.getName() : "Desconocido";
     }
-
 
     @Override
     public Logs saveLog(Logs logs) {
@@ -57,6 +61,9 @@ public class LogsServiceImpl implements LogsService {
         return logsRepo.save(logs);
     }
 
+    /**
+     * Método auxiliar para extraer una divisa de un mapa, validando que contenga el campo "id".
+     */
     private Divisas extractDivisaFromMap(Map<?, ?> divisaMap) {
         if (divisaMap.containsKey("id") && divisaMap.get("id") instanceof Number) {
             Long divisaId = ((Number) divisaMap.get("id")).longValue();
@@ -65,11 +72,13 @@ public class LogsServiceImpl implements LogsService {
             throw new IllegalArgumentException("Campo 'id' no válido en 'divisas'");
         }
     }
+
     public class LogNotFoundException extends RuntimeException {
         public LogNotFoundException(Long id) {
             super("No se encontraron logs con id " + id);
         }
     }
+
     @Override
     public Logs patchLog(Long id, Map<String, Object> updates) {
         Logs existingLog = getLogById(id);
@@ -95,31 +104,53 @@ public class LogsServiceImpl implements LogsService {
             }
         });
 
-        // Registrar el usuario que realizó la modificación en el log
+        // Registrar el usuario que realizó la modificación
         existingLog.setUsuarios(usuarioAutenticado);
 
         return logsRepo.save(existingLog);
     }
 
-
-
+    /**
+     * Método auxiliar para encontrar un usuario por su ID y lanzar una excepción si no se encuentra.
+     */
     private Usuarios findUsuarioById(Long usuarioId) {
         return usuariosRepo.findById(usuarioId)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario con id " + usuarioId + " no encontrado."));
     }
 
+    /**
+     * Método auxiliar para encontrar una divisa por su ID y lanzar una excepción si no se encuentra.
+     */
     private Divisas findDivisaById(Long divisaId) {
         return divisasRepo.findById(divisaId)
                 .orElseThrow(() -> new IllegalArgumentException("Divisa con id " + divisaId + " no encontrada."));
     }
 
+    /**
+     * Método auxiliar para encontrar un usuario por su nombre de usuario y lanzar una excepción si no se encuentra.
+     */
     private Usuarios findUsuarioByUsername(String username) {
         return usuariosRepo.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario " + username + " no encontrado."));
     }
 
     @Override
+    public List<Logs> findLogsByUsuario(Long usuarioId) {
+        return logsRepo.findByUsuariosId(usuarioId); // Asegúrate de que este método esté definido en tu repositorio
+    }
+
+    @Override
     public void deleteLog(Long id) {
-        logsRepo.deleteById(id);
+        // Obtener el usuario autenticado
+        String username = getAuthenticatedUsername();
+        Usuarios usuarioAutenticado = findUsuarioByUsername(username);
+
+        // Obtener el log a eliminar
+        Logs logToDelete = getLogById(id);
+
+        // Registrar el usuario que realizó la eliminación
+        logToDelete.setUsuarios(usuarioAutenticado);
+
+        logsRepo.delete(logToDelete);
     }
 }

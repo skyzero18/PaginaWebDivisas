@@ -102,5 +102,16 @@
 			</plugin>
 		</plugins>
 	</build>
+	<dependency>
+		<groupId>org.hibernate.validator</groupId>
+		<artifactId>hibernate-validator</artifactId>
+		<version>6.2.0.Final</version> <!-- Asegúrate de usar la versión adecuada -->
+	</dependency>
+	<dependency>
+		<groupId>javax.validation</groupId>
+		<artifactId>validation-api</artifactId>
+		<version>2.0.1.Final</version> <!-- Asegúrate de usar la versión adecuada -->
+	</dependency>
+
 
 </project>
