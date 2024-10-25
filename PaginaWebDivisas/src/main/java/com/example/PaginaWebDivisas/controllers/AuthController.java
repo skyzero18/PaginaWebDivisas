@@ -36,7 +36,7 @@ public class AuthController {
             session.setAttribute("user", username);
             System.out.println("Usuario almacenado en sesión: " + username);
             System.out.println("ID de sesión en login: " + session.getId());
-            return ResponseEntity.ok().body(Map.of("redirectUrl", "/inicioAdmin.html"));
+            return ResponseEntity.ok().body(Map.of("redirectUrl", "/admin"));
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o contraseña incorrectos");
@@ -46,7 +46,7 @@ public class AuthController {
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
         try {
             request.getSession().invalidate();
-            return ResponseEntity.ok(Map.of("redirectUrl", "/login.html"));
+            return ResponseEntity.ok(Map.of("redirectUrl", "/login"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al cerrar la sesión");
         }
