@@ -43,7 +43,7 @@ body {
 .ftx {
     text-align: center;
     font-size: 140%;
-    color: #fff;
+    color: #ffffff;
     background-color: #2268c2; /* Asegúrate de que el color de fondo esté presente */
     position: fixed; /* Para posicionar el texto en movimiento */
     left: 0; /* Asegura que esté alineado a la izquierda */
@@ -57,12 +57,12 @@ body {
 
 .ftx span {
     display: inline-block; /* Permite que el texto se mueva en línea */
-    animation: moveText 18s linear infinite; /* Aplica la animación solo al texto */
+    animation: moveText 12s linear infinite; /* Aplica la animación solo al texto */
 }
 
 @keyframes moveText {
     0% {
-        transform: translateX(+100%); /* Empieza fuera de la pantalla a la izquierda */
+        transform: translateX(+35%); /* Empieza fuera de la pantalla a la izquierda */
     }
     100% {
         transform: translateX(-100%); /* Termina fuera de la pantalla a la derecha */
@@ -82,8 +82,9 @@ body {
     display: flex; /* Coloca las cajas en fila */
     justify-content: space-around; /* Distribuye las cajas con espacio alrededor */
     flex-wrap: wrap; /* Permite que las cajas salten a nuevas filas si es necesario */
-    max-width: 50%; /* Controla el ancho total del contenedor (80% del ancho de la página) */
+    max-width: 70%; /* Controla el ancho total del contenedor (80% del ancho de la página) */
     margin: 0 auto; /* Centra el contenedor en la página */
+    gap: 10px;
 }
 
 .box {
@@ -137,7 +138,7 @@ img {
 }
 
 .exchange-table th {
-    background-color: #2268c2;
+    background-color: #00913e;
     color: white;
 }
 
@@ -319,7 +320,7 @@ footer a:hover {
 
 /* Main Section */
 .main {
-    margin-top: 60px; /* Para dejar espacio debajo del header fijo */
+    margin-top: 70px; /* Para dejar espacio debajo del header fijo */
     text-align: center;
     padding: 20px;
     flex: 1; /* Permite que el contenido principal crezca y ocupe el espacio disponible */

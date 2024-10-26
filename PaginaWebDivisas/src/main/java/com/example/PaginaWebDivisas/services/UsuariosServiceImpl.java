@@ -3,6 +3,7 @@ package com.example.PaginaWebDivisas.services;
 import com.example.PaginaWebDivisas.models.Usuarios;
 import com.example.PaginaWebDivisas.repository.UsuariosRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder; // Importa PasswordEncoder
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +12,12 @@ import java.util.Optional;
 
 @Service
 public class UsuariosServiceImpl implements UsuariosService {
+
     @Autowired
     private UsuariosRepo usuariosRepo;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder; // Inyecta PasswordEncoder
 
     @Override
     public List<Usuarios> getAllUsuarios() {
@@ -21,12 +26,17 @@ public class UsuariosServiceImpl implements UsuariosService {
 
     @Override
     public Usuarios getUsuarioById(Long id) {
-        return usuariosRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("No se encontró el usuario con id " + id));
+        Optional<Usuarios> usuario = usuariosRepo.findById(id);
+        if (usuario.isPresent()) {
+            return usuario.get();
+        }
+        throw new RuntimeException("No se encontraron usuarios con id " + id);
     }
 
     @Override
     public Usuarios saveUsuario(Usuarios usuario) {
+        // Encripta la contraseña antes de guardarla
+        usuario.setContraseña(passwordEncoder.encode(usuario.getContraseña()));
         return usuariosRepo.save(usuario);
     }
 
@@ -40,20 +50,21 @@ public class UsuariosServiceImpl implements UsuariosService {
                     existingUsuario.setNombre((String) value);
                     break;
                 case "contraseña":
-                    existingUsuario.setContraseña((String) value);
+                    // Encripta la contraseña si se actualiza
+                    existingUsuario.setContraseña(passwordEncoder.encode((String) value));
                     break;
-                // Añade más casos según tus campos
-                default:
-                    throw new IllegalArgumentException("Campo no reconocido: " + key);
             }
         });
 
         return usuariosRepo.save(existingUsuario);
     }
-
     @Override
     public List<Usuarios> findByNombre(String nombre) {
-        return usuariosRepo.findByNombre(nombre); // Asegúrate de que este método esté definido en tu repositorio
+        List<Usuarios> usuarios = usuariosRepo.findByNombre(nombre);
+        if (usuarios.isEmpty()) {
+            return null; // O lanzar una excepción según tu lógica
+        }
+        return usuarios;
     }
 
     @Override
@@ -63,11 +74,8 @@ public class UsuariosServiceImpl implements UsuariosService {
 
     @Override
     public Optional<Usuarios> findByUsername(String username) {
-        return usuariosRepo.findByUsername(username); // Asegúrate de que este método esté definido en tu repositorio
+        return usuariosRepo.findByNombre(username).stream().findFirst();
     }
 
-    @Override
-    public Optional<Usuarios> findByEmail(String email) {
-        return usuariosRepo.findByEmail(email); // Asegúrate de que este método esté definido en tu repositorio
-    }
+
 }

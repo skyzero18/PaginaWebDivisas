@@ -87,19 +87,23 @@
 
             if (nombre && compra && venta) {
                 let divisaData = {
-                    nombre: nombre,
-                    compra: parseFloat(compra),
-                    venta: parseFloat(venta)
+                    "nombre": nombre,
+                    "compra": parseFloat(compra),
+                    "venta": parseFloat(venta)
                 };
 
                 // Si existe ID, se hace PATCH, de lo contrario POST
-                const url = id ? `https://cotizacionesdefi.com:8443/divisas/${id}` : `https://cotizacionesdefi.com:8443/divisas`;
+                const url = id ? `https://cotizacionesdefi.com/divisas/${id}` : `https://cotizacionesdefi.com/divisas`;
                 const method = id ? 'PATCH' : 'POST';
 
                 fetch(url, {
                     method: method,
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(divisaData)
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json' // Cambiar a 'application/json' para más claridad
+                    },
+                    body: JSON.stringify(divisaData),
+                    credentials: 'include'
                 })
                 .then(response => {
                     if (!response.ok) {
@@ -126,6 +130,7 @@
             }
         }
 
+
         function eliminarDivisa(id) {
             Swal.fire({
                 title: '¿Estás seguro?',
@@ -139,10 +144,11 @@
                     // Configurar el cuerpo de la solicitud para establecer el status a false
                     const divisaData = { status: false };
 
-                    fetch(`https://cotizacionesdefi.com:8443/divisas/${id}`, {
+                    fetch(`https://cotizacionesdefi.com/divisas/${id}`, {
                         method: 'PATCH',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(divisaData) // Enviar el nuevo estado
+                        body: JSON.stringify(divisaData) ,
+                        credentials:"include"
                     })
                     .then(response => {
                         if (response.ok) {
@@ -163,7 +169,7 @@
 
 
         function obtenerDivisas() {
-            fetch('https://cotizacionesdefi.com:8443/divisas')
+            fetch('https://cotizacionesdefi.com/divisas')
                 .then(response => response.json())
                 .then(data => {
                     let tablaDivisas = document.getElementById('tabla-divisas').getElementsByTagName('tbody')[0];
@@ -193,7 +199,9 @@
         }
 
         function editarDivisa(id) {
-            fetch(`https://cotizacionesdefi.com:8443/divisas/${id}`)
+            fetch(`https://cotizacionesdefi.com/divisas/${id}`, {
+                credentials:"include"
+            })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al obtener la divisa.');
@@ -213,18 +221,22 @@
         }
 
         function obtenerLogs() {
-            fetch('https://cotizacionesdefi.com:8443/logs')
+            fetch('https://cotizacionesdefi.com/logs')
                 .then(response => response.json())
                 .then(data => {
+                    // Ordenar los logs por fecha de creación de más reciente a más antigua
+                    data.sort((a, b) => new Date(b.fechaCreacion) - new Date(a.fechaCreacion));
+
                     let tablaLogs = document.getElementById('tabla-logs').getElementsByTagName('tbody')[0];
                     tablaLogs.innerHTML = '';
 
+                    // Crear las filas de la tabla con los logs ordenados
                     data.forEach(log => {
                         let fila = `<tr>
-                            <td>${log.usuarios.nombre}</td>
-                            <td>${log.divisas.nombre}</td>
-                            <td>${new Date(log.fechaCreacion).toLocaleString()}</td>
-                        </tr>`;
+                                        <td>${log.usuarios.nombre}</td>
+                                        <td>${log.divisas.nombre}</td>
+                                        <td>${new Date(log.fechaCreacion).toLocaleString()}</td>
+                                    </tr>`;
                         tablaLogs.innerHTML += fila;
                     });
                 })
@@ -232,11 +244,11 @@
                     console.error('Error:', error);
                     Swal.fire('Ocurrió un error al obtener los logs.');
                 });
+
         }
 
-
         function cerrarSesion() {
-            fetch('https://cotizacionesdefi.com:8443/auth/logout', {
+            fetch('https://cotizacionesdefi.com/auth/logout', {
                 method: 'POST',
                 credentials: 'include' // Incluye las cookies de sesión
             })
@@ -261,7 +273,7 @@
 
 
         function irainicio() {
-            fetch('https://cotizacionesdefi.com:8443/auth/inicio', {
+            fetch('https://cotizacionesdefi.com/auth/inicio', {
                 method: 'POST',
                 credentials: 'include'
             })
@@ -285,7 +297,7 @@
 
 
         function verificarUsuario() {
-            fetch('https://cotizacionesdefi.com:8443/auth/checkSession', {
+            fetch('https://cotizacionesdefi.com/auth/checkSession', {
                 method: 'GET',
                 credentials: 'include' // Incluir cookies de sesión
             })
@@ -306,7 +318,7 @@
 
         // Llama a verificarUsuario al cargar la página
         window.onload = function() {
-            verificarUsuario()
+            
             obtenerDivisas();
             obtenerLogs();
         };

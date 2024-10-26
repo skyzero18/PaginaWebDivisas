@@ -23,19 +23,19 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    String username;
-    String password;
+    @Autowired
+    private HttpSession httpSession;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> credentials, HttpSession session) {
-        username = credentials.get("username");
-        password = credentials.get("password");
+    public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
+        String username = credentials.get("username");
+        String password = credentials.get("password");
         var usuarioOptional = usuariosService.findByUsername(username);
 
         if (usuarioOptional.isPresent() && passwordEncoder.matches(password, usuarioOptional.get().getContraseña())) {
-            session.setAttribute("user", username);
+            httpSession.setAttribute("user", username);
             System.out.println("Usuario almacenado en sesión: " + username);
-            System.out.println("ID de sesión en login: " + session.getId());
+            System.out.println("ID de sesión en login: " + httpSession.getId());
             return ResponseEntity.ok().body(Map.of("redirectUrl", "/admin"));
         }
 
@@ -70,12 +70,16 @@ public class AuthController {
     }
 
     @GetMapping("/verify")
-    public ResponseEntity<?> verifySession(HttpSession session) {
-        String user = (String) session.getAttribute("user");
-        if (user != null) {
-            return ResponseEntity.ok(Map.of("autenticado", true, "redirectUrl", "/inicioAdmin.html"));
-        } else {
-            return ResponseEntity.ok(Map.of("autenticado", false, "redirectUrl", "/login.html"));
+    public ResponseEntity<?> verifySession() {
+        String user = (String) httpSession.getAttribute("user");
+        System.out.println("Usuario de la sesión: " + user);
+        System.out.println("ID de sesión en verify: " + httpSession.getId());
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No hay usuario autenticado");
         }
+
+        return ResponseEntity.ok().body("Usuario autenticado: " + user);
     }
 }
+

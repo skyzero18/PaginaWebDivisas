@@ -1,5 +1,4 @@
 package com.example.PaginaWebDivisas.services;
-
 import com.example.PaginaWebDivisas.models.Usuarios;
 import java.util.List;
 import java.util.Map;
@@ -13,9 +12,6 @@ public interface UsuariosService {
     List<Usuarios> findByNombre(String nombre);
     void deleteUsuario(Long id);
 
-    // Método para buscar usuario por nombre de usuario (username)
+    // Agrega el nuevo método
     Optional<Usuarios> findByUsername(String username);
-
-    // Método para buscar usuario por email
-    Optional<Usuarios> findByEmail(String email);
 }

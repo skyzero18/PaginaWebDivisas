@@ -43,24 +43,28 @@ public class DivisasServiceImpl implements DivisasService {
 
 
     @Override
-    public Divisas saveDivisa(Divisas divisas, HttpSession httpSession) {
+    public Divisas saveDivisa(Divisas divisas) {
+
+        String user = (String) httpSession.getAttribute("user");
+        System.out.println("Usuario de la sesión: " + user);
+        System.out.println("ID de sesión en verify: " + httpSession.getId());
+
         divisas.setStatus(true);
         Divisas nuevaDivisa = divisasRepo.save(divisas);
-        Usuarios usuarioEjemplo = usuariosRepo.findById(1L).orElse(null);
+        Usuarios usuarioEjemplo = usuariosRepo.findByUsername(user).orElse(null);
         Logs nuevoLog = new Logs();
         nuevoLog.setFechaCreacion(LocalDateTime.now());
         nuevoLog.setDivisas(nuevaDivisa);
         nuevoLog.setUsuarios(usuarioEjemplo);
 
-        String user = (String) httpSession.getAttribute("user");
-        System.out.println("usuario de la sesion " + user);
+
 
         logsRepo.save(nuevoLog);
         return divisasRepo.save(divisas);
     }
 
     @Override
-    public Divisas patchDivisa(Long id, Map<String, Object> updates) {
+    public Divisas patchDivisa(Long id, Map<String, Object> updates, Divisas divisas) {
         Divisas existingDivisa = getDivisaById(id);
 
         updates.forEach((key, value) -> {
@@ -81,7 +85,12 @@ public class DivisasServiceImpl implements DivisasService {
                     throw new IllegalArgumentException("Campo no reconocido: " + key);
             }
         });
-        Usuarios usuarioEjemplo = usuariosRepo.findById(1L).orElse(null);
+
+        String user = (String) httpSession.getAttribute("user");
+        System.out.println("Usuario de la sesión: " + user);
+        System.out.println("ID de sesión en verify: " + httpSession.getId());
+
+        Usuarios usuarioEjemplo = usuariosRepo.findByUsername(user).orElse(null);
         Logs nuevoLog = new Logs();
         nuevoLog.setFechaCreacion(LocalDateTime.now());
         nuevoLog.setDivisas(existingDivisa);

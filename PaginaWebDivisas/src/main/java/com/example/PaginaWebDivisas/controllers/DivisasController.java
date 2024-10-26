@@ -25,13 +25,13 @@ public class DivisasController {
     }
 
     @PostMapping
-    public Divisas createDivisa(@RequestBody Divisas divisas, HttpSession httpSession) {
-        return divisasService.saveDivisa(divisas, httpSession);
+    public Divisas createDivisa(@RequestBody Divisas divisas) {
+        return divisasService.saveDivisa(divisas);
     }
 
     @PatchMapping("/{id}")
-    public Divisas patchDivisas(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
-        return divisasService.patchDivisa(id, updates);
+    public Divisas patchDivisas(@PathVariable Long id, @RequestBody Map<String, Object> updates, Divisas divisas) {
+        return divisasService.patchDivisa(id, updates, divisas);
     }
 
     @DeleteMapping("/{id}")
