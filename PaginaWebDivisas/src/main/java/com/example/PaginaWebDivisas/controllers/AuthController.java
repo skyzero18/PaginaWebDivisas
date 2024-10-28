@@ -57,6 +57,11 @@ public class AuthController {
         return ResponseEntity.ok().body(Map.of("redirectUrl", "/"));
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> irlogi() {
+        return ResponseEntity.ok().body(Map.of("redirectUrl", "/login"));
+    }
+
     @GetMapping("/checkSession")
     public ResponseEntity<?> checkSession(HttpSession session) {
         String user = (String) session.getAttribute("user");

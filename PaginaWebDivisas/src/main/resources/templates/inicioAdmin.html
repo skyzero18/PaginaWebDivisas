@@ -303,7 +303,20 @@
             if (usuarioVerificado) {
                 cargarContenido(); // Llama a cargar contenido si el usuario está verificado
             } else {
-                window.location.href = "/login"; // Redirige al login si no está verificado
+                fetch("https://cotizacionesdefi.com/auth/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.redirectUrl) {
+                        window.location.href = data.redirectUrl; // Redirige al login según la respuesta del servidor
+                    }
+                })
+                .catch(error => console.error("Error en la redirección:", error));
+            }
             }
         }
 
