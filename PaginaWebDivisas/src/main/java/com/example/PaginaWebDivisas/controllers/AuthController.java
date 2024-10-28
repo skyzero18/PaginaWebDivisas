@@ -57,7 +57,7 @@ public class AuthController {
         return ResponseEntity.ok().body(Map.of("redirectUrl", "/"));
     }
 
-    @PostMapping("/login")
+    @PostMapping("/loginpan")
     public ResponseEntity<?> irlogi() {
         return ResponseEntity.ok().body(Map.of("redirectUrl", "/login"));
     }
