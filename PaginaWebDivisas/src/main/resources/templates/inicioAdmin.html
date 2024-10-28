@@ -302,16 +302,14 @@
                 credentials: "include"
             })
             .then(response => {
-                return response.json()  // Convierte la respuesta a JSON
-                    .then(data => {
-                        if (response.ok) {
-                            cargarContenido();
-                            
-                        } else {
-                            Swal.fire('Error.');  // Corrección aquí
-                            throw new Error('Error en la respuesta');
-                        }
-                    });
+                if (response.ok) {
+                    cargarContenido();
+                    
+                } 
+                else {
+                    Swal.fire('Error.');  // Corrección aquí
+                    throw new Error('Error en la respuesta');
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
