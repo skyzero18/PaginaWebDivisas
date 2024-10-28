@@ -297,53 +297,36 @@
 
 
         function verificarUsuario() {
-            fetch("https://cotizacionesdefi.com/auth/checkSession", {
-                method: "GET",
+            fetch("https://cotizacionesdefi.com/auth/checkSession",{
+                method:"GET",
                 credentials: "include"
-            })
-            .then(response => {
+            }).then(response => {
                 if (response.ok) {
-                    return response.json();
+                    window.location.href = data.redirectUrl; 
                 } else {
-                    throw new Error("Usuario no autenticado");
+                    Swal.firert('Error.'); 
+                    throw new Error('Error en la respuesta');
                 }
             })
-            .then(data => {
-                if (data && data.redirectUrl) {
-                    // Si el backend envía una redirección en caso de no autenticación
-                    redirigirLogin();
-                } else {
-                    // Si el usuario está autenticado, se carga el contenido
-                    cargarContenido();
-                }
-            })
-            .catch(error => {
-                console.error("Error al verificar usuario:", error);
-                redirigirLogin();
-            });
+            if (usuarioVerificado) {
+                cargarContenido(); // Llama a cargar contenido si el usuario está verificado
+            } else {
+                fetch("https://cotizacionesdefi.com/auth/loginpan", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.redirectUrl) {
+                        window.location.href = data.redirectUrl; // Redirige al login según la respuesta del servidor
+                    }
+                })
+                .catch(error => console.error("Error en la redirección:", error));
+            }
+            
         }
-
-        function redirigirLogin() {
-            fetch("https://cotizacionesdefi.com/auth/loginpan", {
-                method: "POST",
-                credentials: "include"
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.redirectUrl) {
-                    window.location.href = data.redirectUrl;
-                } else {
-                    console.error("Error: No se recibió URL de redirección en la respuesta de loginpan.");
-                }
-            })
-            .catch(error => {
-                console.error("Error al obtener URL de redirección desde loginpan:", error);
-            });
-        }
-
-
-
-
 
         // Función para cargar todo el contenido de la página
         function cargarContenido() {
