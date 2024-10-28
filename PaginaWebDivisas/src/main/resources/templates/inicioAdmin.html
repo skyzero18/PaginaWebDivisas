@@ -305,16 +305,19 @@
                 if (response.ok) {
                     return response.json(); // Espera la respuesta JSON
                 } else {
-                    Swal.fire('Error.');  
-                    throw new Error('Error en la respuesta');
+                    return response.json().then(data => {
+                        throw new Error(data.redirectUrl || 'Usuario no autenticado'); // Lanza error con la URL de redirección
+                    });
                 }
             })
             .then(data => {
-                window.location.href = data.redirectUrl; 
+                // Si el usuario está autenticado, cargar contenido
                 cargarContenido();
             })
             .catch(error => {
                 console.error('Error:', error);
+                // Redirigir a la URL proporcionada por el backend
+                window.location.href = error.message; // Utiliza la URL de redirección del error
             });
         }
 
