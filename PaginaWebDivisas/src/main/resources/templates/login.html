@@ -33,35 +33,6 @@
 
     <script>
         // Función para verificar si el usuario ya está logueado
-        async function checkSession() {
-            try {
-                const currentUrl = window.location.pathname; // Obtén la ruta actual
-
-                const response = await fetch('https://cotizacionesdefi.com/auth/verify', {
-                    method: 'GET',
-                    credentials: 'include', // Permite el envío de cookies de sesión
-                });
-
-                if (response.ok) {
-                    const data = await response.json(); // Obtén los datos de la respuesta JSON
-                    if (data.autenticado) {
-                        if (currentUrl !== data.redirectUrl) {
-                            // Redirige solo si no estás ya en la página de inicio admin
-                            window.location.href = data.redirectUrl;
-                        }
-                    } else {
-                        if (currentUrl !== data.redirectUrl) {
-                            // Redirige solo si no estás ya en la página de login
-                            window.location.href = data.redirectUrl;
-                        }
-                    }
-                } else {
-                    console.error('Error en la respuesta del servidor:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error al verificar la sesión:', error);
-            }
-        }
 
         // Llama a la función para verificar la sesión al cargar la página
 
@@ -178,8 +149,32 @@
                 }
             });
         });
+
+
+        function verificarUsuario() {
+            fetch('https://cotizacionesdefi.com/auth/checkSession2', {
+                method: 'GET',
+                credentials: 'include' // Incluir cookies de sesión
+            })
+            .then(response => {
+                if (response.status === 401) {
+                    return response.json().then(data => {
+                        window.location.href = data.redirectUrl;
+                    });
+                }
+
+                return response.text();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('Ocurrió un error al verificar la sesión.');
+            });
+        }
+
+
+
         window.onload = function() {
-            checkSession();
+            verificarUsuario();
         };
     </script>
     
