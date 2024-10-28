@@ -39,6 +39,7 @@ header h1 {
     margin: 10px 0; /* Añadir margen superior e inferior */
 }
 h1{
+     margin-top: 100px; 
     text-align: center;
 }
 .main {
@@ -124,6 +125,14 @@ table {
     margin-bottom: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     min-width: 600px; /* Ancho mínimo para tablas más grandes */
+    
+    margin: 20px auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
 }
 
 thead {
