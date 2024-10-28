@@ -27,8 +27,8 @@ body {
 }
 
 .header h1 {
-    text-align: center;
-    font-size: 23px;
+    text-align: center; 
+    font-size: 23px; 
     margin: 20px 0; /* Añadir margen superior e inferior */
 }
 
@@ -72,7 +72,7 @@ body {
 @media (max-width: 800px) {
     .ftx {
         font-size: 100%
-
+        
     }
 }
 
@@ -89,7 +89,7 @@ body {
 
 .box {
     border: 1px solid #ccc; /* Borde de la caja */
-    width: 20%;
+    width: 20%; 
     box-sizing: border-box; /* Incluye el padding en el ancho total */
     word-wrap: break-word; /* Asegura que el texto haga saltos de línea */
     overflow-wrap: break-word; /* Evita que las palabras largas salgan de la caja */
@@ -109,12 +109,12 @@ img {
 /* Media Queries para tamaños de pantalla más pequeños */
 @media (max-width: 800px) {
     .container {
-        justify-content: center;
+        justify-content: center; 
         max-width: 100%;
     }
 
     .box {
-        width: 40%;
+        width: 40%; 
     }
 }
 
@@ -329,31 +329,4 @@ footer a:hover {
 @font-face {
     font-family: 'Avalon';
     src: url('fond/Avalon\ Bold.ttf') format('truetype');
-}
-/* Estilos de paginación */
-.pagination {
-    display: flex; /* Usar flexbox para la paginación */
-    justify-content: center; /* Centra los elementos de paginación */
-    margin: 20px 0; /* Margen superior e inferior */
-}
-
-.pagination a {
-    margin: 0 5px; /* Espacio entre los enlaces */
-    padding: 10px 15px; /* Espaciado interno */
-    border-radius: 5px; /* Bordes redondeados */
-    text-decoration: none; /* Sin subrayado */
-    background-color: #00913e; /* Color de fondo */
-    color: white; /* Color del texto */
-}
-
-.pagination a:hover {
-    background-color: #00642b; /* Color de fondo al pasar el mouse */
-}
-
-.pagination span {
-    margin: 0 5px; /* Espacio entre elementos */
-    padding: 10px 15px; /* Espaciado interno */
-    border-radius: 5px; /* Bordes redondeados */
-    background-color: rgba(0, 147, 62, 0.8); /* Color de fondo para el elemento activo */
-    color: white; /* Color del texto */
 }
