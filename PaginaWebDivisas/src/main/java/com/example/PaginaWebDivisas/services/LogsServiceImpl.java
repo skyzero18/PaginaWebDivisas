@@ -7,7 +7,6 @@ import com.example.PaginaWebDivisas.repository.LogsRepo;
 import com.example.PaginaWebDivisas.repository.UsuariosRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +25,9 @@ public class LogsServiceImpl implements LogsService {
     private DivisasRepo divisasRepo;
 
     @Override
-    public Page<Logs> getAllLogs(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+    public List<Logs> getAllLogs() {return logsRepo.findAll();}
+    @Override
+    public Page<Logs> getLogs(Pageable pageable) {
         return logsRepo.findAll(pageable);
     }
     @Override

@@ -9,107 +9,107 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-<header>
-    <button id="inicioButton" onclick="irainicio()">
-        <img src="/static/img/inicio.png" alt="Inicio">
-    </button>
-    <h1>DeFi</h1>
-    <button id="logoutbutton" onclick="cerrarSesion()">
-        <img src="/static/img/image.png" alt="Cerrar Sesión">
-    </button>
-</header>
+    <header>
 
-<main>
-    <h1>Administración de Divisas</h1>
-    <form id="form-divisas">
-        <!-- Formulario -->
-        <label for="id-divisa" style="display:none;">ID:</label>
-        <input type="text" style="display:none;" id="id-divisa" placeholder="ID solo para editar" disabled>
-        <label for="nombre-divisa">Nombre:</label>
-        <input type="text" id="nombre-divisa" placeholder="Ingrese el nombre de la divisa" required>
-        <label for="compra-divisa">Precio de Compra:</label>
-        <input type="number" id="compra-divisa" placeholder="Ingrese el precio de compra" step="0.01" required>
-        <label for="venta-divisa">Precio de Venta:</label>
-        <input type="number" id="venta-divisa" placeholder="Ingrese el precio de venta" step="0.01" required>
+        <button id="inicioButton" onclick="irainicio()">
+            <img src="/static/img/inicio.png" alt="Inicio">
+        </button>
+        <h1>DeFi</h1>
 
-        <button type="button" onclick="agregarOEditarDivisa()">Guardar</button>
-    </form>
-    <!-- Tabla de Divisas -->
-    <div class="table-container">
-        <table id="tabla-divisas">
-            <thead>
-            <tr>
-                <th style="display:none;">ID</th>
-                <th>Nombre</th>
-                <th>Precio de Compra</th>
-                <th>Precio de Venta</th>
-                <th>Acciones</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Las divisas serán insertadas aquí dinámicamente -->
-            </tbody>
-        </table>
-    </div>
+        <button id="logoutbutton" onclick="cerrarSesion()">
+            <img src="/static/img/image.png" alt="Cerrar Sesión">
+        </button>
+    </header>
 
-    <!-- Tabla de Logs -->
-    <div class="table-container">
-        <table id="tabla-logs">
-            <thead>
-            <tr>
-                <th>Usuario</th>
-                <th>Moneda</th>
-                <th>Fecha del Cambio</th>
-            </tr>
-            </thead>
-            <tbody id="logs-body">
-            <!-- Los logs serán insertados aquí dinámicamente -->
-            </tbody>
-        </table>
-        <div id="controles-paginacion" class="paginacion">
-            <button id="prev-button" onclick="cambiarPagina(-1)" disabled>Anterior</button>
-            <span id="numero-pagina">1</span>
-            <button id="next-button" onclick="cambiarPagina(1)">Siguiente</button>
+    <main>
+        <h1>Administración de Divisas</h1>
+        <form id="form-divisas">
+            <!-- Formulario -->
+            <label for="id-divisa" style="display:none;">ID:</label>
+            <input type="text" style="display:none;" id="id-divisa" placeholder="ID solo para editar" disabled>
+            <label for="nombre-divisa">Nombre:</label>
+            <input type="text" id="nombre-divisa" placeholder="Ingrese el nombre de la divisa" required>
+            <label for="compra-divisa">Precio de Compra:</label>
+            <input type="number" id="compra-divisa" placeholder="Ingrese el precio de compra" step="0.01" required>
+            <label for="venta-divisa">Precio de Venta:</label>
+            <input type="number" id="venta-divisa" placeholder="Ingrese el precio de venta" step="0.01" required>
+
+            <button type="button" onclick="agregarOEditarDivisa()">Guardar</button>
+        </form>
+        <!-- Tabla de Divisas -->
+        <div class="table-container">
+            <table id="tabla-divisas">
+                <thead>
+                    <tr>
+                        <th style="display:none;">ID</th>
+                        <th>Nombre</th>
+                        <th>Precio de Compra</th>
+                        <th>Precio de Venta</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las divisas serán insertadas aquí dinámicamente -->
+                </tbody>
+            </table>
         </div>
-    </div>
 
-</main>
+        <!-- Tabla de Logs -->
+        <div class="table-container">
+            <table id="tabla-logs">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Moneda</th>
+                        <th>Fecha del Cambio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Los logs serán insertados aquí dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            <button onclick="changePage(-1)">Previous</button>
+            <span id="pageIndicator">Page 1</span>
+            <button onclick="changePage(1)">Next</button>
+        </div>
+    </main>
 
-<footer>
-    <p>&copy; 2024 Cotizaciones DeFi</p>
-</footer>
+    <footer>
+        <p>&copy; 2024 Cotizaciones DeFi</p>
+    </footer>
 
-<script>
-    // Simulación de obtener el ID del usuario autenticado
-    const usuarioId = 1; // Reemplazar con el ID del usuario real en la aplicación autenticada
-    let paginaActual = 1; // Estado para la página actual
+    <script>
+        // Simulación de obtener el ID del usuario autenticado
+        const usuarioId = 1; // Reemplazar con el ID del usuario real en la aplicación autenticada
 
-    function agregarOEditarDivisa() {
-        let id = document.getElementById('id-divisa').value;
-        let nombre = document.getElementById('nombre-divisa').value.toUpperCase(); // Convertir a mayúsculas
-        let compra = document.getElementById('compra-divisa').value;
-        let venta = document.getElementById('venta-divisa').value;
+        function agregarOEditarDivisa() {
+            let id = document.getElementById('id-divisa').value;
+            let nombre = document.getElementById('nombre-divisa').value.toUpperCase(); // Convertir a mayúsculas
+            let compra = document.getElementById('compra-divisa').value;
+            let venta = document.getElementById('venta-divisa').value;
 
-        if (nombre && compra && venta) {
-            let divisaData = {
-                "nombre": nombre,
-                "compra": parseFloat(compra),
-                "venta": parseFloat(venta)
-            };
+            if (nombre && compra && venta) {
+                let divisaData = {
+                    "nombre": nombre,
+                    "compra": parseFloat(compra),
+                    "venta": parseFloat(venta)
+                };
 
-            // Si existe ID, se hace PATCH, de lo contrario POST
-            const url = id ? `https://cotizacionesdefi.com/divisas/${id}` : `https://cotizacionesdefi.com/divisas`;
-            const method = id ? 'PATCH' : 'POST';
+                // Si existe ID, se hace PATCH, de lo contrario POST
+                const url = id ? `https://cotizacionesdefi.com/divisas/${id}` : `https://cotizacionesdefi.com/divisas`;
+                const method = id ? 'PATCH' : 'POST';
 
-            fetch(url, {
-                method: method,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json' // Cambiar a 'application/json' para más claridad
-                },
-                body: JSON.stringify(divisaData),
-                credentials: 'include'
-            })
+                fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json' // Cambiar a 'application/json' para más claridad
+                    },
+                    body: JSON.stringify(divisaData),
+                    credentials: 'include'
+                })
                 .then(response => {
                     if (!response.ok) {
                         return response.json().then(errorData => {
@@ -130,30 +130,31 @@
                     console.error('Error:', error);
                     Swal.fire(`Ocurrió un error: ${error.message}`);
                 });
-        } else {
-            Swal.fire("Por favor, completa todos los campos.");
+            } else {
+                Swal.fire("Por favor, completa todos los campos.");
+            }
         }
-    }
 
-    function eliminarDivisa(id) {
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: "No podrás revertir esto",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Sí, eliminarlo',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Configurar el cuerpo de la solicitud para establecer el status a false
-                const divisaData = { status: false };
 
-                fetch(`https://cotizacionesdefi.com/divisas/${id}`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(divisaData),
-                    credentials: "include"
-                })
+        function eliminarDivisa(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "No podrás revertir esto",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminarlo',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Configurar el cuerpo de la solicitud para establecer el status a false
+                    const divisaData = { status: false };
+
+                    fetch(`https://cotizacionesdefi.com/divisas/${id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(divisaData) ,
+                        credentials:"include"
+                    })
                     .then(response => {
                         if (response.ok) {
                             Swal.fire(`Divisa con ID ${id} eliminada.`);
@@ -167,22 +168,23 @@
                         console.error('Error:', error);
                         Swal.fire('Ocurrió un error al intentar eliminar la divisa.');
                     });
-            }
-        });
-    }
+                }
+            });
+        }
 
-    function obtenerDivisas() {
-        fetch('https://cotizacionesdefi.com/divisas')
-            .then(response => response.json())
-            .then(data => {
-                let tablaDivisas = document.getElementById('tabla-divisas').getElementsByTagName('tbody')[0];
-                tablaDivisas.innerHTML = '';
 
-                // Filtrar las divisas con status true
-                const divisasActivas = data.filter(divisa => divisa.status === true);
+        function obtenerDivisas() {
+            fetch('https://cotizacionesdefi.com/divisas')
+                .then(response => response.json())
+                .then(data => {
+                    let tablaDivisas = document.getElementById('tabla-divisas').getElementsByTagName('tbody')[0];
+                    tablaDivisas.innerHTML = '';
 
-                divisasActivas.forEach(divisa => {
-                    let fila = `<tr>
+                    // Filtrar las divisas con status true
+                    const divisasActivas = data.filter(divisa => divisa.status === true);
+
+                    divisasActivas.forEach(divisa => {
+                        let fila = `<tr>
                                 <td style="display:none;">${divisa.id}</td>
                                 <td>${divisa.nombre.toUpperCase()}</td>
                                 <td>${divisa.compra}</td>
@@ -192,19 +194,19 @@
                                     <button class="delete-btn" onclick="eliminarDivisa(${divisa.id})"><img src="/img/5561819.png" alt="Editar" style="width: 20px; height: 20px; margin-right: 5px;"></button>
                                 </td>
                             </tr>`;
-                    tablaDivisas.innerHTML += fila;
+                        tablaDivisas.innerHTML += fila;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire('Ocurrió un error al obtener las divisas.');
                 });
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                Swal.fire('Ocurrió un error al obtener las divisas.');
-            });
-    }
+        }
 
-    function editarDivisa(id) {
-        fetch(`https://cotizacionesdefi.com/divisas/${id}`, {
-            credentials: "include"
-        })
+        function editarDivisa(id) {
+            fetch(`https://cotizacionesdefi.com/divisas/${id}`, {
+                credentials:"include"
+            })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al obtener la divisa.');
@@ -221,106 +223,111 @@
                 console.error('Error:', error);
                 Swal.fire(`Ocurrió un error: ${error.message}`);
             });
-    }
-
-    let paginaActual = 1; // Inicializa la página actual
-
-    function obtenerLogs() {
-        fetch('https://cotizacionesdefi.com/logs')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Verificar si data es un array
-                if (!Array.isArray(data)) {
-                    console.error('Se esperaba un array, pero se recibió:', data);
-                    Swal.fire('Ocurrió un error: la respuesta no es un array.');
-                    return;
-                }
-
-                let tablaLogs = document.getElementById('tabla-logs').getElementsByTagName('tbody')[0];
-                tablaLogs.innerHTML = '';
-
-                // Calcular los índices para la paginación
-                const registrosPorPagina = 5; // Establecer la cantidad de registros por página
-                const inicio = (paginaActual - 1) * registrosPorPagina;
-                const fin = inicio + registrosPorPagina;
-                const logsPaginados = data.slice(inicio, fin); // Obtener los logs correspondientes a la página actual
-
-                logsPaginados.forEach(log => {
-                    // Convertir la fecha a la hora argentina
-                    let fechaArg = new Date(log.fecha).toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });
-                    let fila = `<tr>
-                        <td>${log.usuario}</td>
-                        <td>${log.moneda}</td>
-                        <td>${fechaArg}</td>
-                    </tr>`;
-                    tablaLogs.innerHTML += fila;
-                });
-
-                // Actualizar el estado de la paginación
-                document.getElementById('numero-pagina').innerText = paginaActual;
-                document.getElementById('prev-button').disabled = paginaActual === 1; // Deshabilitar botón "Anterior" en la primera página
-                document.getElementById('next-button').disabled = fin >= data.length; // Deshabilitar botón "Siguiente" si no hay más registros
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                Swal.fire('Ocurrió un error al obtener los logs.');
-            });
-    }
-
-    function cambiarPagina(incremento) {
-        // Cambia el estado de la página actual
-        paginaActual += incremento;
-
-        // Evitar que la página actual esté fuera de los límites
-        if (paginaActual < 1) {
-            paginaActual = 1; // No permitir ir a la página anterior
         }
 
-        obtenerLogs(); // Volver a obtener los logs para la nueva página
-    }
+        function obtenerLogs() {
+            fetch('https://cotizacionesdefi.com/logs')
+                .then(response => response.json())
+                .then(data => {
+                    // Ordenar los logs por fecha de creación de más reciente a más antigua
+                    data.sort((a, b) => new Date(b.fechaCreacion) - new Date(a.fechaCreacion));
 
-    // Inicializar la carga de logs al cargar la página
-    document.addEventListener('DOMContentLoaded', () => {
-        obtenerLogs();
-    });
+                    let tablaLogs = document.getElementById('tabla-logs').getElementsByTagName('tbody')[0];
+                    tablaLogs.innerHTML = '';
 
+                    // Crear las filas de la tabla con los logs ordenados
+                    data.forEach(log => {
+                        let fila = `<tr>
+                                        <td>${log.usuarios.nombre}</td>
+                                        <td>${log.divisas.nombre}</td>
+                                        <td>${new Date(log.fechaCreacion).toLocaleString()}</td>
+                                    </tr>`;
+                        tablaLogs.innerHTML += fila;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire('Ocurrió un error al obtener los logs.');
+                });
 
+        }
 
-
-    // Funciones de navegación
-    function irainicio() {
-        window.location.href = '/inicio.html';
-    }
-
-    function cerrarSesion() {
-        fetch('https://cotizacionesdefi.com/logout', {
-            method: 'POST',
-            credentials: 'include'
-        })
+        function cerrarSesion() {
+            fetch('https://cotizacionesdefi.com/auth/logout', {
+                method: 'POST',
+                credentials: 'include' // Incluye las cookies de sesión
+            })
             .then(response => {
                 if (response.ok) {
-                    Swal.fire('Sesión cerrada');
-                    window.location.href = '/login.html';
+                    return response.json(); // Obtener el cuerpo de la respuesta
                 } else {
-                    Swal.fire('Error al cerrar sesión');
+                    console.error('Error al cerrar sesión:', response.statusText);
+                    Swal.fire('Error al cerrar sesión, inténtalo de nuevo.');
+                    throw new Error('Error en la respuesta de logout');
                 }
+            })
+            .then(data => {
+                // Redirigir a la URL proporcionada por el backend
+                window.location.href = data.redirectUrl; // Redirigir a la página de inicio de sesión
+            })
+            .catch(error => {
+                console.error('Error en la petición:', error);
+                Swal.fire('Error al cerrar sesión, inténtalo de nuevo.'); // Mostrar un mensaje de error
+            });
+        }
+
+
+        function irainicio() {
+            fetch('https://cotizacionesdefi.com/auth/inicio', {
+                method: 'POST',
+                credentials: 'include'
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    Swal.firert('Error.'); // Mostrar un mensaje de error
+                    throw new Error('Error en la respuesta');
+                }
+            })
+            .then(data => {
+
+                window.location.href = data.redirectUrl;
+            })
+            .catch(error => {
+                console.error('Error en la petición:', error);
+                Swal.fire('Error al cerrar sesión, inténtalo de nuevo.'); // Mostrar un mensaje de error
+            });
+        }
+
+
+        function verificarUsuario() {
+            fetch('https://cotizacionesdefi.com/auth/checkSession', {
+                method: 'GET',
+                credentials: 'include' // Incluir cookies de sesión
+            })
+            .then(response => {
+                if (response.status === 401) {
+                    return response.json().then(data => {
+                        window.location.href = data.redirectUrl;
+                    });
+                }
+
+                return response.text();
             })
             .catch(error => {
                 console.error('Error:', error);
-                Swal.fire('Ocurrió un error al cerrar sesión.');
+                Swal.fire('Ocurrió un error al verificar la sesión.');
             });
-    }
+        }
 
-    // Cargar datos al inicio
-    document.addEventListener('DOMContentLoaded', function() {
-        obtenerDivisas();
-        obtenerLogs();
-    });
-</script>
+        // Llama a verificarUsuario al cargar la página
+        window.onload = function() {
+            verificarUsuario()
+            obtenerDivisas();
+            obtenerLogs();
+        };
+
+    </script>
 </body>
 </html>
