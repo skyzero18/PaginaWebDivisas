@@ -54,7 +54,7 @@ public class AuthController {
 
     @PostMapping("/inicio")
     public ResponseEntity<?> inicio() {
-        return ResponseEntity.ok().body(Map.of("redirectUrl", "/inicio.html"));
+        return ResponseEntity.ok().body(Map.of("redirectUrl", "/"));
     }
 
     @GetMapping("/checkSession")
