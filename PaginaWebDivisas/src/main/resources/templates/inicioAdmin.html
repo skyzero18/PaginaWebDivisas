@@ -303,25 +303,22 @@
             })
             .then(response => {
                 if (response.ok) {
-                    return response.json(); // Espera la respuesta JSON
+                    return response.json(); // Asegúrate de convertir la respuesta a JSON
                 } else {
-                    return response.json().then(data => {
-                        throw new Error(data.redirectUrl || 'Usuario no autenticado'); // Lanza error con la URL de redirección
-                    });
+                    Swal.fire('Error.');  
+                    throw new Error('Error en la respuesta');
                 }
             })
             .then(data => {
-                // Si el usuario está autenticado, cargar contenido
+                if (data.redirectUrl) {
+                    window.location.href = data.redirectUrl; 
+                }
                 cargarContenido();
             })
             .catch(error => {
                 console.error('Error:', error);
-                // Redirigir a la URL proporcionada por el backend
-                window.location.href = error.message; // Utiliza la URL de redirección del error
             });
         }
-
-
         // Función para cargar todo el contenido de la página
         function cargarContenido() {
             obtenerDivisas();
