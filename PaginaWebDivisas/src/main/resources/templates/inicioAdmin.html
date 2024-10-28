@@ -297,24 +297,18 @@
 
 
         function verificarUsuario() {
-            fetch("https://cotizacionesdefi.com/auth/checkSession", {
-                method: "GET",
+            fetch("https://cotizacionesdefi.com/auth/checkSession",{
+                method:"GET",
                 credentials: "include"
-            })
-            .then(response => {
+            }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Procesa la respuesta JSON
+                    window.location.href = data.redirectUrl; 
                 } else {
-                    Swal.fire('Error.'); // Corrige el nombre de la función
+                    Swal.firert('Error.'); 
                     throw new Error('Error en la respuesta');
                 }
             })
-            .then(data => {
-                window.location.href = data.redirectUrl; // Usa la variable data
-            })
-            .catch(error => {
-                console.error(error); // Maneja errores de la solicitud
-            });
+            
         }
 
         // Función para cargar todo el contenido de la página
