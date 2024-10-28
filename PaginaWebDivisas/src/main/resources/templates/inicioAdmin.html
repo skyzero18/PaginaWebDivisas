@@ -297,34 +297,58 @@
 
 
         function verificarUsuario() {
-            // Lógica de verificación de usuario (puede ser una llamada AJAX al servidor o similar)
-            const usuarioVerificado = true; // Reemplaza esto con la lógica real de verificación
-
-            if (usuarioVerificado) {
-                cargarContenido(); // Llama a cargar contenido si el usuario está verificado
-            } else {
-                fetch("https://cotizacionesdefi.com/auth/loginpan", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.redirectUrl) {
-                        window.location.href = data.redirectUrl; // Redirige al login según la respuesta del servidor
-                    }
-                })
-                .catch(error => console.error("Error en la redirección:", error));
-            }
-            
+            fetch("https://cotizacionesdefi.com/auth/checkSession", {
+                method: "GET",
+                credentials: "include"
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("Usuario no autenticado");
+                }
+            })
+            .then(data => {
+                if (data && data.redirectUrl) {
+                    // Si el backend envía una redirección en caso de no autenticación
+                    redirigirLogin();
+                } else {
+                    // Si el usuario está autenticado, se carga el contenido
+                    cargarContenido();
+                }
+            })
+            .catch(error => {
+                console.error("Error al verificar usuario:", error);
+                redirigirLogin();
+            });
         }
+
+        function redirigirLogin() {
+            fetch("https://cotizacionesdefi.com/auth/loginpan", {
+                method: "POST",
+                credentials: "include"
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.redirectUrl) {
+                    window.location.href = data.redirectUrl;
+                } else {
+                    console.error("Error: No se recibió URL de redirección en la respuesta de loginpan.");
+                }
+            })
+            .catch(error => {
+                console.error("Error al obtener URL de redirección desde loginpan:", error);
+            });
+        }
+
+
+
+
 
         // Función para cargar todo el contenido de la página
         function cargarContenido() {
             obtenerDivisas();
             obtenerLogs();
-            // Cualquier otra inicialización
         }
         // Llama a verificarUsuario al cargar la página
         window.onload = verificarUsuario;
