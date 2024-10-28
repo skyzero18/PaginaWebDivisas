@@ -305,8 +305,8 @@
                 return response.json()  // Convierte la respuesta a JSON
                     .then(data => {
                         if (response.ok) {
-                            obtenerDivisas();
-                            window.location.href = data.redirectUrl; 
+                            cargarContenido();
+                            
                         } else {
                             Swal.fire('Error.');  // Corrección aquí
                             throw new Error('Error en la respuesta');
