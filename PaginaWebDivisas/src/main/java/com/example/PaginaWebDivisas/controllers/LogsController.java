@@ -2,6 +2,7 @@ package com.example.PaginaWebDivisas.controllers;
 import com.example.PaginaWebDivisas.models.Logs;
 import com.example.PaginaWebDivisas.services.LogsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,8 @@ public class LogsController {
     private LogsService logsService;
 
     @GetMapping
-    public List<Logs> getAllLogs() {
-        return logsService.getAllLogs();
+    public Page<Logs> getAllLogs(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
+        return logsService.getAllLogs(page, size);
     }
 
     @GetMapping("/{id}")
