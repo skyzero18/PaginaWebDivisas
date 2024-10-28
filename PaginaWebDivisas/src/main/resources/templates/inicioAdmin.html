@@ -303,19 +303,21 @@
             })
             .then(response => {
                 if (response.ok) {
-                    window.location.href = data.redirectUrl; 
-                    cargarContenido();
-                    
-                } 
-                else {
-                    Swal.fire('Error.');  // Corrección aquí
+                    return response.json(); // Espera la respuesta JSON
+                } else {
+                    Swal.fire('Error.');  
                     throw new Error('Error en la respuesta');
                 }
+            })
+            .then(data => {
+                window.location.href = data.redirectUrl; 
+                cargarContenido();
             })
             .catch(error => {
                 console.error('Error:', error);
             });
         }
+
 
         // Función para cargar todo el contenido de la página
         function cargarContenido() {
