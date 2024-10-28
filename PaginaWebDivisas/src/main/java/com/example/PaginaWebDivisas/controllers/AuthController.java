@@ -81,7 +81,7 @@ public class AuthController {
         System.out.println("ID de sesión en checkSession: " + session.getId());
         System.out.println("Usuario recuperado de la sesión: " + user);
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("redirectUrl", "/login"));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("redirectUrl", "/admin"));
         } else {
             return ResponseEntity.ok().body("Usuario autenticado: " + user);
         }
