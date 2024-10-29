@@ -130,6 +130,9 @@ form button {
     max-width: 95%;
     overflow-x: auto; /* Permitir desplazamiento horizontal */
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 table {
@@ -140,7 +143,7 @@ table {
     min-width: 250px; /* Ancho mínimo para tablas más grandes */
     
     margin: 20px auto;
-    border-collapse: separate;
+    border-collapse: collapse;
     border-spacing: 0;
     border-radius: 15px;
     overflow: hidden;
@@ -193,11 +196,20 @@ tbody td {
 
 /* Estilo de desplazamiento horizontal */
 .table-container {
-    overflow-x: auto;
+    
+    margin: 20px auto;
+    max-width: 95%;
+    overflow-x: auto; /* Permitir desplazamiento horizontal */
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
 }
 
 td, th {
     white-space: nowrap; /* Evitar que el contenido se ajuste en varias líneas */
+    text-align: center;
+    width: 37%;
+    padding: 5px 10px;
 }
 
 
