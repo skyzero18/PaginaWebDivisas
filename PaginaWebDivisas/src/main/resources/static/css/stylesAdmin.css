@@ -18,6 +18,17 @@ body {
     min-height: 100vh; 
 }
 
+#app-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+
 header { 
     background: linear-gradient(to top, #207388, #135764);
 
@@ -193,12 +204,12 @@ td, th {
 
 
 footer {
-    background-color: #00913e;
-    padding: 0%;
+    background-color: #136423;
     color: white;
     text-align: center;
+    padding: 3px; /* Espaciado para evitar que el contenido quede pegado */
+    width: 100%;
 }
-
 footer a {
     color: white;
     text-decoration: none;
