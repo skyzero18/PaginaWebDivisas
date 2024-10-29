@@ -127,7 +127,7 @@ form button {
 /* Table Styles */
 .table-container {
     margin: 20px auto;
-    max-width: 90%;
+    max-width: 95%;
     overflow-x: auto; /* Permitir desplazamiento horizontal */
     border-radius: 10px;
 }
@@ -137,7 +137,7 @@ table {
     border-collapse: collapse;
     margin-bottom: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    min-width: 600px; /* Ancho mínimo para tablas más grandes */
+    min-width: 250px; /* Ancho mínimo para tablas más grandes */
     
     margin: 20px auto;
     border-collapse: separate;

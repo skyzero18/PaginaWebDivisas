@@ -44,8 +44,8 @@
                         <tr>
                             <th style="display:none;">ID</th>
                             <th>Nombre</th>
-                            <th>Precio de Compra</th>
-                            <th>Precio de Venta</th>
+                            <th>Compra</th>
+                            <th>Venta</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -187,8 +187,8 @@
                                 <td>${divisa.compra}</td>
                                 <td>${divisa.venta}</td>
                                 <td>
-                                    <button class="edit-btn" onclick="editarDivisa(${divisa.id})" ><img src="/img/6324826.png" alt="Editar" style="width: 20px; height: 20px; margin-right: 5px;"></button>
-                                    <button class="delete-btn" onclick="eliminarDivisa(${divisa.id})"><img src="/img/5561819.png" alt="Editar" style="width: 20px; height: 20px; margin-right: 5px;"></button>
+                                    <button class="edit-btn" onclick="editarDivisa(${divisa.id})" ><img src="/static/img/6324826.png" alt="Editar" style="width: 20px; height: 20px; margin-right: 5px;"></button>
+                                    <button class="delete-btn" onclick="eliminarDivisa(${divisa.id})"><img src="/static/img/5561819.png" alt="Editar" style="width: 20px; height: 20px; margin-right: 5px;"></button>
                                 </td>
                             </tr>`;
                         tablaDivisas.innerHTML += fila;
