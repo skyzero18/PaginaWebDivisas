@@ -147,7 +147,7 @@ img {
 }
 
 .exchange-table td:first-child {
-    color: #135764; /* Texto azul para la columna de DIVISAS */
+    color: #1e7c8f; /* Texto azul para la columna de DIVISAS */
 }
 
 .exchange-table td:nth-child(2),
