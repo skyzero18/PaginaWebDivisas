@@ -17,13 +17,16 @@ body {
 
 
 .header {
-    background-color: #00913e;
+    background: linear-gradient(to top, #207388, #135764);
+
+
     color: rgb(255, 255, 255);
     grid-template-columns: 2fr auto; /* Dos partes para el h1 y una parte automática para el botón de cierre de sesión */
     align-items: center; /* Alinear verticalmente los elementos */
     width: 100%;
     position: fixed;
     grid-template-columns: auto 1fr;
+    z-index: 10;
 }
 
 .header h1 {
@@ -52,6 +55,7 @@ body {
     overflow: hidden; /* Para ocultar el texto que se desborda */
     white-space: nowrap;
     padding: 5px;
+    z-index: 5;
 }
 
 
@@ -138,17 +142,17 @@ img {
 }
 
 .exchange-table th {
-    background-color: #00913e;
+    background-color: #136423;
     color: white;
 }
 
 .exchange-table td:first-child {
-    color: #2268c2; /* Texto azul para la columna de DIVISAS */
+    color: #135764; /* Texto azul para la columna de DIVISAS */
 }
 
 .exchange-table td:nth-child(2),
 .exchange-table td:nth-child(3) {
-    color: black; /* Texto negro para las columnas de COMPRA y VENTA */
+    color: rgb(74, 73, 73); /* Texto negro para las columnas de COMPRA y VENTA */
 }
 .exchange-table td:first-child {
     border-radius: 0 0 0 10px;
@@ -158,20 +162,26 @@ img {
     border-radius: 0 0 10px 0;
 }
 
-/* Formulario */
 .conversion-section {
     margin: 20px auto;
-    padding: 20px;
+    padding: 20px; /* Aumenta el padding general sin afectar el h2 */
     background-color: #fff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     max-width: 400px;
     width: 90%;
+    position: relative;
 }
 
 .conversion-section h2 {
-    color: #0066cc;
+    color: #ffffff;
+    background-color: #136423;
     text-align: center;
+    margin: -20px -20px 0 -20px; /* Ajusta los márgenes para sobresalir sobre el padding */
+    padding: 10px 0;
+    width: calc(100% + 40px); /* Ancho para cubrir el padding */
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 15px;
 }
 
 .form-group {
@@ -201,7 +211,7 @@ select, input {
     width: 100%;
     margin: 20px 0;
     padding: 15px 0;
-    background-color: #00913e;
+    background-color: #136423;
     color: white;
     font-size: 18px;
     border-radius: 10px;
@@ -253,7 +263,7 @@ select, input {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #00913e;
+    background-color: #136423;
     color: white;
     padding: 10px;
     border-radius: 50px;
@@ -266,7 +276,7 @@ select, input {
 
 /* Footer */
 footer {
-    background-color: #00913e;
+    background-color: #136423;
     padding: 0%;
     color: white;
     text-align: center;

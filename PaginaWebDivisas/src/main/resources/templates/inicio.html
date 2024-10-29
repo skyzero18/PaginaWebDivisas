@@ -13,10 +13,10 @@
 </header>
 
 <section class="main">
-    <div class="ftx">
+   <!--  <div class="ftx">
         <span>Nuestra cotización es válida por 15 minutos, transcurrido el tiempo establecido, puede variar sin previo aviso, según la modificación del mercado. </span>
     </div>
-    
+    -->
     <!-- Indicador de carga -->
     <div id="loading" class="loading-spinner" style="display:none;">Cargando...</div>
 
@@ -36,7 +36,7 @@
 
     <!-- Formulario para conversión -->
     <div class="conversion-section" id="conversion-section">
-        <h2>Conversión de Divisas</h2>
+        <h2>CONVERSOR DE DIVISAS</h2>
         <div class="form-group">
             <label for="divisa-origen">Divisa Origen:&nbsp</label>
             <select id="divisa-origen">
@@ -55,7 +55,7 @@
                 <option value="ARS" selected>ARS</option>
             </select>
         </div>
-        <button class="cta-btn" onclick="convertirDivisa()">Convertir</button>
+        <button class="cta-btn" onclick="convertirDivisa()">CONVERTIR</button>
 
         <!-- Mostrar el resultado de la conversión en lugar de una alerta -->
         <div id="resultado" class="resultado-conversion"></div>
@@ -80,14 +80,17 @@
 
          <div class="box">
              <img src="/static/img/citaag.png" alt="Descripción de la imagen">
-             <p>Se realizan todo tipo de transacciones con todo tipo de Cryptoactivos</p>
+             <p>Se realizan todo tipo de transacciones con Cryptoactivos</p>
          </div>
 
          <div class="box">
              <img src="/static/img/reclam.png" alt="Descripción de la imagen" >
-             <p>No se reserva dinero, tampoco se congelan cotizaciones. No comprometa a nuestro equipo.</p>
+             <p>No se reserva dinero ni se congelan cotizaciones. No comprometa a nuestro equipo.</p>
          </div>
-
+         <div class="box">
+            <img src="/static/img/reclam.png" alt="Descripción de la imagen" >
+            <p>Nuestra cotización es válida por 15 minutos, transcurrido el tiempo establecido, puede variar sin previo aviso, según la modificación del mercado</p>
+        </div>
      </div>
  </section>
 
@@ -155,8 +158,8 @@
              return;
          }
 
-         let divisaOrigen = divisas.find(d => d.id == idOrigen) || { compra: 1, nombre: "Peso Argentino" };
-         let divisaDestino = divisas.find(d => d.id == idDestino) || { venta: 1, nombre: "Peso Argentino" };
+         let divisaOrigen = divisas.find(d => d.id == idOrigen) || { compra: 1, nombre: "ARS" };
+         let divisaDestino = divisas.find(d => d.id == idDestino) || { venta: 1, nombre: "ARS" };
 
          let resultado = 0;
 

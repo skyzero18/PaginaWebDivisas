@@ -11,7 +11,9 @@ body {
 }
 
 header { 
-    background-color: #00913e;
+    background: linear-gradient(to top, #207388, #135764);
+
+
     color: rgb(255, 255, 255);
     flex-direction: column;
     text-align: center;
@@ -66,7 +68,7 @@ form button {
     display: block;
     width: 100%;
     padding: 15px;
-    background-color: #00913e;
+    background-color: #136423;
     color: white;
     font-size: 18px;
     border-radius: 10px;
@@ -82,7 +84,7 @@ form button:hover {
 
 footer {
     text-align: center;
-    background-color: #00913e;
+    background-color: #136423;
     color: white;
     padding: 0;
     position: fixed;

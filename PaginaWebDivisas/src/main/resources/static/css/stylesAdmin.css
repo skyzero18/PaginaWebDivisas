@@ -19,7 +19,9 @@ body {
 }
 
 header { 
-    background-color: #00913e;
+    background: linear-gradient(to top, #207388, #135764);
+
+
     color: rgb(255, 255, 255);
     display: grid; /* Usar grid para el layout */
     grid-template-columns: auto 1fr auto; /* Para el botón de inicio, el título, y el botón de cerrar sesión */
