@@ -18,8 +18,6 @@ body {
 
 .header {
     background: linear-gradient(to top, #207388, #135764);
-
-
     color: rgb(255, 255, 255);
     grid-template-columns: 2fr auto; /* Dos partes para el h1 y una parte automática para el botón de cierre de sesión */
     align-items: center; /* Alinear verticalmente los elementos */

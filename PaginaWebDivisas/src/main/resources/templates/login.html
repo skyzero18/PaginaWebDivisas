@@ -3,34 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Administración de Divisas</title>
+    <title>Inicio de sesion</title>
     <link rel="icon" href="/static/img/Defilogo1.png" type="image/x-icon">
     <link rel="stylesheet" href="/static/css/stylesLogin.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <header>
-        <h1 onclick="irainicio()">DeFi</h1>
-    </header>
-  
-    <main>
-        <h1>Iniciar Sesión</h1>
-        <form id="form-login">
-            <label for="usuario">Usuario:</label>
-            <input type="text" id="usuario" placeholder="Ingrese su usuario" required>
-            <label for="contraseña">Contraseña:</label>
-            <input type="password" id="contraseña" placeholder="Ingrese su contraseña" required>
-            <button type="submit">Iniciar Sesión</button>
-            <button id="registrarse-btn">Registrarse</button>
-        </form>
-        <br>
-        
-    </main>
+    <div id="app-content" style="display: none;">
+        <header>
+            <h1 onclick="irainicio()">DeFi</h1>
+        </header>
+    
+        <main>
+            <h1>Iniciar Sesión</h1>
+            <form id="form-login">
+                <label for="usuario">Usuario:</label>
+                <input type="text" id="usuario" placeholder="Ingrese su usuario" required>
+                <label for="contraseña">Contraseña:</label>
+                <input type="password" id="contraseña" placeholder="Ingrese su contraseña" required>
+                <button type="submit">Iniciar Sesión</button>
+                <button id="registrarse-btn">Registrarse</button>
+            </form>
+            <br>
+            
+        </main>
 
-    <footer>
-        <p>&copy; 2024 Cotizaciones DeFi</p>
-    </footer>
-
+        <footer>
+            <p>&copy; 2024 Cotizaciones DeFi</p>
+        </footer>
+    </div>
     <script>
         // Función para verificar si el usuario ya está logueado
 
@@ -161,9 +162,9 @@
                     return response.json().then(data => {
                         window.location.href = data.redirectUrl;
                     });
+                }else {
+                    document.getElementById('app-content').style.display = 'block';
                 }
-
-                return response.text();
             })
             .catch(error => {
                 console.error('Error:', error);
