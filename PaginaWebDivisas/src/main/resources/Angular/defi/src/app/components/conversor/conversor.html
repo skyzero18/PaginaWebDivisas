@@ -1,0 +1,30 @@
+<!-- conversor.component.html -->
+<div class="conversion-section" *ngIf="divisas.length > 0; else loading">
+  <h2>CONVERSOR DE DIVISAS</h2>
+  <div class="form-group">
+    <label for="divisa-origen">DESDE:&nbsp;</label>
+    <select id="divisa-origen" [(ngModel)]="divisaOrigen">
+      <option *ngFor="let divisa of divisas" [value]="divisa.id">{{ divisa.nombre }}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="cantidad">Cantidad:&nbsp;</label>
+    <input type="number" id="cantidad" [(ngModel)]="cantidad" placeholder="Ingresa la cantidad" />
+  </div>
+
+  <div class="form-group">
+    <label for="divisa-destino">HACIA:&nbsp;</label>
+    <select id="divisa-destino" [(ngModel)]="divisaDestino">
+      <option *ngFor="let divisa of divisas" [value]="divisa.id">{{ divisa.nombre }}</option>
+    </select>
+  </div>
+
+  <button class="cta-btn" (click)="convertirDivisa()">CONVERTIR</button>
+
+  <div id="resultado" class="resultado-conversion">{{ resultado }}</div>
+</div>
+
+<ng-template #loading>
+  <div id="loading" class="loading-spinner">Cargando...</div>
+</ng-template>

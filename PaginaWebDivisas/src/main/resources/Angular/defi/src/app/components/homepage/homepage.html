@@ -1,9 +1,37 @@
-<header class="header"><h1>DeFi</h1></header>
+<!-- page.component.html -->
+<header class="header">
+  <h1>DeFi</h1>
+</header>
 
-<main class="main">
+<section class="main">
+  <app-divisa-table [divisas]="divisas"></app-divisa-table>
 
-<app-divisa-table></app-divisa-table>
-</main>
+  <app-conversor [divisas]="divisas"></app-conversor>
+
+  <!-- Aquí puedes agregar el resto de contenido estático como las cajas (boxes) -->
+  <div class="container">
+    <div class="box">
+      <img src="/src/assets/img/citaag.png" alt="Descripción de la imagen" />
+      <p>Se realizan tranferencias nacionales e internacionales.</p>
+    </div>
+    <div class="box">
+      <img src="/src/assets/img/efect.png" alt="Descripción de la imagen" />
+      <p>El dinero deberá ser revisado en nuestras oficinas bajo nuestro sistema monitoreado de cámaras.</p>
+    </div>
+    <div class="box">
+      <img src="/src/assets/img/citaag.png" alt="Descripción de la imagen" />
+      <p>Se realizan todo tipo de transacciones con Cryptoactivos</p>
+    </div>
+    <div class="box">
+      <img src="/src/assets/img/reclam.png" alt="Descripción de la imagen" />
+      <p>No se reserva dinero ni se congelan cotizaciones. No comprometa a nuestro equipo.</p>
+    </div>
+    <div class="box">
+      <img src="/src/assets/img/reclam.png" alt="Descripción de la imagen" />
+      <p>Nuestra cotización es válida por 15 minutos, transcurrido el tiempo establecido, puede variar sin previo aviso, según la modificación del mercado</p>
+    </div>
+  </div>
+</section>
 
 <footer>
   <p>&copy; 2024 Cotizaciones DeFi</p>

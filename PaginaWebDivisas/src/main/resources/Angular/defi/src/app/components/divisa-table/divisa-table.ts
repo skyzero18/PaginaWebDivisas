@@ -1,32 +1,16 @@
-import { Component } from '@angular/core';
-import { Api } from '../../services/api';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Divisa } from '../divisa-table/divisa.model'; // crea esta interfaz con los campos que usas
 
 @Component({
   selector: 'app-divisa-table',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './divisa-table.html',
-  styleUrl: './divisa-table.css'
+  styleUrls: ['./divisa-table.css']
 })
-
 export class DivisaTable {
-  divisas: any[] = [];
+  @Input() divisas: Divisa[] = [];
   cargando = false;
 
-  constructor(private api: Api) {}
-
-  ngOnInit() {
-    this.cargando = true;
-    this.api.get<any[]>('divisas').subscribe({
-      next: (data) => {
-        // Solo divisas activas
-        this.divisas = data.filter(d => d.status === true);
-        this.cargando = false;
-      },
-      error: (e) => {
-        console.error('Error al obtener divisas:', e);
-        this.cargando = false;
-      }
-    });
-  }
 }
